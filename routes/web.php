@@ -10,3 +10,10 @@ Route::get('/', function () {
 Route::get('/BznsSoka', function () {
     return view('welcome');
 });
+
+Route::get('/BznsBzns', function () {
+    return view('welcome');
+});
+
+
+
