@@ -17,7 +17,7 @@ class ProductController extends Controller
                   ->orWhere('description', 'like', '%' . $request->search . '%');
         }
 
-        if ($request->has('type') && in_array($request->type, ['game', 'pc'])) {
+        if ($request->has('type') && in_array($request->type, ['game', 'pc', 'console'])) {
             $query->where('type', $request->type);
         }
 
@@ -32,13 +32,19 @@ class ProductController extends Controller
         return view('products.create', compact('type'));
     }
 
+    public function show(Product $product)
+    {
+        return view('products.show', compact('product'));
+    }
+
     public function store(Request $request)
     {
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'price' => 'required|numeric',
-            'type' => 'required|in:game,pc',
+            'quantity' => 'required|integer|min:0',
+            'type' => 'required|in:game,pc,console',
             'image' => 'nullable|image|max:2048',
         ]);
 
@@ -65,7 +71,8 @@ class ProductController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'price' => 'required|numeric',
-            'type' => 'required|in:game,pc',
+            'quantity' => 'required|integer|min:0',
+            'type' => 'required|in:game,pc,console',
             'image' => 'nullable|image|max:2048',
         ]);
 

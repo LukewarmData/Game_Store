@@ -4,9 +4,11 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="fw-bold">
         @if(request('type') == 'game')
-            الألعاب
+            ألعاب فيديو
         @elseif(request('type') == 'pc')
-            الحواسيب
+            حاسبات وقطع PC
+        @elseif(request('type') == 'console')
+            أجهزة كونسول
         @else
             كل المنتجات
         @endif
@@ -29,25 +31,37 @@
         <div class="col">
             <div class="card h-100 product-card glass-panel text-white border-0">
                 @if($product->image_url)
-                    <img src="{{ asset($product->image_url) }}" class="card-img-top" alt="{{ $product->title }}">
+                    <a href="{{ route('products.show', $product) }}">
+                        <img src="{{ asset($product->image_url) }}" class="card-img-top" alt="{{ $product->title }}">
+                    </a>
                 @else
-                    <div class="card-img-top bg-dark d-flex align-items-center justify-content-center" style="height: 250px;">
-                        <i class="fa-solid {{ $product->type == 'game' ? 'fa-gamepad' : 'fa-desktop' }} fa-4x text-muted"></i>
-                    </div>
+                    <a href="{{ route('products.show', $product) }}" class="text-decoration-none">
+                        <div class="card-img-top bg-dark d-flex align-items-center justify-content-center" style="height: 250px;">
+                            <i class="fa-solid {{ $product->type == 'game' ? 'fa-gamepad' : 'fa-desktop' }} fa-4x text-muted"></i>
+                        </div>
+                    </a>
                 @endif
                 <div class="card-body d-flex flex-column">
-                    <h5 class="card-title fw-bold text-truncate">{{ $product->title }}</h5>
+                    <a href="{{ route('products.show', $product) }}" class="text-decoration-none text-white hover-accent">
+                        <h5 class="card-title fw-bold text-truncate">{{ $product->title }}</h5>
+                    </a>
                     <p class="card-text text-muted small text-truncate">{{ $product->description }}</p>
                     <div class="mt-auto d-flex justify-content-between align-items-center">
                         <span class="fs-5 fw-bold" style="color: var(--accent-pink);">${{ $product->price }}</span>
                         
                         <div class="d-flex gap-2">
-                            <form action="{{ route('cart.add', $product) }}" method="POST">
-                                @csrf
-                                <button type="submit" class="btn btn-sm btn-custom rounded-circle" title="إضافة للسلة">
-                                    <i class="fa-solid fa-cart-plus"></i>
-                                </button>
-                            </form>
+                            @if(!Auth::check() || !Auth::user()->is_admin)
+                                @if($product->quantity > 0)
+                                <form action="{{ route('cart.add', $product) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-sm btn-custom rounded-circle" title="إضافة للسلة">
+                                        <i class="fa-solid fa-cart-plus"></i>
+                                    </button>
+                                </form>
+                                @else
+                                <span class="badge bg-danger rounded-pill px-3 py-2">نفدت الكمية</span>
+                                @endif
+                            @endif
                             
                             @auth
                                 @if(Auth::user()->is_admin)

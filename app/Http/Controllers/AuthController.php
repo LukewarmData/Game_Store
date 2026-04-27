@@ -26,7 +26,7 @@ class AuthController extends Controller
             // Check if user is trying to login via user portal but is actually an admin
             // We can optionally block this, but let's just let them in as admin anyway, or redirect to home
             $request->session()->regenerate();
-            return redirect()->intended('/home');
+            return redirect()->intended('/');
         }
 
         return back()->withErrors([
@@ -50,7 +50,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             if (Auth::user()->is_admin) {
                 $request->session()->regenerate();
-                return redirect()->intended('/home');
+                return redirect()->intended('/');
             } else {
                 Auth::logout();
                 return back()->withErrors([
@@ -87,7 +87,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect('/home');
+        return redirect('/');
     }
 
     // Logout

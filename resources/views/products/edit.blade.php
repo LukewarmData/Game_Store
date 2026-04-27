@@ -32,15 +32,20 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-4 mb-3">
                         <label class="form-label text-white-50">السعر ($)</label>
                         <input type="number" step="0.01" name="price" class="form-control" required value="{{ old('price', $product->price) }}">
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label text-white-50">النوع</label>
-                        <select name="type" class="form-select" required>
-                            <option value="game" {{ old('type', $product->type) == 'game' ? 'selected' : '' }}>لعبة</option>
-                            <option value="pc" {{ old('type', $product->type) == 'pc' ? 'selected' : '' }}>حاسوب</option>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label text-white-50">الكمية المتوفرة</label>
+                        <input type="number" min="0" name="quantity" class="form-control" required value="{{ old('quantity', $product->quantity) }}">
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label text-white-50">القسم (النوع)</label>
+                        <select name="type" class="form-select text-white" style="background: rgba(255, 255, 255, 0.05);" required>
+                            <option value="game" class="text-dark" {{ old('type', $product->type) == 'game' ? 'selected' : '' }}>ألعاب فيديو</option>
+                            <option value="pc" class="text-dark" {{ old('type', $product->type) == 'pc' ? 'selected' : '' }}>حاسبات وقطع PC</option>
+                            <option value="console" class="text-dark" {{ old('type', $product->type) == 'console' ? 'selected' : '' }}>أجهزة كونسول</option>
                         </select>
                     </div>
                 </div>

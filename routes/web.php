@@ -2,13 +2,17 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 // Landing page to select login type
-Route::get('/', function () {
+Route::get('/login-select', function () {
     return view('auth.select');
-})->name('welcome');
+})->name('login.select');
+
+// Public Routes (Browsing)
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Auth routes for users
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -22,21 +26,22 @@ Route::post('/admin/login', [AuthController::class, 'adminLogin']);
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+Route::get('/products/{product}', [ProductController::class, 'show'])
+    ->name('products.show')
+    ->where('product', '[0-9]+');
+
 // Protected Routes
 Route::middleware('auth')->group(function () {
     
-    // Home page (now protected)
-    Route::get('/home', function () {
-        return view('home');
-    })->name('home');
-
-    // Products (Protected browsing)
-    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-
     // Cart
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
     Route::delete('/cart/remove/{cartItem}', [CartController::class, 'remove'])->name('cart.remove');
+    
+    // Checkout & Orders
+    Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout');
+    Route::get('/checkout/success/{order}', [CartController::class, 'success'])->name('checkout.success');
     
     // Admin Routes
     Route::middleware([App\Http\Middleware\AdminMiddleware::class])->group(function () {

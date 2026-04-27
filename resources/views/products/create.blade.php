@@ -26,14 +26,21 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-4 mb-3">
                         <label class="form-label text-white-50">السعر ($)</label>
                         <input type="number" step="0.01" name="price" class="form-control" required value="{{ old('price') }}">
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label text-white-50">النوع</label>
-                        <input type="text" class="form-control bg-secondary text-white" disabled value="{{ isset($type) && $type == 'pc' ? 'حاسوب' : 'لعبة' }}">
-                        <input type="hidden" name="type" value="{{ $type ?? 'game' }}">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label text-white-50">الكمية المتوفرة</label>
+                        <input type="number" min="0" name="quantity" class="form-control" required value="{{ old('quantity', 1) }}">
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label text-white-50">القسم (النوع)</label>
+                        <select name="type" class="form-select text-white" style="background: rgba(255, 255, 255, 0.05);" required>
+                            <option value="game" class="text-dark" {{ (isset($type) && $type == 'game') ? 'selected' : '' }}>ألعاب فيديو</option>
+                            <option value="pc" class="text-dark" {{ (isset($type) && $type == 'pc') ? 'selected' : '' }}>حاسبات وقطع PC</option>
+                            <option value="console" class="text-dark">أجهزة كونسول</option>
+                        </select>
                     </div>
                 </div>
 

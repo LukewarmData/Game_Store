@@ -79,9 +79,18 @@
                 <span class="fs-5">الإجمالي الكلي</span>
                 <span class="fs-4 fw-bold" style="color: var(--accent-pink);">${{ number_format($total, 2) }}</span>
             </div>
-            <button class="btn btn-custom w-100 btn-lg" {{ $items->count() == 0 ? 'disabled' : '' }}>
-                إتمام الطلب <i class="fa-solid fa-credit-card ms-2"></i>
-            </button>
+            @if($items->count() > 0)
+            <form action="{{ route('checkout') }}" method="POST" onsubmit="return confirm('هل أنت متأكد أنك تريد إتمام عملية الشراء لجميع هذه المنتجات؟ \nسيتم خصمها من المخزن فوراً.');">
+                @csrf
+                <button type="submit" class="btn btn-custom w-100 btn-lg">
+                    إتمام الطلب <i class="fa-solid fa-credit-card ms-2"></i>
+                </button>
+            </form>
+            @else
+                <button class="btn btn-custom w-100 btn-lg" disabled>
+                    إتمام الطلب <i class="fa-solid fa-credit-card ms-2"></i>
+                </button>
+            @endif
         </div>
     </div>
 </div>

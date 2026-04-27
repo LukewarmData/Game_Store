@@ -16,6 +16,7 @@
 </head>
 <body>
 
+
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container">
@@ -30,34 +31,25 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('products.index') }}">كل المنتجات</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('products.index', ['type' => 'game']) }}">الألعاب</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('products.index', ['type' => 'pc']) }}">الحواسيب</a>
-                    </li>
                 </ul>
                 
                 <ul class="navbar-nav ms-auto align-items-center">
                     @auth
                         @if(Auth::user()->is_admin)
-                            <li class="nav-item me-2">
-                                <a href="{{ route('products.create', ['type' => 'game']) }}" class="btn btn-sm btn-outline-custom">
-                                    <i class="fa-solid fa-plus"></i> إضافة لعبة
-                                </a>
-                            </li>
                             <li class="nav-item me-3">
-                                <a href="{{ route('products.create', ['type' => 'pc']) }}" class="btn btn-sm btn-outline-custom" style="border-color: var(--accent-pink); color: var(--accent-pink);">
-                                    <i class="fa-solid fa-plus"></i> إضافة حاسبة
+                                <a href="{{ route('products.create') }}" class="btn btn-sm btn-outline-custom" style="border-color: var(--accent-pink); color: var(--accent-pink);">
+                                    <i class="fa-solid fa-plus"></i> إضافة منتج
                                 </a>
                             </li>
                         @endif
+                        @if(!Auth::user()->is_admin)
                         <li class="nav-item me-3">
                             <a href="{{ route('cart.index') }}" class="nav-link position-relative">
                                 <i class="fa-solid fa-cart-shopping fs-5"></i>
                                 <!-- Custom logic to count items could go here -->
                             </a>
                         </li>
+                        @endif
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                                 <i class="fa-solid fa-user-circle"></i> {{ Auth::user()->name }}
@@ -73,7 +65,7 @@
                         </li>
                     @else
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">تسجيل الدخول</a>
+                            <a class="nav-link" href="{{ route('login.select') }}">تسجيل الدخول</a>
                         </li>
                         <li class="nav-item ms-2">
                             <a class="btn btn-custom" href="{{ route('register') }}">إنشاء حساب</a>
@@ -83,6 +75,21 @@
             </div>
         </div>
     </nav>
+
+    <!-- Categories Sub-Navbar -->
+    <div class="categories-bar d-none d-md-block glass-panel-light py-2 mb-3">
+        <div class="container d-flex justify-content-center gap-4">
+            <a href="{{ route('products.index', ['type' => 'game']) }}" class="text-decoration-none text-white small category-link">
+                <i class="fa-solid fa-gamepad me-1"></i> ألعاب فيديو
+            </a>
+            <a href="{{ route('products.index', ['type' => 'pc']) }}" class="text-decoration-none text-white small category-link">
+                <i class="fa-solid fa-desktop me-1"></i> حاسبات وقطع PC
+            </a>
+            <a href="{{ route('products.index', ['type' => 'console']) }}" class="text-decoration-none text-white small category-link">
+                <i class="fa-brands fa-playstation me-1"></i> أجهزة كونسول
+            </a>
+        </div>
+    </div>
 
     <!-- Main Content -->
     <main class="container my-5 flex-grow-1 animate-fade-up">
@@ -100,14 +107,42 @@
         @yield('content')
     </main>
 
-    <!-- Footer -->
-    <footer class="text-center text-white-50">
+    <!-- Expanded Footer -->
+    <footer class="mt-auto glass-panel pt-5 pb-3 text-white-50">
         <div class="container">
-            <p class="mb-0">&copy; {{ date('Y') }} GameStore. جميع الحقوق محفوظة.</p>
-            <div class="mt-2">
-                <a href="#" class="text-white-50 me-2 fs-5"><i class="fa-brands fa-discord"></i></a>
-                <a href="#" class="text-white-50 me-2 fs-5"><i class="fa-brands fa-twitter"></i></a>
-                <a href="#" class="text-white-50 fs-5"><i class="fa-brands fa-instagram"></i></a>
+            <div class="row mb-4">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5 class="text-white mb-3 fw-bold"><i class="fa-solid fa-gamepad me-2" style="color: var(--accent-pink);"></i> GameStore</h5>
+                    <p class="small">الوجهة الأولى للاعبين في العراق. نوفر أحدث الألعاب، وأقوى تجميعات الحواسيب، والإكسسوارات بأسعار تنافسية.</p>
+                </div>
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5 class="text-white mb-3 fw-bold">روابط سريعة</h5>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="{{ route('home') }}" class="text-white-50 text-decoration-none hover-white">الرئيسية</a></li>
+                        <li class="mb-2"><a href="{{ route('products.index') }}" class="text-white-50 text-decoration-none hover-white">المتجر</a></li>
+                        <li class="mb-2"><a href="{{ route('cart.index') }}" class="text-white-50 text-decoration-none hover-white">سلة المشتريات</a></li>
+                        <li class="mb-2"><a href="{{ route('login.select') }}" class="text-white-50 text-decoration-none hover-white">حسابي</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="text-white mb-3 fw-bold">تواصل معنا</h5>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><i class="fa-solid fa-location-dot me-2 text-white"></i> كربلاء</li>
+                        <li class="mb-2"><i class="fa-solid fa-phone me-2 text-white"></i> 07875565480 </li>
+                        <li class="mb-2"><i class="fa-solid fa-phone me-2 text-white"></i> 07709774704 </li>
+                        <li class="mb-2"><i class="fa-solid fa-phone me-2 text-white"></i> 07875257459 </li>
+                        <li class="mb-3"><i class="fa-solid fa-envelope me-2 text-white"></i> nevergiveup@gmail.com</li>
+                    </ul>
+                    <div>
+                        <a href="#" class="text-white-50 me-3 fs-5 hover-accent"><i class="fa-brands fa-discord"></i></a>
+                        <a href="#" class="text-white-50 me-3 fs-5 hover-accent"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" class="text-white-50 fs-5 hover-accent"><i class="fa-brands fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="border-secondary">
+            <div class="text-center small mt-3">
+                &copy; {{ date('Y') }} GameStore. جميع الحقوق محفوظة. تم التطوير لدعم مجتمع اللاعبين.
             </div>
         </div>
     </footer>
