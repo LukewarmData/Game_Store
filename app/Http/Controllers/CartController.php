@@ -31,7 +31,7 @@ class CartController extends Controller
         } else {
             $cart->items()->create([
                 'product_id' => $product->id,
-                'quantity' => 1
+                'quantity' => 1.0
             ]);
         }
 
