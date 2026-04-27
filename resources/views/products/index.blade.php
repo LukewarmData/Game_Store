@@ -54,6 +54,13 @@
                                     <a href="{{ route('products.edit', $product) }}" class="btn btn-sm btn-outline-light rounded-circle" title="تعديل">
                                         <i class="fa-solid fa-pen"></i>
                                     </a>
+                                    <form action="{{ route('products.destroy', $product) }}" method="POST" class="d-inline" onsubmit="return confirm('هل أنت متأكد من حذف هذا المنتج؟');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-outline-danger rounded-circle" title="حذف">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </form>
                                 @endif
                             @endauth
                         </div>

@@ -3,10 +3,16 @@
 @section('content')
 <div class="row justify-content-center">
     <div class="col-md-5">
-        <div class="glass-panel p-5 text-center">
-            <h2 class="fw-bold mb-4">تسجيل الدخول</h2>
+        <div class="glass-panel p-5 text-center border-0" @if(isset($isAdminLogin) && $isAdminLogin) style="border: 1px solid var(--accent-purple) !important;" @endif>
+            <h2 class="fw-bold mb-4">
+                @if(isset($isAdminLogin) && $isAdminLogin)
+                    <i class="fa-solid fa-user-shield me-2" style="color: #d8b4fe;"></i> تسجيل الدخول كمسؤول
+                @else
+                    <i class="fa-solid fa-user me-2" style="color: var(--accent-pink);"></i> تسجيل الدخول كمستخدم
+                @endif
+            </h2>
             
-            <form action="{{ route('login') }}" method="POST">
+            <form action="{{ isset($isAdminLogin) && $isAdminLogin ? route('admin.login') : route('login') }}" method="POST">
                 @csrf
                 <div class="mb-3 text-start">
                     <label class="form-label text-white-50">البريد الإلكتروني</label>

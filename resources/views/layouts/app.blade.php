@@ -41,9 +41,14 @@
                 <ul class="navbar-nav ms-auto align-items-center">
                     @auth
                         @if(Auth::user()->is_admin)
+                            <li class="nav-item me-2">
+                                <a href="{{ route('products.create', ['type' => 'game']) }}" class="btn btn-sm btn-outline-custom">
+                                    <i class="fa-solid fa-plus"></i> إضافة لعبة
+                                </a>
+                            </li>
                             <li class="nav-item me-3">
-                                <a href="{{ route('products.create') }}" class="btn btn-sm btn-outline-custom">
-                                    <i class="fa-solid fa-plus"></i> إضافة منتج
+                                <a href="{{ route('products.create', ['type' => 'pc']) }}" class="btn btn-sm btn-outline-custom" style="border-color: var(--accent-pink); color: var(--accent-pink);">
+                                    <i class="fa-solid fa-plus"></i> إضافة حاسبة
                                 </a>
                             </li>
                         @endif

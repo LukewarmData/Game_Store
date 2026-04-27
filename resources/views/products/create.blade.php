@@ -5,7 +5,10 @@
     <div class="col-md-8">
         <div class="glass-panel p-4 p-md-5">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h3 class="fw-bold m-0"><i class="fa-solid fa-plus-circle me-2" style="color: var(--accent-pink);"></i> إضافة منتج جديد</h3>
+                <h3 class="fw-bold m-0">
+                    <i class="fa-solid fa-plus-circle me-2" style="color: var(--accent-pink);"></i> 
+                    {{ isset($type) && $type == 'pc' ? 'إضافة حاسبة' : 'إضافة لعبة' }}
+                </h3>
                 <a href="{{ route('products.index') }}" class="btn btn-outline-light btn-sm">العودة</a>
             </div>
 
@@ -29,10 +32,8 @@
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label text-white-50">النوع</label>
-                        <select name="type" class="form-select" required>
-                            <option value="game" {{ old('type') == 'game' ? 'selected' : '' }}>لعبة</option>
-                            <option value="pc" {{ old('type') == 'pc' ? 'selected' : '' }}>حاسوب</option>
-                        </select>
+                        <input type="text" class="form-control bg-secondary text-white" disabled value="{{ isset($type) && $type == 'pc' ? 'حاسوب' : 'لعبة' }}">
+                        <input type="hidden" name="type" value="{{ $type ?? 'game' }}">
                     </div>
                 </div>
 

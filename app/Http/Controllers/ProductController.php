@@ -26,9 +26,10 @@ class ProductController extends Controller
         return view('products.index', compact('products'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        return view('products.create');
+        $type = $request->query('type', 'game'); // default to game if not specified
+        return view('products.create', compact('type'));
     }
 
     public function store(Request $request)

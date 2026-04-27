@@ -9,9 +9,10 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    // User Login
     public function showLoginForm()
     {
-        return view('auth.login');
+        return view('auth.login', ['isAdminLogin' => false]);
     }
 
     public function login(Request $request)
@@ -22,15 +23,48 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
+            // Check if user is trying to login via user portal but is actually an admin
+            // We can optionally block this, but let's just let them in as admin anyway, or redirect to home
             $request->session()->regenerate();
-            return redirect()->intended('/');
+            return redirect()->intended('/home');
         }
 
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'email' => 'البيانات المدخلة غير صحيحة.',
         ])->onlyInput('email');
     }
 
+    // Admin Login
+    public function showAdminLoginForm()
+    {
+        return view('auth.login', ['isAdminLogin' => true]);
+    }
+
+    public function adminLogin(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+
+        if (Auth::attempt($credentials)) {
+            if (Auth::user()->is_admin) {
+                $request->session()->regenerate();
+                return redirect()->intended('/home');
+            } else {
+                Auth::logout();
+                return back()->withErrors([
+                    'email' => 'هذا الحساب لا يمتلك صلاحيات المسؤول.',
+                ])->onlyInput('email');
+            }
+        }
+
+        return back()->withErrors([
+            'email' => 'البيانات المدخلة غير صحيحة.',
+        ])->onlyInput('email');
+    }
+
+    // Register
     public function showRegisterForm()
     {
         return view('auth.register');
@@ -53,9 +87,10 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect('/');
+        return redirect('/home');
     }
 
+    // Logout
     public function logout(Request $request)
     {
         Auth::logout();
