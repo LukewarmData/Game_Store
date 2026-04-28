@@ -138,7 +138,7 @@ class ProductSeeder extends Seeder
                 'quantity' => 120,
                 'source_url' => 'https://steamcdn-a.akamaihd.net/steam/apps/1938090/library_600x900.jpg',
             ],
-            // الكونسول (الجيل السابق ومحمول)
+            // الكونسول (الجيل السابق وممول)
             [
                 'title' => 'PlayStation 4 Pro 1TB',
                 'description' => 'جهاز الجيل السابق القوي مع دعم رسوميات 4K وتشكيلة ضخمة من الألعاب الحصرية الكلاسيكية.',
