@@ -32,7 +32,7 @@
             <div class="card h-100 product-card glass-panel text-white border-0">
                 @if($product->image_url)
                     <a href="{{ route('products.show', $product) }}">
-                        <img src="{{ asset($product->image_url) }}" class="card-img-top" alt="{{ $product->title }}">
+                        <img src="{{ Str::startsWith($product->image_url, 'http') ? $product->image_url : asset($product->image_url) }}" class="card-img-top" alt="{{ $product->title }}">
                     </a>
                 @else
                     <a href="{{ route('products.show', $product) }}" class="text-decoration-none">

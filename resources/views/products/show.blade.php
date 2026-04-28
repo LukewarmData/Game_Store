@@ -16,7 +16,7 @@
         <div class="col-md-5">
             <div class="glass-panel p-2 position-relative h-100 d-flex align-items-center justify-content-center">
                 @if($product->image_url)
-                    <img src="{{ asset($product->image_url) }}" alt="{{ $product->title }}" class="img-fluid rounded" style="max-height: 500px; object-fit: contain;">
+                    <img src="{{ Str::startsWith($product->image_url, 'http') ? $product->image_url : asset($product->image_url) }}" alt="{{ $product->title }}" class="img-fluid rounded" style="max-height: 500px; object-fit: contain;">
                 @else
                     <div class="bg-dark rounded d-flex flex-column align-items-center justify-content-center w-100" style="height: 400px;">
                         <i class="fa-solid {{ $product->type == 'pc' ? 'fa-desktop' : 'fa-gamepad' }} fa-6x text-muted mb-3"></i>
@@ -33,8 +33,11 @@
                 <div class="d-flex justify-content-between align-items-start mb-2">
                     <div>
                         <h1 class="fw-bold mb-1" style="text-shadow: 0 0 10px var(--accent-purple);">{{ $product->title }}</h1>
-                        <span class="badge {{ $product->type == 'pc' ? 'bg-primary' : 'bg-danger' }} mb-3">
-                            {{ $product->type == 'pc' ? 'حاسوب تجميع' : 'لعبة فيديو' }}
+                        <span class="badge {{ $product->type == 'pc' ? 'bg-primary' : ($product->type == 'console' ? 'bg-success' : 'bg-danger') }} mb-3">
+                            @if($product->type == 'game') ألعاب فيديو
+                            @elseif($product->type == 'pc') حاسبات وقطع PC
+                            @elseif($product->type == 'console') أجهزة كونسول
+                            @endif
                         </span>
                     </div>
                 </div>
@@ -71,8 +74,22 @@
                         </div>
                     @endif
                 @else
-                    <div class="alert alert-warning text-center fw-bold py-3 mt-auto mb-0" style="background: rgba(255,193,7,0.1); border-color: #ffc107; color: #ffc107;">
-                        <i class="fa-solid fa-triangle-exclamation me-2"></i> حساب المسؤول لا يمتلك صلاحية الشراء وإضافة المنتجات للسلة.
+                    <div class="mt-auto">
+                        <div class="alert alert-warning text-center fw-bold py-2 mb-3" style="background: rgba(255,193,7,0.1); border-color: #ffc107; color: #ffc107;">
+                            <i class="fa-solid fa-triangle-exclamation me-2"></i> حساب المسؤول (لإدارة المنتجات)
+                        </div>
+                        <div class="d-flex gap-2">
+                            <a href="{{ route('products.edit', $product) }}" class="btn btn-outline-light flex-grow-1 py-2 fs-5">
+                                <i class="fa-solid fa-pen-to-square me-2"></i> تعديل / زيادة الكمية
+                            </a>
+                            <form action="{{ route('products.destroy', $product) }}" method="POST" onsubmit="return confirm('هل أنت متأكد من حذف هذا المنتج نهائياً؟');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-outline-danger py-2 px-4 fs-5" title="حذف المنتج">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 @endif
             </div>

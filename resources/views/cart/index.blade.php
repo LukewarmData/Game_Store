@@ -27,7 +27,7 @@
                                     <td>
                                         <div class="d-flex align-items-center">
                                             @if($item->product->image_url)
-                                                <img src="{{ asset($item->product->image_url) }}" alt="" style="width: 50px; height: 50px; object-fit: cover;" class="rounded me-3">
+                                                <img src="{{ Str::startsWith($item->product->image_url, 'http') ? $item->product->image_url : asset($item->product->image_url) }}" alt="" style="width: 50px; height: 50px; object-fit: cover;" class="rounded me-3">
                                             @else
                                                 <div class="bg-secondary rounded me-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
                                                     <i class="fa-solid fa-gamepad"></i>
