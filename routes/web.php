@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AiController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
@@ -44,6 +45,9 @@ Route::middleware('auth')->group(function () {
     // روابط الدفع والطلبات (Checkout)
     Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout');
     Route::get('/checkout/success/{order}', [CartController::class, 'success'])->name('checkout.success');
+
+    // روابط مساعد الذكاء الاصطناعي NGU (متاح للمستخدمين والأدمن)
+    Route::post('/ai/chat', [AiController::class, 'chat'])->name('ai.chat');
     
     // روابط لوحة التحكم (خاصة بالأدمن فقط)
     Route::middleware([App\Http\Middleware\AdminMiddleware::class])->group(function () {
