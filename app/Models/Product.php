@@ -9,12 +9,13 @@ class Product extends Model
 {
     use HasFactory;
 
+    // المودل الخاص بالمنتج (Product) - يمثل جدول المنتجات في قاعدة البيانات
     protected $fillable = [
-        'title',
-        'description',
-        'price',
-        'type',
-        'quantity',
-        'image_url',
+        'title',       // عنوان المنتج أو اسم اللعبة
+        'description', // وصف المنتج
+        'price',       // سعر المنتج
+        'type',        // نوع المنتج (لعبة، حاسوب، كونسول)
+        'quantity',    // الكمية المتوفرة في المخزن
+        'image_url',   // رابط صورة المنتج
     ];
 }

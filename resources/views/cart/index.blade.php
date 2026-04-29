@@ -6,8 +6,10 @@
         <div class="glass-panel p-4">
             <h3 class="fw-bold mb-4"><i class="fa-solid fa-cart-shopping me-2" style="color: var(--accent-pink);"></i> سلة التسوق الخاصة بك</h3>
             
+            {{-- متغير لحساب السعر الإجمالي الكلي --}}
             @php $total = 0; @endphp
             
+            {{-- التحقق إذا كانت السلة تحتوي على منتجات --}}
             @if($items->count() > 0)
                 <div class="table-responsive">
                     <table class="table table-dark table-hover align-middle bg-transparent">
@@ -22,6 +24,7 @@
                         </thead>
                         <tbody>
                             @foreach($items as $item)
+                                {{-- جمع سعر المنتج المضروب في الكمية لإضافته للمجموع الكلي --}}
                                 @php $total += $item->product->price * $item->quantity; @endphp
                                 <tr>
                                     <td>
@@ -80,6 +83,7 @@
                 <span class="fs-4 fw-bold" style="color: var(--accent-pink);">${{ number_format($total, 2) }}</span>
             </div>
             @if($items->count() > 0)
+            {{-- نموذج إرسال الطلب النهائي (Checkout) مع رسالة تأكيد نهائية للزبون --}}
             <form action="{{ route('checkout') }}" method="POST" onsubmit="return confirm('هل أنت متأكد أنك تريد إتمام عملية الشراء لجميع هذه المنتجات؟ \nسيتم خصمها من المخزن فوراً.');">
                 @csrf
                 <button type="submit" class="btn btn-custom w-100 btn-lg">

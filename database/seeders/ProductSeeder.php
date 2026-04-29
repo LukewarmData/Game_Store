@@ -190,7 +190,7 @@ class ProductSeeder extends Seeder
             ],
         ];
 
-        // Ensure public/images directory exists
+        // التأكد من وجود مجلد الصور في المسار العام public
         $imgDir = public_path('images/products');
         if (!file_exists($imgDir)) {
             mkdir($imgDir, 0777, true);
@@ -203,15 +203,17 @@ class ProductSeeder extends Seeder
         \App\Models\Product::truncate();
         \Illuminate\Support\Facades\Schema::enableForeignKeyConstraints();
 
+        // الدوران حول قائمة المنتجات وتعريف كل منتج مع تحميل صورته
         foreach ($products as $productData) {
             $sourceUrl = $productData['source_url'];
             unset($productData['source_url']);
 
+            // توليد اسم ملف فرعي بناءً على اسم المنتج
             $slug = \Illuminate\Support\Str::slug($productData['title']);
             $filename = $slug . '.jpg';
             $localPath = $imgDir . '/' . $filename;
 
-            // Simple cURL to download locally 
+            // كود سحب الصور من النت وتخزينها محلياً في السيرفر لمنع اختفائها
             if (!file_exists($localPath)) {
                 $ch = curl_init($sourceUrl);
                 $fp = fopen($localPath, 'wb');
@@ -223,8 +225,10 @@ class ProductSeeder extends Seeder
                 fclose($fp);
             }
 
+            // ربط المنتج بالمسار المحلي للصورة التي تم تحميلها
             $productData['image_url'] = '/images/products/' . $filename;
             
+            // إنشاء سجل المنتج في قاعدة البيانات
             \App\Models\Product::create($productData);
             
             echo "Seeded: " . $productData['title'] . "\n";

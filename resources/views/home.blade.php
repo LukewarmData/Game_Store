@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.app') {{-- وراثة التنسيق العام من ملف app.blade.php --}}
 
-@section('content')
+@section('content') {{-- بداية قسم المحتوى الرئيسي --}}
 <!-- Hero Carousel -->
 <div id="heroCarousel" class="carousel slide mb-5 rounded overflow-hidden shadow-lg" data-bs-ride="carousel">
     <div class="carousel-indicators">
@@ -44,12 +44,13 @@
     </button>
 </div>
 
-<!-- Latest Games Section -->
+<!-- قسم أحدث الألعاب المضافة -->
 <div class="d-flex justify-content-between align-items-center mb-4 mt-5">
     <h3 class="fw-bold border-bottom border-secondary pb-2"><i class="fa-solid fa-gamepad me-2" style="color: var(--accent-pink);"></i> أحدث الألعاب</h3>
     <a href="{{ route('products.index', ['type' => 'game']) }}" class="text-white-50 text-decoration-none hover-white">عرض الكل <i class="fa-solid fa-angle-left"></i></a>
 </div>
 <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4 mb-5">
+    {{-- الدوران حول مصفوفة الألعاب القادمة من الـ Controller --}}
     @forelse($latestGames as $product)
         <div class="col">
             <div class="card h-100 product-card glass-panel text-white border-0 position-relative">
@@ -72,11 +73,11 @@
                     <p class="card-text text-muted small text-truncate">{{ $product->description }}</p>
                     <div class="mt-auto d-flex justify-content-between align-items-center">
                         <span class="fs-5 fw-bold" style="color: var(--accent-pink);">${{ $product->price }}</span>
-                        <!-- Cart Add Form -->
+                        <!-- نموذج إضافة المنتج للسلة (يظهر فقط للمستخدم وليس للأدمن) -->
                         @if(!Auth::check() || !Auth::user()->is_admin)
                             @if($product->quantity > 0)
                             <form action="{{ route('cart.add', $product) }}" method="POST">
-                                @csrf
+                                @csrf {{-- حماية من هجمات CSRF --}}
                                 <button type="submit" class="btn btn-sm btn-custom rounded-circle" title="إضافة للسلة">
                                     <i class="fa-solid fa-cart-plus"></i>
                                 </button>

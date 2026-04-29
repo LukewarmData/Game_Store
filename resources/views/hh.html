@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام تتبع حضور الطلبة (QR Code)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#1e3a8a',
+                            lightBlue: '#3b82f6',
+                            gold: '#fbbf24',
+                            dark: '#0f172a'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden; /* Prevent scrolling, handle via JS slider */
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+
+        /* Particle Background Canvas */
+        #canvas-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        /* Slide Container */
+        #slider-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+            transform: scale(0.95) translateY(20px);
+            overflow-y: auto; /* Allow scrolling within slide if content is tall */
+            scrollbar-width: thin;
+            scrollbar-color: #3b82f6 transparent;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1) translateY(0);
+            z-index: 10;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Highlight animation for items */
+        .slide.active .animate-item {
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        /* Staggered animation delays */
+        .slide.active .delay-100 { animation-delay: 100ms; }
+        .slide.active .delay-200 { animation-delay: 200ms; }
+        .slide.active .delay-300 { animation-delay: 300ms; }
+        .slide.active .delay-400 { animation-delay: 400ms; }
+        .slide.active .delay-500 { animation-delay: 500ms; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Progress Bar */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #fbbf24);
+            width: 0%;
+            transition: width 0.3s ease;
+            z-index: 50;
+        }
+
+        /* Custom Scrollbar for slides */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 10px; }
+
+        /* Floating Controls */
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            gap: 10px;
+            background: rgba(15, 23, 42, 0.8);
+            padding: 10px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        .controls button {
+            background: transparent;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .controls button:hover {
+            background: #3b82f6;
+            transform: scale(1.1);
+        }
+
+        .slide-number {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 100;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: rgba(255,255,255,0.5);
+        }
+        
+        .pulse-icon {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); color: #fbbf24; }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Progress Bar -->
+    <div id="progress-bar"></div>
+
+    <!-- Particle Background -->
+    <canvas id="canvas-background"></canvas>
+
+    <!-- Slide Number Indicator -->
+    <div class="slide-number">
+        <span id="current-slide-num">1</span> / <span id="total-slides-num">14</span>
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="controls">
+        <button onclick="nextSlide()" title="الشريحة التالية (السهم الأيسر)"><i class="fas fa-chevron-right"></i></button>
+        <button onclick="toggleFullscreen()" title="ملء الشاشة"><i class="fas fa-expand"></i></button>
+        <button onclick="prevSlide()" title="الشريحة السابقة (السهم الأيمن)"><i class="fas fa-chevron-left"></i></button>
+    </div>
+
+    <!-- Main Container -->
+    <div id="slider-container">
+
+        <!-- ================= Slide 1: Cover ================= -->
+        <section class="slide active">
+            <div class="w-full max-w-5xl mx-auto h-full flex flex-col items-center justify-center text-center">
+                <div class="glass-card p-10 w-full animate-item delay-100 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500 rounded-bl-full opacity-20"></div>
+                    <div class="absolute bottom-0 left-0 w-32 h-32 bg-yellow-500 rounded-tr-full opacity-20"></div>
+                    
+                    <div class="flex justify-center mb-6 space-x-8 space-x-reverse">
+                        <i class="fas fa-university text-5xl text-brand-gold mx-4"></i>
+                        <i class="fas fa-network-wired text-5xl text-brand-lightBlue mx-4"></i>
+                    </div>
+                    <h3 class="text-xl text-gray-300 mb-2">وزارة التعليم العالي والبحث العلمي</h3>
+                    <h3 class="text-xl text-gray-300 mb-6">جامعة الفرات الأوسط التقنية - المعهد التقني كربلاء<br>قسم تقنيات شبكات وبرمجيات الحاسوب</h3>
+                    
+                    <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent my-6"></div>
+
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 leading-tight">
+                        نظام تتبع حضور الطلبة <br>
+                        <span class="text-brand-lightBlue">باستخدام تقنية الاستجابة السريعة</span> <br>
+                        <span class="text-brand-gold inline-block mt-2 pulse-icon">(QR Code) الديناميكية</span>
+                    </h1>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-lg mt-10">
+                        <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg border border-gray-700">
+                            <h4 class="text-brand-gold font-bold mb-2"><i class="fas fa-user-graduate ml-2"></i>إعداد الطلبة:</h4>
+                            <p>حيدر رعد مطشر | رنا ماجد دهش</p>
+                        </div>
+                        <div class="bg-gray-800 bg-opacity-50 p-4 rounded-lg border border-gray-700">
+                            <h4 class="text-brand-lightBlue font-bold mb-2"><i class="fas fa-chalkboard-teacher ml-2"></i>بإشراف:</h4>
+                            <p>الأستاذة: م.م. جنان جادر مساعد</p>
+                            <p>الأستاذ: م.م. حسن صلاح حسن</p>
+                        </div>
+                    </div>
+                    
+                    <p class="mt-8 text-gray-400 tracking-widest">للعام الدراسي 2025 - 2026</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= Slide 2: Index ================= -->
+        <section class="slide">
+            <div class="w-full max-w-5xl mx-auto py-10 h-full flex flex-col justify-center">
+                <h2 class="text-4xl font-bold text-brand-gold mb-10 text-center animate-item delay-100">
+                    <i class="fas fa-list-ul ml-3"></i>فهرست العرض
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Section 1 -->
+                    <div class="glass-card p-6 animate-item delay-200 border-l-4 border-l-brand-lightBlue">
+                        <h3 class="text-2xl font-bold text-white mb-4"><span class="bg-brand-lightBlue text-white w-8 h-8 inline-flex items-center justify-center rounded-full ml-2">1</span> نظرة عامة على المشروع</h3>
+                        <ul class="list-disc list-inside text-gray-300 space-y-2 mr-4">
+                            <li>ملخص المشروع والهدف الأساسي.</li>
+                            <li>مشكلة البحث والثغرة الأمنية للأنظمة السابقة.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Section 2 -->
+                    <div class="glass-card p-6 animate-item delay-300 border-l-4 border-l-brand-gold">
+                        <h3 class="text-2xl font-bold text-white mb-4"><span class="bg-brand-gold text-gray-900 w-8 h-8 inline-flex items-center justify-center rounded-full ml-2">2</span> آلية عمل النظام (السيناريو الحي)</h3>
+                        <ul class="list-disc list-inside text-gray-300 space-y-2 mr-4">
+                            <li>غرفة عمليات الأستاذ والمزامنة اللحظية.</li>
+                            <li>تجربة الطالب والماسح الضوئي (Student App).</li>
+                        </ul>
+                    </div>
+
+                    <!-- Section 3 -->
+                    <div class="glass-card p-6 animate-item delay-400 border-l-4 border-l-green-500">
+                        <h3 class="text-2xl font-bold text-white mb-4"><span class="bg-green-500 text-white w-8 h-8 inline-flex items-center justify-center rounded-full ml-2">3</span> الإدارة المركزية والإضافات المتقدمة</h3>
+                        <ul class="list-disc list-inside text-gray-300 space-y-2 mr-4">
+                            <li>لوحة القيادة المركزية والأرشيف.</li>
+                            <li>نظام الإنذارات والفصل الآلي.</li>
+                            <li>نظام الصلاحيات وتفويض المقررين (RBAC).</li>
+                            <li>أتمتة التقارير وتصدير البيانات (Excel).</li>
+                        </ul>
+                    </div>
+
+                    <!-- Section 4 -->
+                    <div class="glass-card p-6 animate-item delay-500 border-l-4 border-l-red-500">
+                        <h3 class="text-2xl font-bold text-white mb-4"><span class="bg-red-500 text-white w-8 h-8 inline-flex items-center justify-center rounded-full ml-2">4</span> الجانب التقني والنتائج</h3>
+                        <ul class="list-disc list-inside text-gray-300 space-y-2 mr-4">
+                            <li>التحديات الهندسية وتحسين الأداء (Optimization).</li>
+                            <li>التطوير المستقبلي (Future Work).</li>
+                            <li>الاستنتاجات النهائية (Conclusions).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= Slide 3: Abstract & Objectives ================= -->
+        <section class="slide">
+            <div class="w-full max-w-6xl mx-auto py-10">
+                <h2 class="text-4xl font-bold text-brand-lightBlue mb-8 text-center animate-item delay-100">
+                    <i class="fas fa-project-diagram ml-3"></i>ملخص المشروع والأهداف الأساسية
+                </h2>
+                
+                <div class="glass-card p-6 mb-8 animate-item delay-200">
+                    <h3 class="text-2xl font-bold text-brand-gold mb-3">ملخص المشروع (Project Abstract):</h3>
+                    <p class="text-lg text-gray-200 leading-relaxed">
+                        نظام تقني سحابي متكامل يهدف إلى أتمتة إدارة حضور وغياب الطلبة في المؤسسات التعليمية باستخدام تقنية رمز الاستجابة السريعة (QR Code) الديناميكي. يعالج النظام الثغرات الأمنية في الأنظمة التقليدية، ويوفر بيئة تفاعلية تربط الإدارة والأساتذة والطلبة لضمان دقة البيانات وسرعة معالجتها.
+                    </p>
+                </div>
+
+                <h3 class="text-2xl font-bold text-white mb-6 animate-item delay-300 text-center">الأهداف الأساسية للمشروع:</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="glass-card p-5 animate-item delay-400 hover:-translate-y-2 transition-transform duration-300 text-center">
+                        <i class="fas fa-laptop-code text-4xl text-blue-400 mb-4"></i>
+                        <h4 class="text-xl font-bold text-white mb-2">التحول الرقمي الشامل</h4>
+                        <p class="text-gray-300 text-sm">إنهاء العمل بالسجلات الورقية التقليدية وتقليل الأخطاء البشرية في توثيق الغيابات.</p>
+                    </div>
+                    <div class="glass-card p-5 animate-item delay-500 hover:-translate-y-2 transition-transform duration-300 text-center">
+                        <i class="fas fa-hourglass-half text-4xl text-yellow-400 mb-4"></i>
+                        <h4 class="text-xl font-bold text-white mb-2">استثمار الوقت الأكاديمي</h4>
+                        <p class="text-gray-300 text-sm">استعادة ما يقارب 15 دقيقة مهدورة من وقت كل محاضرة، مما يوفر حوالي 8 ساعات دراسية في الفصل الواحد.</p>
+                    </div>
+                    <div class="glass-card p-5 animate-item delay-500 hover:-translate-y-2 transition-transform duration-300 text-center">
+                        <i class="fas fa-shield-alt text-4xl text-green-400 mb-4"></i>
+                        <h4 class="text-xl font-bold text-white mb-2">الابتكار والأمان</h4>
+                        <p class="text-gray-300 text-sm">القضاء التام على محاولات التلاعب عبر ابتكار "باركود ديناميكي" يتغير برمجياً كل دقيقة لمنع مشاركة الرمز خارج القاعة.</p>
+                    </div>
+                    <div class="glass-card p-5 animate-item delay-500 hover:-translate-y-2 transition-transform duration-300 text-center md:col-span-1 lg:col-start-2">
+                        <i class="fas fa-piggy-bank text-4xl text-pink-400 mb-4"></i>
+                        <h4 class="text-xl font-bold text-white mb-2">الكفاءة الاقتصادية</h4>
+                        <p class="text-gray-300 text-sm">توفير حل برمجِي ذكي بتكلفة صفرية، مستغنياً عن أجهزة البصمة المكلفة واحتياجات صيانتها المستمرة.</p>
+                    </div>
+                    <div class="glass-card p-5 animate-item delay-500 hover:-translate-y-2 transition-transform duration-300 text-center md:col-span-1 lg:col-start-3">
+                        <i class="fas fa-chart-pie text-4xl text-purple-400 mb-4"></i>
+                        <h4 class="text-xl font-bold text-white mb-2">الأتمتة والتحليل</h4>
+                        <p class="text-gray-300 text-sm">سرعة استخراج التقارير الإحصائية (Excel) وتفعيل نظام الإنذارات الآلي للطلبة المتجاوزين لنسب الغياب المسموح بها.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= Slide 4: Problem & Security Flaw ================= -->
+        <section class="slide">
+            <div class="w-full max-w-5xl mx-auto h-full flex flex-col justify-center">
+                <h2 class="text-4xl font-bold text-red-500 mb-10 text-center animate-item delay-100">
+                    <i class="fas fa-bug ml-3"></i>مشكلة البحث والثغرة الأمنية
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                    <div class="glass-card p-8 animate-item delay-200 border-t-4 border-red-500 flex flex-col items-center text-center">
+                        <i class="fas fa-fingerprint text-6xl text-gray-400 mb-4"></i>
+                        <h3 class="text-2xl font-bold text-white mb-4">تحديات الأنظمة الحالية</h3>
+                        <p class="text-xl text-gray-300">أجهزة البصمة تخلق زحاماً وتأخيراً إدارياً مستمراً.</p>
+                    </div>
+                    
+                    <div class="glass-card p-8 animate-item delay-300 border-t-4 border-orange-500 flex flex-col items-center text-center">
+                        <i class="fas fa-qrcode text-6xl text-gray-400 mb-4 relative">
+                            <i class="fas fa-ban absolute text-red-500 text-7xl -top-2 -right-2 opacity-70"></i>
+                        </i>
+                        <h3 class="text-2xl font-bold text-white mb-4">نقطة ضعف الـ (Static QR)</h3>
+                        <p class="text-xl text-gray-300">ثغرة "الحضور الوهمي"؛ حيث يمكن للطالب تصوير الرمز وإرساله لزملائه خارج أسوار الجامعة.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card p-8 animate-item delay-400 border-r-4 border-brand-gold bg-gradient-to-l from-gray-800 to-transparent">
+                    <div class="flex items-start">
+                        <i class="fas fa-lightbulb text-5xl text-brand-gold ml-6 mt-2 pulse-icon"></i>
+                        <div>
+                            <h3 class="text-3xl font-bold text-brand-gold mb-3">الابتكار الهندسي (الحل):</h3>
+                            <p class="text-2xl text-white leading-relaxed">
+                                معالجة هذه الثغرات بابتكار <span class="text-green-400 font-bold">"الباركود الديناميكي"</span> الذي يُبطل صلاحية الرمز المُصور فوراً.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= Slide 5: Live Scenario (Professor Start) ================= -->
+        <section class="slide">
+            <div class="w-full max-w-5xl mx-auto h-full flex flex-col justify-center">
+                <h2 class="text-4xl font-bold text-brand-lightBlue mb-10 text-center animate-item delay-100">
+                    <i class="fas fa-chalkboard-teacher ml-3"></i>السيناريو الحي: غرفة عمليات الأستاذ
+                </h2>
+                
+                <div class="glass-card p-8 animate-item delay-200 mb-6">
+                    <p class="text-xl text-gray-300 mb-6 font-bold">تبدأ دورة حياة النظام من الأستاذ داخل القاعة:</p>
+                    
+                    <ul class="space-y-6 text-xl text-white">
+                        <li class="flex items-center animate-item delay-300">
+                            <span class="bg-blue-600 text-white w-10 h-10 flex items-center justify-center rounded-full ml-4 shrink-0">1</span>
+                            يدخل الأستاذ إلى لوحته الخاصة، ويختار (المادة) و(المرحلة الدراسية).
+                        </li>
+                        <li class="flex items-center animate-item delay-400">
+                            <span class="bg-blue-600 text-white w-10 h-10 flex items-center justify-center rounded-full ml-4 shrink-0">2</span>
+                            يضغط على زر "بدء المحاضرة".
+                        </li>
+                        <li class="flex items-center animate-item delay-500">
+                            <span class="bg-blue-600 text-white w-10 h-10 flex items-center justify-center rounded-full ml-4 shrink-0">3</span>
+                            يقوم النظام بتوليد (جلسة مؤمنة) وعرض باركود عملاق على شاشة العرض (Data Show).
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="glass-card p-6 border-2 border-red-500 bg-red-900 bg-opacity-20 animate-item delay-500">
+                    <div class="flex items-center">
+                        <i class="fas fa-user-secret text-5xl text-red-400 ml-6"></i>
+                        <div>
+                            <h3 class="text-2xl font-bold text-red-400 mb-2">السر الأمني:</h3>
+                            <p class="text-lg text-gray-200">
+                                هذا الباركود يتغير آلياً كل <span class="font-bold text-white bg-red-600 px-2 rounded">60 ثانية</span>، ويحمل (Token) مشفر. إذا أرسله الطالب لصديقه، سيصل متأخراً وتظهر رسالة <span class="font-bold text-red-400">(الرمز منتهي الصلاحية - Expired)</span>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= Slide 6: Live Scenario (Sync & Control) ================= -->
+        <section class="slide">
+            <div class="w-full max-w-6xl mx-auto h-full flex flex-col justify-center">
+                <h2 class="text-4xl font-bold text-brand-gold mb-8 text-center animate-item delay-100">
+                    <i class="fas fa-sync-alt ml-3"></i>السيناريو الحي: المزامنة والتحكم المزدوج للأستاذ
+                </h2>
+                
+                <p class="text-2xl text-center text-white mb-10 animate-item delay-200">
+                    كيف يعرف الأستاذ من حضر؟ النظام يوفر طريقتين للتحكم:
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Method 1 -->
+                    <div class="glass-card p-8 animate-item delay-300 relative overflow-hidden group hover:border-green-500 transition-colors">
+                        <div class="absolute top-0 right-0 w-2 bg-green-500 h-full"></div>
+                        <i class="fas fa-wifi text-4xl text-green-400 mb-4"></i>
+                        <h3 class="text-2xl font-bold text-green-400 mb-4">الطريقة الأولى (المزامنة الآلية Live Sync)</h3>
+                        <p class="text-lg text-gray-300 leading-relaxed">
+                            جدول على يمين شاشة الأستاذ يتحدث كل <span class="text-white font-bold bg-green-600 px-2 rounded">3 ثوانٍ</span> بتقنية (AJAX)، ويُلوّن اسم الطالب الذي مسح الرمز باللون الأخضر لحظياً.
+                        </p>
+                    </div>
+
+                    <!-- Method 2 -->
+                    <div class="glass-card p-8 animate-item delay-400 relative overflow-hidden group hover:border-blue-500 transition-colors">
+                        <div class="absolute top-0 right-0 w-2 bg-blue-500 h-full"></div>
+                        <i class="fas fa-user-edit text-4xl text-blue-400 mb-4"></i>
+                        <h3 class="text-2xl font-bold text-blue-400 mb-4">الطريقة الثانية (التعديل اليدوي المستقر)</h3>
+                        <p class="text-lg text-gray-300 leading-relaxed">
+                            الأستاذ هو سيد القاعة. إذا غيّر حالة طالب يدوياً إلى (غائب)، يمتلك النظام <span class="text-brand-gold font-bold">"ذاكرة مؤقتة"</span> تتجاهل أي تحديث أوتوماتيكي لهذا الطالب تحديداً، لضمان عدم تضارب التحديث الآلي مع قرار الأستاذ اليدوي.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= Slide 7: Live Scenario (Student App) ================= -->
+        <section class="slide">
+            <div class="w-full max-w-5xl mx-auto h-full flex flex-col justify-center">
+                <h2 class="text-4xl font-bold text-green-400 mb-8 text-center animate-item delay-100">
+                    <i class="fas fa-mobile-alt ml-3"></i>السيناريو الحي: تجربة الطالب (Student App)
+                </h2>
+                
+                <p class="text-2xl text-center text-white mb-10 animate-item delay-200">
+                    لا يحتاج الطالب لكتابة أي شيء، العملية تستغرق <span class="text-brand-gold font-bold">ثانية واحدة</span>:
+                </p>
+
+                <div class="space-y-6">
+                    <div class="glass-card p-6 animate-item delay-300 flex items-center">
+                        <div class="bg-gray-800 p-4 rounded-full ml-6 border border-gray-600">
+                            <i class="fas fa-moon text-3xl text-yellow-300"></i>
+                        </div>
+                        <div>
+                            <p class="text-xl text-white">يفتح الطالب تطبيقه (المصمم بالوضع الليلي Dark Mode لحفظ البطارية وراحة العين).</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-6 animate-item delay-400 flex items-center">
+                        <div class="bg-gray-800 p-4 rounded-full ml-6 border border-gray-600">
+                            <i class="fas fa-camera text-3xl text-blue-400"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-bold text-blue-400 mb-1">إجبار النظام:</h4>
+                            <p class="text-xl text-white">النظام يجبر المتصفح على فتح (الكاميرا الخلفية) فوراً دون طلبات إضافية.</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-6 animate-item delay-500 flex items-center">
+                        <div class="bg-gray-800 p-4 rounded-full ml-6 border border-gray-600">
+                            <i class="fas fa-expand text-3xl text-gray-400"></i>
+                        </div>
+                        <div>
+                            <p class="text-xl text-white">يوجه الطالب الهاتف نحو شاشة الأستاذ.</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-6 animate-item delay-500 flex items-center border border-green-500 bg-green-900 bg-opacity-20">
+                        <div class="bg-gray-800 p-4 rounded-full ml-6 border border-green-500">
+                            <i class="fas fa-check-circle text-3xl text-green-500"></i>
+                        </div>
+                        <div>
+                            <p class="text-xl text-white leading-relaxed">
+                                بمجرد الالتقاط، تقوم برمجياتنا بـ <span class="text-brand-gold font-bold">(تجميد الكاميرا)</span> لاقتطاع الرمز وإرساله للسيرفر لمنع التكرار (Infinite Loop)، وتظهر رسالة <span class="text-green-400 font-bold">"تم تسجيل حضورك بنجاح"</span>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= Slide 8: Central Admin & Archive ================= -->
+        <section class="slide">
+            <div class="w-full max-w-6xl mx-auto h-full flex flex-col justify-center">
+                <h2 class="text-4xl font-bold text-white mb-10 text-center animate-item delay-100">
+                    <i class="fas fa-tachometer-alt text-brand-lightBlue ml-3"></i>لوحة القيادة المركزية والأرشيف (Admin Dashboard)
+                </h2>
+                
+                <p class="text-2xl text-center text-gray-300 mb-8 animate-item delay-200">
+                    كل ما يحدث في القاعات يصب في شاشة المدير:
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="glass-card p-6 animate-item delay-300 text-center">
+                        <i class="fas fa-chart-line text-5xl text-blue-400 mb-4"></i>
+                        <h3 class="text-xl font-bold text-white mb-3">إحصائيات حية</h3>
+                        <p class="text-gray-300">عدادات رقمية تعرض (إجمالي الطلاب، الأساتذة، ومحاضرات اليوم).</p>
+                    </div>
+
+                    <div class="glass-card p-6 animate-item delay-400 text-center border-t-4 border-red-500">
+                        <i class="fas fa-lock text-5xl text-red-400 mb-4"></i>
+                        <h3 class="text-xl font-bold text-white mb-3">التحكم الأمني</h3>
+                        <p class="text-gray-300">مفتاح لـ (قفل/فتح) التسجيل الخارجي لمنع إنشاء حسابات عشوائية بعد اكتمال المقاعد.</p>
+                    </div>
+
+                    <div class="glass-card p-6 animate-item delay-500 text-center border-t-4 border-yellow-500 bg-yellow-900 bg-opacity-10">
+                        <i class="fas fa-archive text-5xl text-yellow-400 mb-4"></i>
+                        <h3 class="text-xl font-bold text-brand-gold mb-3">أرشيف المدرسين (Soft Delete)</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">
+                            إضافة استراتيجية. عند استقالة أستاذ، لا نقوم بحذفه نهائياً بل ننقله لـ (الأرشيف). هذا يحمي جداول غيابات الطلاب المرتبطة به في الماضي من التلف أو الحذف.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= Slide 9: Automated Warning System ================= -->
+        <section class="slide">
+            <div class="w-full max-w-5xl mx-auto h-full flex flex-col justify-center">
+                <h2 class="text-4xl font-bold text-red-400 mb-6 text-center animate-item delay-100">
+                    <i class="fas fa-exclamation-triangle ml-3"></i>نظام الإنذارات الآلي
+                </h2>
+                <h3 class="text-2xl text-brand-gold mb-10 text-center animate-item delay-200">
+                    الإضافات الهندسية: نظام الإنذارات والفصل الآلي
+                </h3>
+                
+                <div class="glass-card p-8 animate-item delay-300 relative overflow-hidden">
+                    <i class="fas fa-brain absolute -left-10 -bottom-10 text-9xl text-white opacity-5"></i>
+                    
+                    <p class="text-2xl font-bold text-white mb-6 border-b border-gray-600 pb-4">
+                        النظام ليس لتسجيل الأسماء فقط، بل هو "مقرر ذكي":
+                    </p>
+
+                    <ul class="space-y-6 text-xl text-gray-200">
+                        <li class="flex items-start">
+                            <i class="fas fa-cogs text-brand-lightBlue mt-1 ml-4 text-2xl"></i>
+                            <p>تم دمج (Logic) يراقب غيابات كل طالب في كل مادة بشكل تراكمي.</p>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-user-minus text-orange-400 mt-1 ml-4 text-2xl"></i>
+                            <p>إذا تغيب الطالب ووصل للحد الأقصى، يتم سحبه آلياً من القوائم العادية ووضعه في <span class="text-red-400 font-bold">"مصفوفة الإنذارات الحمراء"</span>.</p>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-bell text-yellow-400 mt-1 ml-4 text-2xl pulse-icon"></i>
+                            <p>تصدر اللوحة تنبيهاً للإدارة (تجاوز الإنذار الأولي / يستوجب الفصل)، مما يلغي المراجعة اليدوية المتعبة لملفات الطلبة.</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= Slide 10: RBAC ================= -->
+        <section class="slide">
+            <div class="w-full max-w-5xl mx-auto h-full flex flex-col justify-center">
+                <h2 class="text-4xl font-bold text-purple-400 mb-8 text-center animate-item delay-100">
+                    <i class="fas fa-users-cog ml-3"></i>نظام الصلاحيات وتفويض المقررين (RBAC)
+                </h2>
+                
+                <p class="text-xl text-center text-white mb-8 animate-item delay-200">
+                    لتخفيف العبء عن مدير النظام (Admin)، أنشأنا رتبة فرعية (مساعد أو مقرر قسم):
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="glass-card p-6 animate-item delay-300 text-center hover:bg-purple-900 hover:bg-opacity-30 transition">
+                        <div class="w-16 h-16 rounded-full bg-purple-600 flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-tasks text-3xl text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-brand-gold mb-3">التفويض الدقيق</h3>
+                        <p class="text-gray-300">يمكن للمدير إعطاء المساعد حساباً لغرض (للاطلاع فقط) أو لمهام محددة (مثل إدخال الجداول أو الطلاب).</p>
+                    </div>
+
+                    <div class="glass-card p-6 animate-item delay-400 text-center hover:bg-purple-900 hover:bg-opacity-30 transition">
+                        <div class="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-mask text-3xl text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-brand-gold mb-3">حجب البيانات (Data Masking)</h3>
+                        <p class="text-gray-300">المساعد لا يمكنه رؤية الأرقام السرية أو الإيميلات الشخصية للأساتذة (تظهر مشفرة) حمايةً للخصوصية.</p>
+                    </div>
+
+                    <div class="glass-card p-6 animate-item delay-500 text-center hover:bg-purple-900 hover:bg-opacity-30 transition">
+                        <div class="w-16 h-16 rounded-full bg-red-600 flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-door-closed text-3xl text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-brand-gold mb-3">عزل أكاديمي</h3>
+                        <p class="text-gray-300">يُمنع المساعد من الدخول لشاشات الأساتذة أو التلاعب بالحضور المباشر داخل القاعات.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= Slide 11: Excel Automation ================= -->
+        <section class="slide">
+            <div class="w-full max-w-5xl mx-auto h-full flex flex-col justify-center">
+                <h2 class="text-4xl font-bold text-green-500 mb-10 text-center animate-item delay-100">
+                    <i class="fas fa-file-excel ml-3"></i>أتمتة التقارير وتصدير (Excel)
+                </h2>
+                
+                <div class="glass-card p-8 animate-item delay-200 flex flex-col md:flex-row items-center gap-8">
+                    <div class="flex-1 text-xl text-white space-y-6">
+                        <p class="bg-gray-800 p-4 rounded-lg border-r-4 border-gray-500">
+                            نهاية الكورس، لا حاجة للتفريغ اليدوي المعرض للأخطاء.
+                        </p>
+                        <p class="bg-blue-900 bg-opacity-40 p-4 rounded-lg border-r-4 border-blue-500">
+                            يوفر النظام تقارير مفلترة (حسب المادة، حسب المرحلة، حسب التاريخ).
+                        </p>
+                        <p class="bg-green-900 bg-opacity-40 p-4 rounded-lg border-r-4 border-green-500 font-bold">
+                            بضغطة زر، يتم تصدير مصفوفة الغياب بالكامل إلى ملف (Microsoft Excel).
+                        </p>
+                        <p class="bg-yellow-900 bg-opacity-40 p-4 rounded-lg border-r-4 border-yellow-500">
+                            تم دمج كود تشفير <span class="font-mono text-brand-gold">(UTF-8 BOM)</span> لضمان ظهور أسماء الطلبة باللغة العربية داخل الإكسل بشكل سليم دون أي حروف مشوهة.
+                        </p>
+                    </div>
+                    
+                    <div class="w-full md:w-1/3 flex justify-center animate-item delay-400">
+                        <i class="fas fa-file-excel text-[150px] text-green-600 drop-shadow-2xl hover:scale-110 transition-transform cursor-pointer"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= Slide 12: Engineering Challenges ================= -->
+        <section class="slide">
+            <div class="w-full max-w-6xl mx-auto py-10">
+                <h2 class="text-4xl font-bold text-orange-400 mb-8 text-center animate-item delay-100">
+                    <i class="fas fa-tools ml-3"></i>التحديات الهندسية وتحسين الأداء (Optimization)
+                </h2>
+                
+                <p class="text-xl text-center text-gray-300 mb-8 animate-item delay-200">
+                    العمل على خوادم سحابية مجانية ولّد كوارث برمجية نجحنا في حلها:
+                </p>
+
+                <div class="space-y-6">
+                    <!-- Challenge 1 -->
+                    <div class="glass-card p-6 animate-item delay-300 border-r-4 border-red-500 bg-gradient-to-l from-red-900/20 to-transparent">
+                        <h3 class="text-2xl font-bold text-white mb-2"><i class="fas fa-sync fa-spin text-red-400 ml-2"></i>دوامة التوجيه (Redirect Loop)</h3>
+                        <p class="text-gray-300 mb-2">المتصفح كان يعلق بين الصفحات.</p>
+                        <p class="text-brand-gold font-bold"><i class="fas fa-check text-green-500 ml-2"></i>الحل: استبدلنا توجيه PHP بتوجيه JavaScript مع منع تخزين الـ Cache.</p>
+                    </div>
+
+                    <!-- Challenge 2 -->
+                    <div class="glass-card p-6 animate-item delay-400 border-r-4 border-orange-500 bg-gradient-to-l from-orange-900/20 to-transparent">
+                        <h3 class="text-2xl font-bold text-white mb-2"><i class="fas fa-server text-orange-400 ml-2"></i>خطأ السيرفر (Error 500)</h3>
+                        <p class="text-gray-300 mb-2">السيرفر انهار بسبب ضغط الماسح.</p>
+                        <p class="text-brand-gold font-bold"><i class="fas fa-check text-green-500 ml-2"></i>الحل: تخفيف استعلامات قواعد البيانات وإيقاف هاردوير الكاميرا فور التقاط الرمز.</p>
+                    </div>
+
+                    <!-- Challenge 3 -->
+                    <div class="glass-card p-6 animate-item delay-500 border-r-4 border-yellow-500 bg-gradient-to-l from-yellow-900/20 to-transparent">
+                        <h3 class="text-2xl font-bold text-white mb-2"><i class="fas fa-clock text-yellow-400 ml-2"></i>خطأ توقيت غرينتش</h3>
+                        <p class="text-gray-300 mb-2">السيرفر كان يسجل الحضور بتاريخ "البارحة".</p>
+                        <p class="text-brand-gold font-bold"><i class="fas fa-check text-green-500 ml-2"></i>الحل: حقن النظام بكود يضبط التوقيت على <span class="font-mono bg-black px-1 rounded text-white">(Asia/Baghdad)</span> حصراً.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= Slide 13: Future Work ================= -->
+        <section class="slide">
+            <div class="w-full max-w-5xl mx-auto h-full flex flex-col justify-center">
+                <h2 class="text-4xl font-bold text-brand-lightBlue mb-10 text-center animate-item delay-100">
+                    <i class="fas fa-rocket ml-3"></i>التطوير المستقبلي (Future Work)
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="glass-card p-8 animate-item delay-300 text-center relative hover:-translate-y-2 transition-transform">
+                        <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center border-4 border-[#0f172a]">
+                            <i class="fas fa-lock text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-brand-gold mt-4 mb-4">تأمين السيرفر وتوسعة الاستيعاب (HTTPS & Scaling)</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">
+                            ترقية خوادم الجامعة لدعم البروتوكول الآمن (HTTPS)، وهو شرط أساسي لعمل كاميرات هواتف (iPhone / iOS) بسلاسة، مع زيادة سعة الخادم (Bandwidth) لتحمل ضغط دخول آلاف الطلبة في وقت واحد.
+                        </p>
+                    </div>
+
+                    <div class="glass-card p-8 animate-item delay-400 text-center relative hover:-translate-y-2 transition-transform">
+                        <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 bg-green-600 rounded-full flex items-center justify-center border-4 border-[#0f172a]">
+                            <i class="fas fa-map-marker-alt text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-brand-gold mt-4 mb-4">تقنية السياج الجغرافي (Geo-Fencing)</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">
+                            ربط الماسح الضوئي بإحداثيات الـ (GPS) للكلية، بحيث يُرفض تسجيل الحضور آلياً إذا كان الطالب يقف خارج النطاق الجغرافي للقاعة.
+                        </p>
+                    </div>
+
+                    <div class="glass-card p-8 animate-item delay-500 text-center relative hover:-translate-y-2 transition-transform">
+                        <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 bg-green-500 rounded-full flex items-center justify-center border-4 border-[#0f172a]">
+                            <i class="fab fa-whatsapp text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-brand-gold mt-4 mb-4">أتمتة التبليغات عبر الواتساب (WhatsApp API)</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">
+                            ربط نظام "الإنذارات" ببوابة واتساب برمجية، لإرسال إشعار فوري وآلي إلى (ولي الأمر) بمجرد تجاوز الطالب لنسبة الغياب المسموحة.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= Slide 14: Conclusions ================= -->
+        <section class="slide">
+            <div class="w-full max-w-5xl mx-auto h-full flex flex-col justify-center">
+                <h2 class="text-4xl font-bold text-white mb-8 text-center animate-item delay-100">
+                    <i class="fas fa-flag-checkered text-green-500 ml-3"></i>الاستنتاجات النهائية (Conclusions)
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                    <div class="glass-card p-5 animate-item delay-200 border-r-4 border-blue-500 flex items-center">
+                        <i class="fas fa-code text-3xl text-blue-400 ml-4"></i>
+                        <div>
+                            <h4 class="font-bold text-white text-lg">كفاءة برمجية عالية</h4>
+                            <p class="text-gray-300 text-sm">نجاح تقنيات الويب (PHP/JS/MySQL) في بناء منظومة مؤسسية مستقرة تتجاوز كفاءة الأنظمة التقليدية.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-card p-5 animate-item delay-300 border-r-4 border-green-500 flex items-center">
+                        <i class="fas fa-leaf text-3xl text-green-400 ml-4"></i>
+                        <div>
+                            <h4 class="font-bold text-white text-lg">استدامة اقتصادية (Zero-Cost)</h4>
+                            <p class="text-gray-300 text-sm">تحقيق نسبة توفير 100% من ميزانية المعدات، بالاعتماد الكلي على البنية التحتية المتاحة (هواتف الطلبة وشاشات العرض).</p>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-card p-5 animate-item delay-400 border-r-4 border-brand-gold flex items-center">
+                        <i class="fas fa-shield-check text-3xl text-brand-gold ml-4"></i>
+                        <div>
+                            <h4 class="font-bold text-white text-lg">أمان وموثوقية قطعية</h4>
+                            <p class="text-gray-300 text-sm">القضاء الجذري على ثغرات الغش والحضور الوهمي بفضل خوارزمية الباركود الديناميكي.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-card p-5 animate-item delay-500 border-r-4 border-purple-500 flex items-center">
+                        <i class="fas fa-history text-3xl text-purple-400 ml-4"></i>
+                        <div>
+                            <h4 class="font-bold text-white text-lg">استثمار الوقت الأكاديمي</h4>
+                            <p class="text-gray-300 text-sm">إنهاء الهدر الزمني الإداري، وتحويل الـ 15 دقيقة الضائعة يومياً إلى وقت تعليمي يخدم مسيرة المعهد.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card p-8 animate-item delay-500 bg-gradient-to-b from-brand-blue to-transparent text-center border border-blue-500 border-opacity-50 mt-4">
+                    <i class="fas fa-heart text-red-500 text-4xl mb-4 pulse-icon"></i>
+                    <h3 class="text-2xl font-bold text-white mb-2">ختاماً.. الشكر موصول للجنتكم الموقرة</h3>
+                    <p class="text-xl text-gray-200">نضع ثمرة هذا الجهد البرمجي والهندسي بين أيديكم.<br>ونرحب بكل رحابة صدر بأي استفسارات أو ملاحظات لتقويم عملنا.</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- JavaScript for Slides and Animations -->
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlidesNum = document.getElementById('total-slides-num');
+        const currentSlideNum = document.getElementById('current-slide-num');
+        const progressBar = document.getElementById('progress-bar');
+        
+        totalSlidesNum.innerText = slides.length;
+
+        function updateSlider() {
+            slides.forEach((slide, index) => {
+                if(index === currentSlide) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+            currentSlideNum.innerText = currentSlide + 1;
+            progressBar.style.width = ((currentSlide + 1) / slides.length) * 100 + '%';
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateSlider();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlider();
+            }
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log(`Error attempting to enable fullscreen: ${err.message}`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                nextSlide();
+            } else if (e.key === 'ArrowRight') {
+                prevSlide();
+            }
+        });
+
+        // Touch Swipe Navigation for Mobile
+        let touchstartX = 0;
+        let touchendX = 0;
+        
+        function handleGesture() {
+            if (touchendX < touchstartX - 50) nextSlide(); // Swipe left -> Next slide (since it's RTL, we might want to inverse, but let's keep standard swipe direction)
+            if (touchendX > touchstartX + 50) prevSlide(); // Swipe right -> Prev slide
+        }
+
+        document.addEventListener('touchstart', e => {
+            touchstartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', e => {
+            touchendX = e.changedTouches[0].screenX;
+            handleGesture();
+        });
+
+        updateSlider(); // Initialize
+
+        // ----------------------------------------------------
+        // "حركات وبركات" - Particle Background Canvas Logic
+        // ----------------------------------------------------
+        const canvas = document.getElementById('canvas-background');
+        const ctx = canvas.getContext('2d');
+        let particlesArray = [];
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', function(){
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+        });
+
+        let mouse = {
+            x: null,
+            y: null,
+            radius: 150
+        }
+
+        window.addEventListener('mousemove', function(event){
+            mouse.x = event.x;
+            mouse.y = event.y;
+        });
+        
+        window.addEventListener('mouseout', function(){
+            mouse.x = undefined;
+            mouse.y = undefined;
+        });
+
+        class Particle {
+            constructor(x, y, directionX, directionY, size, color) {
+                this.x = x;
+                this.y = y;
+                this.directionX = directionX;
+                this.directionY = directionY;
+                this.size = size;
+                this.color = color;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                ctx.fillStyle = '#3b82f6';
+                ctx.fill();
+            }
+            update() {
+                if (this.x > canvas.width || this.x < 0) {
+                    this.directionX = -this.directionX;
+                }
+                if (this.y > canvas.height || this.y < 0) {
+                    this.directionY = -this.directionY;
+                }
+                
+                // collision detection with mouse
+                let dx = mouse.x - this.x;
+                let dy = mouse.y - this.y;
+                let distance = Math.sqrt(dx*dx + dy*dy);
+                if(distance < mouse.radius + this.size){
+                    if(mouse.x < this.x && this.x < canvas.width - this.size * 10) this.x += 1;
+                    if(mouse.x > this.x && this.x > this.size * 10) this.x -= 1;
+                    if(mouse.y < this.y && this.y < canvas.height - this.size * 10) this.y += 1;
+                    if(mouse.y > this.y && this.y > this.size * 10) this.y -= 1;
+                }
+                
+                this.x += this.directionX;
+                this.y += this.directionY;
+                this.draw();
+            }
+        }
+
+        function initParticles() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.height * canvas.width) / 15000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                let size = (Math.random() * 2) + 1;
+                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+                let directionX = (Math.random() * 1) - 0.5;
+                let directionY = (Math.random() * 1) - 0.5;
+                let color = '#3b82f6';
+                particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+            }
+        }
+
+        function animateParticles() {
+            requestAnimationFrame(animateParticles);
+            ctx.clearRect(0, 0, innerWidth, innerHeight);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+            }
+            connectParticles();
+        }
+
+        function connectParticles(){
+            let opacityValue = 1;
+            for(let a = 0; a < particlesArray.length; a++){
+                for(let b = a; b < particlesArray.length; b++){
+                    let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x)) + 
+                                   ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
+                    if(distance < (canvas.width/7) * (canvas.height/7)){
+                        opacityValue = 1 - (distance/20000);
+                        ctx.strokeStyle = 'rgba(59, 130, 246,' + opacityValue + ')';
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        initParticles();
+        animateParticles();
+    </script>
+</body>
+</html>

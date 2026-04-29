@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container animate-fade-up">
-    <!-- Breadcrumb -->
+    <!-- مسار التنقل (Breadcrumb) - يسهل على المستخدم معرفة موقعه الحالي -->
     <nav aria-label="breadcrumb" class="mb-4">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('home') }}" class="text-white-50 text-decoration-none hover-white">الرئيسية</a></li>
@@ -32,6 +32,7 @@
             <div class="glass-panel p-4 p-md-5 h-100 d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start mb-2">
                     <div>
+                        {{-- اسم المنتج ونوعه --}}
                         <h1 class="fw-bold mb-1" style="text-shadow: 0 0 10px var(--accent-purple);">{{ $product->title }}</h1>
                         <span class="badge {{ $product->type == 'pc' ? 'bg-primary' : ($product->type == 'console' ? 'bg-success' : 'bg-danger') }} mb-3">
                             @if($product->type == 'game') ألعاب فيديو
@@ -44,6 +45,7 @@
 
                 <h2 class="fw-bold mb-3" style="color: var(--accent-pink);">${{ number_format($product->price, 2) }}</h2>
 
+                {{-- عرض حالة التوفر في المخزن --}}
                 @if($product->quantity > 0)
                     <p class="mb-4"><span class="badge bg-success">متوفر بالمخزن: {{ $product->quantity }}</span></p>
                 @else
@@ -74,6 +76,7 @@
                         </div>
                     @endif
                 @else
+                    {{-- لوحة تحكم سريعة تظهر للأدمن فقط داخل صفحة المنتج --}}
                     <div class="mt-auto">
                         <div class="alert alert-warning text-center fw-bold py-2 mb-3" style="background: rgba(255,193,7,0.1); border-color: #ffc107; color: #ffc107;">
                             <i class="fa-solid fa-triangle-exclamation me-2"></i> حساب المسؤول (لإدارة المنتجات)
@@ -82,6 +85,7 @@
                             <a href="{{ route('products.edit', $product) }}" class="btn btn-outline-light flex-grow-1 py-2 fs-5">
                                 <i class="fa-solid fa-pen-to-square me-2"></i> تعديل / زيادة الكمية
                             </a>
+                            {{-- الحذف النهائي من صفحة التفاصيل --}}
                             <form action="{{ route('products.destroy', $product) }}" method="POST" onsubmit="return confirm('هل أنت متأكد من حذف هذا المنتج نهائياً؟');">
                                 @csrf
                                 @method('DELETE')

@@ -3,16 +3,16 @@
 @section('content')
 <div class="row justify-content-center">
     <div class="col-md-8">
-        <!-- Success Alert -->
-        <div class="text-center mb-4 hide-on-print">
-            <i class="fa-solid fa-circle-check fa-4x text-success mb-3"></i>
-            <h2 class="fw-bold text-white">تمت إضافة طلبك بنجاح!</h2>
-            <p class="text-white-50">شكراً لتسوقك معنا. هذه فاتورة بشراء منتجاتك.</p>
-        </div>
+    {{-- صندوق النجاح - يظهر فقط على الشاشة وليس عند الطباعة (hide-on-print) --}}
+    <div class="text-center mb-4 hide-on-print">
+        <i class="fa-solid fa-circle-check fa-4x text-success mb-3"></i>
+        <h2 class="fw-bold text-white">تمت إضافة طلبك بنجاح!</h2>
+        <p class="text-white-50">شكراً لتسوقك معنا. هذه فاتورة بشراء منتجاتك.</p>
+    </div>
 
-        <!-- Printable Invoice Panel -->
+        {{-- حاوية الفاتورة القابلة للطباعة --}}
         <div class="glass-panel p-4 p-md-5 position-relative print-container bg-white text-dark mb-4" id="invoice">
-            <!-- Header -->
+            {{-- رأس الفاتورة: شعار المتجر + رقم الطلب ووقته --}}
             <div class="d-flex justify-content-between align-items-center border-bottom pb-4 mb-4">
                 <div>
                     <h3 class="fw-bold mb-0 text-dark"><i class="fa-solid fa-gamepad me-2 text-primary"></i> GameStore</h3>
@@ -20,18 +20,19 @@
                 </div>
                 <div class="text-end">
                     <h4 class="text-uppercase fw-bold text-muted mb-0">فاتورة طلب</h4>
+                    {{-- رقم الطلب مع أصفار لتكميله لـ 5 خانات --}}
                     <p class="fs-5 fw-bold mb-0 text-primary">#{{ str_pad($order->id, 5, '0', STR_PAD_LEFT) }}</p>
                 </div>
             </div>
 
-            <!-- Customer Info -->
+            {{-- معلومات المشتري - تجيء من العلاقة بين الطلب والمستخدم --}}
             <div class="mb-4">
                 <h6 class="fw-bold text-muted text-uppercase small">معلومات المشتري:</h6>
                 <p class="fw-bold mb-0 text-dark">{{ $order->user->name }}</p>
                 <p class="text-muted mb-0">{{ $order->user->email }}</p>
             </div>
 
-            <!-- Items Table -->
+            {{-- جدول المنتجات المشتراة --}}
             <div class="table-responsive mb-4">
                 <table class="table table-bordered border-secondary table-sm">
                     <thead class="table-light">
@@ -43,6 +44,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {{-- الدوران حول عناصر الطلب وعرض كل منتج --}}
                         @foreach($order->items as $item)
                         <tr>
                             <td>
@@ -87,8 +89,9 @@
             </div>
         </div>
 
-        <!-- Action Buttons -->
+        {{-- أزرار الإجراءات - تختفي عند الطباعة --}}
         <div class="d-flex justify-content-center gap-3 hide-on-print">
+            {{-- زر طباعة الفاتورة: ينفذ أمر الطباعة من المتصفح --}}
             <button onclick="window.print()" class="btn btn-outline-light">
                 <i class="fa-solid fa-print me-2"></i> طباعة الفاتورة
             </button>

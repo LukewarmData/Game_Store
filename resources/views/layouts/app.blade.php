@@ -14,12 +14,10 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
-<body>
-
-
-    <!-- Navbar -->
+    <!-- شريط التنقل العلوي (Navbar) -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container">
+            {{-- شعار الموقع ورابط الصفحة الرئيسية --}}
             <a class="navbar-brand" href="{{ route('home') }}">
                 <i class="fa-solid fa-gamepad me-2"></i> GameStore
             </a>
@@ -34,7 +32,9 @@
                 </ul>
                 
                 <ul class="navbar-nav ms-auto align-items-center">
+                    {{-- التحقق إذا كان المستخدم مسجل دخول أم لا --}}
                     @auth
+                        {{-- إذا كان المستخدم أدمن، يظهر له زر إضافة منتج --}}
                         @if(Auth::user()->is_admin)
                             <li class="nav-item me-3">
                                 <a href="{{ route('products.create') }}" class="btn btn-sm btn-outline-custom" style="border-color: var(--accent-pink); color: var(--accent-pink);">
@@ -42,14 +42,17 @@
                                 </a>
                             </li>
                         @endif
+
+                        {{-- إذا كان مستخدماً عادياً، تظهر له أيقونة السلة --}}
                         @if(!Auth::user()->is_admin)
                         <li class="nav-item me-3">
                             <a href="{{ route('cart.index') }}" class="nav-link position-relative">
                                 <i class="fa-solid fa-cart-shopping fs-5"></i>
-                                <!-- Custom logic to count items could go here -->
                             </a>
                         </li>
                         @endif
+
+                        {{-- قائمة منسدلة لاسم المستخدم وتسجيل الخروج --}}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                                 <i class="fa-solid fa-user-circle"></i> {{ Auth::user()->name }}
@@ -64,6 +67,7 @@
                             </ul>
                         </li>
                     @else
+                        {{-- تظهر هذه الروابط فقط للزوار (غير مسجلي الدخول) --}}
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('login.select') }}">تسجيل الدخول</a>
                         </li>
@@ -91,8 +95,9 @@
         </div>
     </div>
 
-    <!-- Main Content -->
+    <!-- قسم المحتوى المتغير (Main Content) -->
     <main class="container my-5 flex-grow-1 animate-fade-up">
+        {{-- عرض رسائل النجاح أو الفشل القادمة من الـ Session --}}
         @if(session('success'))
             <div class="alert alert-success glass-panel text-white border-success mb-4">
                 {{ session('success') }}
@@ -104,6 +109,7 @@
             </div>
         @endif
 
+        {{-- هنا يتم حقن محتوى الصفحات الأخرى --}}
         @yield('content')
     </main>
 

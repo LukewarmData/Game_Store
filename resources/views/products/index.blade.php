@@ -14,8 +14,9 @@
         @endif
     </h2>
     
-    <!-- Search Bar -->
+    <!-- نموذج البحث (تغيير السلة أو البحث بالاسم) -->
     <form action="{{ route('products.index') }}" method="GET" class="d-flex w-50">
+        {{-- الحفاظ على نوع الفلتر الحالي عند البحث --}}
         @if(request('type'))
             <input type="hidden" name="type" value="{{ request('type') }}">
         @endif
@@ -30,11 +31,13 @@
     @forelse($products as $product)
         <div class="col">
             <div class="card h-100 product-card glass-panel text-white border-0">
+                {{-- التحقق من صورة المنتج: هل هي رابط خارجي أم مخزنة محلياً؟ --}}
                 @if($product->image_url)
                     <a href="{{ route('products.show', $product) }}">
                         <img src="{{ Str::startsWith($product->image_url, 'http') ? $product->image_url : asset($product->image_url) }}" class="card-img-top" alt="{{ $product->title }}">
                     </a>
                 @else
+                    {{-- عرض أيقونة افتراضية في حال عدم وجود صورة --}}
                     <a href="{{ route('products.show', $product) }}" class="text-decoration-none">
                         <div class="card-img-top bg-dark d-flex align-items-center justify-content-center" style="height: 250px;">
                             <i class="fa-solid {{ $product->type == 'game' ? 'fa-gamepad' : 'fa-desktop' }} fa-4x text-muted"></i>
@@ -63,11 +66,13 @@
                                 @endif
                             @endif
                             
+                            {{-- أزرار تحكم الأدمن (تظهر فقط للمسؤولين) --}}
                             @auth
                                 @if(Auth::user()->is_admin)
                                     <a href="{{ route('products.edit', $product) }}" class="btn btn-sm btn-outline-light rounded-circle" title="تعديل">
                                         <i class="fa-solid fa-pen"></i>
                                     </a>
+                                    {{-- نموذج حذف المنتج مع رسالة تأكيد جافاسكريبت --}}
                                     <form action="{{ route('products.destroy', $product) }}" method="POST" class="d-inline" onsubmit="return confirm('هل أنت متأكد من حذف هذا المنتج؟');">
                                         @csrf
                                         @method('DELETE')
