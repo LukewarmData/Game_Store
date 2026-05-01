@@ -48,6 +48,8 @@ Route::middleware('auth')->group(function () {
 
     // روابط مساعد الذكاء الاصطناعي NGU (متاح للمستخدمين والأدمن)
     Route::post('/ai/chat', [AiController::class, 'chat'])->name('ai.chat');
+    // رفع صورة منتج عبر شات NGU (للأدمن)
+    Route::post('/ai/upload-image', [AiController::class, 'uploadImage'])->name('ai.upload');
     
     // روابط لوحة التحكم (خاصة بالأدمن فقط)
     Route::middleware([App\Http\Middleware\AdminMiddleware::class])->group(function () {

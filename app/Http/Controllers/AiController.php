@@ -12,10 +12,41 @@ use Illuminate\Support\Facades\Auth;
  */
 class AiController extends Controller
 {
-    // مفتاح Gemini API
-    private $apiKey = 'AIzaSyCF0hGgSwvlzh3KI2G1Za6Z1c9fZ1ziV_s';
-    // رابط الـ API
-    private $apiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
+    // اسم الموديل المثبت في أولاما
+    private $ollamaModel = 'gemma4:e4b';
+    // رابط أولاما المحلي
+    private $ollamaUrl = 'http://localhost:11434/api/chat';
+
+    /**
+     * رفع صورة منتج من شات NGU وحفظها محلياً
+     * تُخزّن في public/images/products/ لتتناسق مع الصور الحالية
+     */
+    public function uploadImage(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,jpg,png,webp,gif|max:6144',
+        ]);
+
+        $file     = $request->file('image');
+        $filename = time() . '_' . preg_replace('/[^a-zA-Z0-9_.]/', '_', $file->getClientOriginalName());
+        $destDir  = public_path('images/products');
+
+        // إنشاء المجلد إذا لم يكن موجوداً
+        if (!is_dir($destDir)) {
+            mkdir($destDir, 0755, true);
+        }
+
+        $file->move($destDir, $filename);
+
+        $relativePath = 'images/products/' . $filename;
+        $fullUrl      = url($relativePath);
+
+        return response()->json([
+            'success'  => true,
+            'url'      => $relativePath,   // للحفظ في قاعدة البيانات
+            'full_url' => $fullUrl,        // لعرضها في الواجهة
+        ]);
+    }
 
     /**
      * استقبال رسالة المستخدم وإرجاع رد NGU
@@ -50,8 +81,8 @@ class AiController extends Controller
         // استقبال تاريخ المحادثة من الواجهة
         $history = $request->input('history', []);
 
-        // استدعاء Gemini API
-        $aiText = $this->callGemini($systemPrompt, $request->message, $history);
+        // استدعاء أولاما المحلي
+        $aiText = $this->callOllama($systemPrompt, $request->message, $history);
 
         // إذا كان الأدمن، تحليل وتنفيذ أوامر CRUD الموجودة في الرد
         $actions = [];
@@ -129,52 +160,68 @@ class AiController extends Controller
     }
 
     /**
-     * استدعاء Gemini API وإرجاع الرد
+     * استدعاء أولاما المحلي وإرجاع الرد
+     * Ollama Chat API: http://localhost:11434/api/chat
      */
-    private function callGemini($systemPrompt, $userMessage, $history = [])
+    private function callOllama($systemPrompt, $userMessage, $history = [])
     {
-        $contents = [];
+        // بناء قائمة الرسائل بصيغة أولاما
+        $messages = [];
 
-        // بناء تاريخ المحادثة بالصيغة المطلوبة لـ Gemini
+        // رسالة الـ System Prompt في أول القائمة
+        $messages[] = [
+            'role'    => 'system',
+            'content' => $systemPrompt,
+        ];
+
+        // إضافة تاريخ المحادثة
         foreach ($history as $msg) {
-            $contents[] = [
-                'role'  => $msg['role'] === 'ai' ? 'model' : 'user',
-                'parts' => [['text' => $msg['text']]],
+            $messages[] = [
+                'role'    => $msg['role'] === 'ai' ? 'assistant' : 'user',
+                'content' => $msg['text'],
             ];
         }
 
         // إضافة الرسالة الحالية
-        $contents[] = [
-            'role'  => 'user',
-            'parts' => [['text' => $userMessage]],
+        $messages[] = [
+            'role'    => 'user',
+            'content' => $userMessage,
         ];
 
         $payload = [
-            'system_instruction' => [
-                'parts' => [['text' => $systemPrompt]],
-            ],
-            'contents'         => $contents,
-            'generationConfig' => [
-                'temperature'     => 0.7,
-                'maxOutputTokens' => 1024,
-            ],
+            'model'    => $this->ollamaModel,
+            'messages' => $messages,
+            'stream'   => false, // نريد الرد كاملاً دفعة واحدة
         ];
 
-        // إرسال الطلب لـ Gemini بواسطة cURL
-        $ch = curl_init($this->apiUrl . '?key=' . $this->apiKey);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-        $response = curl_exec($ch);
+        if (!function_exists('curl_init')) {
+            return 'خطأ: مكتبة cURL غير مفعّلة في الخادم.';
+        }
+
+        $ch = curl_init($this->ollamaUrl);
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST           => true,
+            CURLOPT_POSTFIELDS     => json_encode($payload, JSON_UNESCAPED_UNICODE),
+            CURLOPT_HTTPHEADER     => ['Content-Type: application/json'],
+            CURLOPT_TIMEOUT        => 120, // أولاما أبطأ من API خارجي
+            CURLOPT_CONNECTTIMEOUT => 5,
+        ]);
+
+        $response  = curl_exec($ch);
+        $curlError = curl_error($ch);
         curl_close($ch);
+
+        // خطأ في الاتصال (أولاما مو شغال؟)
+        if ($response === false || !empty($curlError)) {
+            return 'خطأ: تأكد أن أولاما يعمل! (ollama serve). التفاصيل: ' . $curlError;
+        }
 
         $data = json_decode($response, true);
 
-        // إرجاع الرد أو رسالة خطأ
-        return $data['candidates'][0]['content']['parts'][0]['text']
-            ?? 'عذراً، حدث خطأ في الاتصال مع NGU. حاول مرة أخرى.';
+        // إرجاع النص من الرد
+        return $data['message']['content']
+            ?? 'لم يرسل NGU رداً. تحقق من أولاما.';
     }
 
     /**
