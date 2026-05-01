@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ألعاب الفيديو - NGU GameStore</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Tajawal', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              dark: '#1e1b38',
+              darker: '#16132b',
+              accent: '#d946ef', // fuchsia-500
+              accentLight: '#f0abfc', // fuchsia-300
+              accentGlow: 'rgba(217, 70, 239, 0.5)',
+            }
+          },
+          backgroundImage: {
+            'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+          }
+        }
+      }
+    }
+</script>
+<style data-purpose="custom-styles">
+    body {
+      background-color: #1e1b38;
+      color: white;
+    }
+    
+    .glow-effect {
+      box-shadow: 0 0 15px var(--tw-colors-brand-accentGlow);
+    }
+    
+    .input-icon-wrapper {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .form-input {
+      background-color: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: border-color 0.3s ease;
+    }
+    
+    .form-input:focus {
+      border-color: #d946ef;
+      outline: none;
+    }
+
+    .glass-card {
+      background: rgba(22, 19, 43, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.3s ease-out;
+    }
+    
+    .glass-card:hover {
+      border-color: rgba(217, 70, 239, 0.4);
+      box-shadow: 0 0 20px rgba(217, 70, 239, 0.2);
+      transform: translateY(-4px);
+    }
+</style>
+</head>
+<body class="min-h-screen flex flex-col font-sans selection:bg-brand-accent/30">
+<!-- BEGIN: Header -->
+<header class="w-full">
+<!-- Top Navigation -->
+<nav class="bg-brand-darker py-4 px-6 flex justify-between items-center border-b border-white/10">
+<div class="flex items-center gap-4">
+<a class="text-brand-accent font-bold text-2xl flex items-center gap-2" href="#">
+          GameStore <i class="fa-solid fa-gamepad"></i>
+</a>
+<a class="text-gray-300 hover:text-white mr-6" href="#">كل المنتجات</a>
+</div>
+<div class="flex items-center gap-4">
+<a class="text-gray-300 hover:text-white" href="#">تسجيل الدخول</a>
+<a class="bg-brand-accent hover:bg-fuchsia-600 text-white px-6 py-2 rounded-full font-bold transition-colors" href="#">إنشاء حساب</a>
+</div>
+</nav>
+<!-- Secondary Navigation -->
+<nav class="bg-brand-dark py-3 px-6 flex justify-center gap-8 border-b border-white/5 text-sm">
+<a class="text-brand-accent flex items-center gap-2" href="#"><i class="fa-solid fa-gamepad"></i> ألعاب فيديو</a>
+<a class="text-gray-400 hover:text-white flex items-center gap-2" href="#"><i class="fa-solid fa-desktop"></i> حاسبات وقطع PC</a>
+<a class="text-gray-400 hover:text-white flex items-center gap-2" href="#"><i class="fa-brands fa-playstation"></i> أجهزة كونسول</a>
+</nav>
+</header>
+<!-- END: Header -->
+<main class="flex-grow max-w-screen-2xl mx-auto px-6 py-12 w-full relative z-10">
+<!-- Background Gradient Effects -->
+<div class="fixed inset-0 z-0 pointer-events-none">
+<div class="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-accent rounded-full mix-blend-multiply filter blur-[128px] opacity-10"></div>
+<div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-[128px] opacity-10"></div>
+</div>
+<div class="relative z-10">
+<!-- Main Listing Header -->
+<section class="flex flex-col md:flex-row justify-between items-center mb-12 gap-6">
+<h2 class="text-3xl font-bold text-white">ألعاب الفيديو</h2>
+<form class="flex w-full md:w-auto gap-3">
+<div class="relative flex-grow min-w-[300px] flex items-stretch rounded-lg overflow-hidden border border-white/10 group focus-within:border-brand-accent transition-colors bg-black/20">
+<div class="input-icon-wrapper flex items-center justify-center w-12 text-gray-400 border-l border-white/10">
+<i class="fa-solid fa-search"></i>
+</div>
+<input class="flex-grow bg-transparent text-white px-4 py-3 outline-none placeholder-gray-500 w-full text-right" placeholder="ابحث عن منتج..." type="text"/>
+</div>
+<button class="bg-gradient-to-r from-brand-accentLight to-brand-accent text-brand-darker font-bold px-8 py-3 rounded-lg hover:opacity-90 transition-opacity glow-effect" type="submit">
+                    بحث
+                </button>
+</form>
+</section>
+<!-- Product Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Card 1: Elden Ring -->
+<div class="glass-card flex flex-col rounded-2xl overflow-hidden">
+<div class="relative aspect-[3/4] w-full overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A dark fantasy RPG cover art featuring a mysterious figure in ornate golden armor standing against a backdrop of a decaying, glowing golden tree in a twilight sky. The scene is epic and atmospheric with deep blues and brilliant gold highlights, reflecting a premium gaming aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQnfg42wmqTryVMSQZXmGZKUn0EfofCe_egqecNhGOwk1AMbLnHinZNx1gFlU4XkYfBxH_HH0VOwyedjkJJMHOiHwhYq4evs7FCh8k-I5HT02viLHO_MCtzr0QaPZy3yDHIhcpA1ehwVOLyF6Y1nAqTwlJ2P_wKK7PVpgQZ-YFH54uPjrUz2HpkqEWiOR61gqjGXCKxLXbWVUzmmcp8EHV9VPvB3vMSTebi14diWyfmA1CDlhy0A6lOATNj9fDS_sQIlxm_hW1XvoJ"/>
+</div>
+<div class="p-5 flex flex-col gap-3">
+<h3 class="font-bold text-xl text-white truncate">Elden Ring</h3>
+<div class="flex justify-between items-center">
+<span class="text-brand-accent font-bold text-xl">$59.99</span>
+<button class="bg-white/5 hover:bg-brand-accent/20 text-brand-accent p-2 rounded-xl transition-all">
+<i class="fa-solid fa-cart-plus"></i>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 2: Cyberpunk 2077 -->
+<div class="glass-card flex flex-col rounded-2xl overflow-hidden">
+<div class="relative aspect-[3/4] w-full overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A futuristic cyberpunk cityscape with neon signs in pink and cyan reflecting on wet pavement at night. A lone figure with glowing cybernetic implants walks through the alley, creating a high-tech, gritty atmosphere that aligns with the cyber-luxe design system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYB5nfVINqfs-66mji68o5Q0-QymRkHdMe_Y_jZs9P8oi58t14vFSd58HMuF-5DoSoB5GRU1zKPMbCCD5nE37vGT3MU9RblNrXH2VKrxp4nMSBfD8kl1_94EH4lIL7j3GaMz49X-CQUgwfv6mRCQBgqiz3UQvDPsr4Ftg6HNifXc0BvXNngQV7XIQrbsdLSu0hJxx0UdbigMOyjbqfdmdkL_ZKR9OnbW0lbAr5Ua45asQmzBIcDdKXGJF35c0fdtrMPUKdUWCbilNn"/>
+</div>
+<div class="p-5 flex flex-col gap-3">
+<h3 class="font-bold text-xl text-white truncate">Cyberpunk 2077</h3>
+<div class="flex justify-between items-center">
+<span class="text-brand-accent font-bold text-xl">$49.99</span>
+<button class="bg-white/5 hover:bg-brand-accent/20 text-brand-accent p-2 rounded-xl transition-all">
+<i class="fa-solid fa-cart-plus"></i>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 3: God of War -->
+<div class="glass-card flex flex-col rounded-2xl overflow-hidden">
+<div class="relative aspect-[3/4] w-full overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A cinematic scene of a snowy Nordic landscape with a towering warrior holding a glowing ice axe. The lighting is dramatic, with cold blue tones and warm firelight reflections, capturing the epic scale and intense detail of a modern AAA action game." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_GR64ehRZsuQe0m81xxd9Y3yGWVzTEZEZLyh6nFdWN7bKElgzgiNCw7ehLbyuyNupEKm3A-9h0zeh2RqGOFG-dv4oSMkvfXBbU_aXUTO3GHquSUvtXi7aV8A70qye9ea40mL9hoiBejYwKXLkpGBZlqZ3jOL7sNTmNC5vvyP4gpDvLTwu3YHtcQzA8uutL7vSxqYyeeQJVxgdBZFchKCNNPqMRdD6mNxVzlweX_svIodmg18cxS7BmEDNQmcBMU_olcE3ouJzOVq8"/>
+</div>
+<div class="p-5 flex flex-col gap-3">
+<h3 class="font-bold text-xl text-white truncate">God of War</h3>
+<div class="flex justify-between items-center">
+<span class="text-brand-accent font-bold text-xl">$44.99</span>
+<button class="bg-white/5 hover:bg-brand-accent/20 text-brand-accent p-2 rounded-xl transition-all">
+<i class="fa-solid fa-cart-plus"></i>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 4: The Witcher 3 -->
+<div class="glass-card flex flex-col rounded-2xl overflow-hidden relative">
+<div class="absolute top-4 left-4 z-10 bg-red-900/80 text-red-100 px-3 py-1 rounded-full text-xs font-bold border border-red-500/30">
+                    نفدت الكمية
+                </div>
+<div class="relative aspect-[3/4] w-full overflow-hidden grayscale opacity-60">
+<img class="w-full h-full object-cover" data-alt="A dark fantasy forest with a silver-haired warrior tracking a mythical creature through the mist. The palette consists of muted greens and greys, with a focus on detailed textures of leather and steel, presented in a cinematic, immersive style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDp6Y3coEwxCHDl2O1ZBBOWYnz2Kdn4sEzgaeI9hjo94firs0eIcXHCt_mphypC5dleMosPDWHCkFfInrNBFutY2nbT_IiIv7V3DlHjgFgvunXm0OBwblp4GHFdrdFouy6q1lPVll2g6q99dczr8GGcUUUSFqEDXC2E9rTSWWHzIDqD_C-DQ0Opykhy_-qICM78I1w-_PR22166oiqa0eV0iNEWiwYZ_0dRCPWJh9UUtglRSxYob6E0JrO0efhRvsDSb30lyDz56rrQ"/>
+</div>
+<div class="p-5 flex flex-col gap-3">
+<h3 class="font-bold text-xl text-white truncate">The Witcher 3</h3>
+<div class="flex justify-between items-center">
+<span class="text-brand-accent font-bold text-xl">$29.99</span>
+<button class="bg-white/5 text-gray-500 p-2 rounded-xl cursor-not-allowed" disabled="">
+<i class="fa-solid fa-ban"></i>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 5: Admin View PC -->
+<div class="glass-card flex flex-col rounded-2xl overflow-hidden border-brand-accent/30">
+<div class="relative aspect-[3/4] w-full overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A high-performance gaming PC build showcasing vibrant RGB lighting in pink and purple colors inside a tempered glass case. The hardware components are sharp and modern, reflecting a premium gaming experience with a technological and sophisticated aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5RJlsTooenkwEyGM90VMrOGKHO3zF9UJY8O0Wk3ZqPE99kTfcAAWejdXEJ6K_8_v4lX4x9t8pAHJJjc_9Xt76TKR9ZrNB4uXHo9qBYWRmVH_UgVCaZ7p-AxmMUyydCtFe0qga6C8K5DCBpPVqeBoR6qlSTXt0RY26dgILeJ50fzyzL7A4uiv5E3PLLEVxQ-_ypE8fSASLpGzTUyuCs5aTwKQnI2jMNJKlgCzQTXv6toRpZahG2I5ZSx0NPWM8DSYMe2ZqnlE4wfgZ"/>
+<div class="absolute top-4 right-4 flex gap-2">
+<button class="bg-brand-darker/90 backdrop-blur border border-white/10 text-yellow-500 p-2 rounded-lg hover:bg-yellow-500 hover:text-white transition-all shadow-lg">
+<i class="fa-solid fa-pen"></i>
+</button>
+<button class="bg-brand-darker/90 backdrop-blur border border-white/10 text-red-500 p-2 rounded-lg hover:bg-red-500 hover:text-white transition-all shadow-lg">
+<i class="fa-solid fa-trash"></i>
+</button>
+</div>
+</div>
+<div class="p-5 flex flex-col gap-3">
+<h3 class="font-bold text-xl text-white truncate">RTX 4090 PC</h3>
+<div class="flex justify-between items-center">
+<span class="text-brand-accent font-bold text-xl">$3,199</span>
+<button class="bg-white/5 hover:bg-brand-accent/20 text-brand-accent p-2 rounded-xl transition-all">
+<i class="fa-solid fa-basket-shopping"></i>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 6: Gaming Chair -->
+<div class="glass-card flex flex-col rounded-2xl overflow-hidden">
+<div class="relative aspect-[3/4] w-full overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A sleek black professional gaming chair with neon pink accents and high-quality stitching. The background is a dimly lit gaming room with ambient purple light, emphasizing comfort and high-end ergonomics for a serious gaming audience." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSjc_W5kDEphFgfqqgCG6nU41YyiyQBqgOWUdORz7QFnEd8St4ENZSK-UQu9RuVRpy1PteXFSzLZ_aGB4G4BlgcQ2Sp-JGSGS7hq0YttPnDeL9tlZzehvDtIpalbnLKEiuSgBzt_gK6fXDxB14owHLNz2Vixe8FBGeHaP221vdNLh4LlpuvBl20g0E5XNkfJqwSQemXtwgUbddygdL8Zw0RoV6-xVe2UY3NSkH15TwVuSnEAdFrqk6-eV7AKVvdeRpw9wIX0uholBr"/>
+</div>
+<div class="p-5 flex flex-col gap-3">
+<h3 class="font-bold text-xl text-white truncate">Gaming Chair</h3>
+<div class="flex justify-between items-center">
+<span class="text-brand-accent font-bold text-xl">$299</span>
+<button class="bg-white/5 hover:bg-brand-accent/20 text-brand-accent p-2 rounded-xl transition-all">
+<i class="fa-solid fa-cart-plus"></i>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 7: PS5 Controller -->
+<div class="glass-card flex flex-col rounded-2xl overflow-hidden">
+<div class="relative aspect-[3/4] w-full overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A close-up of a modern white game controller with glowing blue LED indicator lights. The focus is on the intricate design of the buttons and joysticks, set against a dark, tech-inspired background with a clean, luxury hardware feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAL8Hs2CTOIe1rQboYsEGV67WFyVIAoXow7ujsFYaqjg1muO28WLnFgsTy7KBh1W3WecphL7SnTxBvFqYn0efazaisrDxY1OukmYmPxOzpjCH_w4FSMF8z3RDoi8Abi1r3vGn3NJ_YR1q9umEpr4bSfukIl6VjmCgtcfVFoa32c5T8jMN5hW0AKe1eR5UfvV5dk0acm4YajiN-iU4j6rH_PmLEZQfWgNUrX8zSjZ-NZtvTc4S2cvJjhFN16ma2djykUL7nBgUmCRnCB"/>
+</div>
+<div class="p-5 flex flex-col gap-3">
+<h3 class="font-bold text-xl text-white truncate">PS5 Controller</h3>
+<div class="flex justify-between items-center">
+<span class="text-brand-accent font-bold text-xl">$79</span>
+<button class="bg-white/5 hover:bg-brand-accent/20 text-brand-accent p-2 rounded-xl transition-all">
+<i class="fa-solid fa-cart-plus"></i>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 8: Gaming Monitor -->
+<div class="glass-card flex flex-col rounded-2xl overflow-hidden">
+<div class="relative aspect-[3/4] w-full overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="An ultra-wide curved gaming monitor displaying a vibrant, fast-paced action game scene. The monitor's slim bezels and back-mounted RGB lighting illuminate the desk in a soft purple glow, creating an immersive, professional gaming setup vibe." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDa6zjloI2Tui4yNXTp2ppzRLlTEL2Nj7trZXwiPzzgvvLD75QMkVHH_jpNPjvsX6t6bNenuRHaSzBfzf9x5Ep9YFBFlI-MbYcHnQK8_71FyLBAVaAd0O9rYpf5l2e3NgALTPSjZiHkLzxh74JYZJaMvSjnaTgjpzuXzH2xC6zzagzvGWqaD1AT1VUgjjeFMzjMWg-OmEUihG_x--prqR6pZpvng-ACPc_NaZ-jRXziwrg0k71ObfUFDahoBQ_eT7zAWQ1k0TscZOXn"/>
+</div>
+<div class="p-5 flex flex-col gap-3">
+<h3 class="font-bold text-xl text-white truncate">Gaming Monitor</h3>
+<div class="flex justify-between items-center">
+<span class="text-brand-accent font-bold text-xl">$599</span>
+<button class="bg-white/5 hover:bg-brand-accent/20 text-brand-accent p-2 rounded-xl transition-all">
+<i class="fa-solid fa-cart-plus"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<nav class="flex justify-center mt-16 mb-8">
+<ul class="flex flex-row-reverse items-center gap-2">
+<li>
+<a class="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-gray-400 hover:text-brand-accent hover:border-brand-accent transition-all flex items-center gap-2" href="#">
+<span>التالي</span>
+<i class="fa-solid fa-chevron-left text-sm"></i>
+</a>
+</li>
+<li>
+<a class="w-10 h-10 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 text-gray-400 hover:border-brand-accent/50 transition-all" href="#">3</a>
+</li>
+<li>
+<a class="w-10 h-10 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 text-gray-400 hover:border-brand-accent/50 transition-all" href="#">2</a>
+</li>
+<li>
+<a class="w-10 h-10 flex items-center justify-center rounded-lg bg-gradient-to-r from-brand-accentLight to-brand-accent text-brand-darker font-bold glow-effect" href="#">1</a>
+</li>
+<li>
+<a class="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-gray-400 opacity-50 cursor-not-allowed flex items-center gap-2" href="#">
+<i class="fa-solid fa-chevron-right text-sm"></i>
+<span>السابق</span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</main>
+<!-- BEGIN: Footer -->
+<footer class="bg-brand-darker border-t border-white/10 pt-12 pb-6 px-6 text-sm relative z-10">
+<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 text-right">
+<!-- Brand & Description -->
+<div class="md:col-span-1 flex flex-col items-end">
+<a class="text-brand-accent font-bold text-xl flex items-center gap-2 mb-4" href="#">
+          GameStore <i class="fa-solid fa-gamepad"></i>
+</a>
+<p class="text-gray-400 leading-relaxed text-right w-full">
+          الوجهة الأولى للاعبين في العراق. نوفر أحدث الألعاب، وأقوى تجميعات الحواسيب، بأسعار تنافسية.
+        </p>
+</div>
+<!-- Quick Links -->
+<div class="flex flex-col items-end">
+<h3 class="text-white font-bold mb-4 text-lg">روابط سريعة</h3>
+<ul class="space-y-2 text-gray-400">
+<li class=""><a class="hover:text-brand-accent transition-colors" href="#">الرئيسية</a></li>
+<li class=""><a class="hover:text-brand-accent transition-colors" href="#">المتجر</a></li>
+<li class=""><a class="hover:text-brand-accent transition-colors" href="#">سلة المشتريات</a></li>
+<li class=""><a class="hover:text-brand-accent transition-colors" href="#">حسابي</a></li>
+</ul>
+</div>
+<!-- Contact Info -->
+<div class="flex flex-col items-end">
+<h3 class="text-white font-bold mb-4 text-lg">تواصل معنا</h3>
+<ul class="space-y-2 text-gray-400 text-right">
+<li class="flex items-center justify-end gap-2"><i class="fa-solid fa-location-dot w-4"></i> كربلاء</li>
+<li class="flex items-center justify-end gap-2"><i class="fa-solid fa-phone w-4"></i> 07875565480</li>
+<li class="flex items-center justify-end gap-2"><i class="fa-solid fa-phone w-4"></i> 07709774704</li>
+<li class="flex items-center justify-end gap-2"><i class="fa-solid fa-phone w-4"></i> 07875257459</li>
+<li class="flex items-center justify-end gap-2"><i class="fa-solid fa-envelope w-4"></i> nevergiveup@gmail.com</li>
+</ul>
+<div class="flex gap-4 mt-4 text-gray-400">
+<a class="hover:text-white transition-colors" href="#"><i class="fa-brands fa-discord text-lg"></i></a>
+<a class="hover:text-white transition-colors" href="#"><i class="fa-brands fa-twitter text-lg"></i></a>
+<a class="hover:text-white transition-colors" href="#"><i class="fa-brands fa-instagram text-lg"></i></a>
+</div>
+</div>
+</div>
+<!-- Copyright -->
+<div class="text-center text-gray-500 text-xs border-t border-white/5 pt-6">
+      © 2024 GameStore. جميع الحقوق محفوظة. تم التطوير لدعم مجتمع اللاعبين.
+    </div>
+</footer>
+<!-- END: Footer -->
+</body></html>

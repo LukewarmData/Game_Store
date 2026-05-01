@@ -1,0 +1,392 @@
+<!DOCTYPE html><html class="dark" dir="rtl" lang="ar"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700;800;900&amp;family=Inter:wght@400;600&amp;family=Space+Grotesk:wght@600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        body {
+            background-color: #0f0f1a;
+            color: #f0ddec;
+        }
+        .glass-panel {
+            background: rgba(26, 26, 46, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .neon-glow-pink {
+            box-shadow: 0 0 15px rgba(224, 64, 251, 0.3);
+        }
+        .neon-glow-purple {
+            box-shadow: 0 0 15px rgba(96, 1, 209, 0.3);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#322631",
+                        "surface-container-low": "#221823",
+                        "on-secondary-fixed": "#25005a",
+                        "on-primary-fixed-variant": "#7b008f",
+                        "outline-variant": "#524152",
+                        "on-error-container": "#ffdad6",
+                        "surface-container": "#271c27",
+                        "surface-dim": "#1a101a",
+                        "error-container": "#93000a",
+                        "secondary-container": "#6001d1",
+                        "on-primary": "#570066",
+                        "inverse-on-surface": "#382d38",
+                        "on-surface": "#f0ddec",
+                        "tertiary-container": "#c9a82b",
+                        "on-tertiary-container": "#4d3e00",
+                        "tertiary-fixed-dim": "#e7c446",
+                        "tertiary-fixed": "#ffe07d",
+                        "surface-container-lowest": "#140b15",
+                        "tertiary": "#e7c446",
+                        "secondary-fixed": "#eaddff",
+                        "on-error": "#690005",
+                        "surface-container-highest": "#3d313c",
+                        "secondary": "#d2bbff",
+                        "primary-fixed-dim": "#faabff",
+                        "primary": "#faabff",
+                        "on-secondary": "#3f008e",
+                        "surface": "#1a101a",
+                        "secondary-fixed-dim": "#d2bbff",
+                        "background": "#1a101a",
+                        "on-surface-variant": "#d7c0d4",
+                        "on-secondary-fixed-variant": "#5a00c6",
+                        "on-secondary-container": "#c9aeff",
+                        "primary-fixed": "#ffd6fe",
+                        "surface-bright": "#413541",
+                        "on-primary-container": "#4c0059",
+                        "error": "#ffb4ab",
+                        "on-tertiary-fixed-variant": "#564500",
+                        "inverse-primary": "#a200bb",
+                        "on-tertiary": "#3b2f00",
+                        "inverse-surface": "#f0ddec",
+                        "outline": "#9f8a9e",
+                        "on-primary-fixed": "#35003f",
+                        "surface-tint": "#faabff",
+                        "on-tertiary-fixed": "#231b00",
+                        "on-background": "#f0ddec",
+                        "surface-variant": "#3d313c",
+                        "primary-container": "#e446ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["inter"],
+                        "label-caps": ["spaceGrotesk"],
+                        "body-lg": ["inter"],
+                        "headline-md": ["beVietnamPro"],
+                        "display-xl": ["beVietnamPro"],
+                        "headline-lg": ["beVietnamPro"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-caps": ["14px", {"lineHeight": "1", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "display-xl": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-surface-dim font-body-md overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="fixed top-0 left-0 right-0 z-50 flex flex-row-reverse justify-between items-center w-full px-8 h-20 bg-slate-950/60 backdrop-blur-xl border-b border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-black text-fuchsia-500 drop-shadow-[0_0_10px_rgba(224,64,251,0.5)] font-['Be_Vietnam_Pro'] tracking-tight"><br></span>
+<div class="hidden md:flex flex-row-reverse gap-6">
+<a class="text-slate-400 hover:text-white transition-colors font-['Be_Vietnam_Pro'] font-bold" href="#">Game Store</a>
+<a class="text-fuchsia-500 border-b-2 border-fuchsia-500 pb-1 font-['Be_Vietnam_Pro'] font-bold" href="#">لوحة التحكم</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden lg:block">
+<input class="bg-surface-container-low border border-outline-variant rounded-full py-2 px-10 text-on-surface focus:ring-1 focus:ring-primary focus:border-primary transition-all" placeholder="ابحث هنا..." type="text">
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-outline">search</span>
+</div>
+<button class="p-2 text-slate-400 hover:bg-white/5 rounded-full transition-all">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-slate-400 hover:bg-white/5 rounded-full transition-all">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="h-10 w-10 rounded-full border border-primary p-0.5">
+<img alt="Admin Avatar" class="h-full w-full rounded-full object-cover" data-alt="A sophisticated professional headshot profile avatar of a high-end tech executive, rendered in a sleek digital art style with soft purple and cyan rim lighting against a dark, futuristic background. The character has a sharp, confident expression, embodying the elite admin persona of a premier gaming ecosystem. High contrast and cinematic lighting accentuate the luxury tech aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdpe2VXumKzz3-t0rRm2BrMGivA0X05W7Hl-hAJhTPtIWfw-_Ql5zpqGEEL0ma10OkH15wM3WJMBm9UYv3xPducZJL1_XVZy_d12gQ92M_Y4vuypsrI7HLqrz5H-ROyO8eculi8H5rcUCxhNbCkdTKSLi_qP60tKBUBvUH1uIWEBHtdu6O1qfkbkcJGLr0lSflE_7ZuddQOiVpw0TpceNK1dTL-iJczCPwbiTsn_7DqpsAcSoQCW_fD3lq3fqas8jVDujO0CXaAKtd">
+</div>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="fixed right-0 top-20 h-[calc(100vh-80px)] z-40 w-64 bg-[#1a1a2e]/80 backdrop-blur-2xl border-l border-white/10 shadow-[-10px_0_30px_rgba(0,0,0,0.5)] flex flex-col pt-6 font-['Be_Vietnam_Pro'] text-sm font-semibold">
+<div class="px-6 mb-8 flex flex-row-reverse items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-lg">
+<span class="material-symbols-outlined text-on-primary" data-weight="fill">shield_person</span>
+</div>
+<div class="text-right">
+<h3 class="text-fuchsia-500 font-bold">Admin Panel</h3>
+<p class="text-slate-500 text-xs uppercase tracking-widest">Elite Access</p>
+</div>
+</div>
+<nav class="flex flex-col w-full">
+<a class="flex flex-row-reverse items-center gap-3 bg-fuchsia-500/10 text-fuchsia-500 border-r-4 border-fuchsia-500 p-4 w-full transition-all duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="">لوحة القيادة</span>
+</a>
+<a class="flex flex-row-reverse items-center gap-3 text-slate-400 p-4 w-full hover:bg-white/5 hover:text-fuchsia-300 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="">Inventory</span>
+</a>
+<a class="flex flex-row-reverse items-center gap-3 text-slate-400 p-4 w-full hover:bg-white/5 hover:text-fuchsia-300 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="">Sales</span>
+</a>
+<a class="flex flex-row-reverse items-center gap-3 text-slate-400 p-4 w-full hover:bg-white/5 hover:text-fuchsia-300 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="">Users</span>
+</a>
+<a class="flex flex-row-reverse items-center gap-3 text-slate-400 p-4 w-full hover:bg-white/5 hover:text-fuchsia-300 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="">Settings</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<main class="mr-64 pt-28 px-8 pb-12 transition-all duration-300">
+<!-- Header & CTA -->
+<div class="flex flex-row-reverse justify-between items-center mb-10">
+<div>
+<h1 class="text-white font-headline-lg font-bold mb-2">إدارة المنتجات</h1>
+<p class="text-outline text-body-md">نظرة عامة على مخزون المتجر والتحكم في المبيعات</p>
+</div>
+<button class="bg-gradient-to-r from-primary to-secondary-container text-on-primary-container px-6 py-3 rounded-xl font-bold flex items-center gap-3 hover:scale-105 transition-transform shadow-[0_0_20px_rgba(224,64,251,0.4)]">
+<span class="material-symbols-outlined">add</span>
+<span class="">إضافة منتج جديد</span>
+</button>
+</div>
+<!-- Stats Row -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+<div class="glass-panel p-6 rounded-2xl neon-glow-pink flex flex-row-reverse items-center justify-between">
+<div class="text-right">
+<p class="text-slate-400 text-sm mb-1">إجمالي المنتجات</p>
+<p class="text-3xl font-black text-white">120</p>
+</div>
+<div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20">
+<span class="material-symbols-outlined text-primary text-3xl">category</span>
+</div>
+</div>
+<div class="glass-panel p-6 rounded-2xl flex flex-row-reverse items-center justify-between border-fuchsia-500/20">
+<div class="text-right">
+<p class="text-slate-400 text-sm mb-1">الطلبات الجديدة</p>
+<p class="text-3xl font-black text-white">5</p>
+</div>
+<div class="w-14 h-14 rounded-xl bg-secondary-container/10 flex items-center justify-center border border-secondary-container/20">
+<span class="material-symbols-outlined text-secondary text-3xl">shopping_cart</span>
+</div>
+</div>
+<div class="glass-panel p-6 rounded-2xl neon-glow-purple flex flex-row-reverse items-center justify-between">
+<div class="text-right">
+<p class="text-slate-400 text-sm mb-1">إجمالي المبيعات</p>
+<p class="text-3xl font-black text-white">$12,500</p>
+</div>
+<div class="w-14 h-14 rounded-xl bg-tertiary/10 flex items-center justify-center border border-tertiary/20">
+<span class="material-symbols-outlined text-tertiary text-3xl">payments</span>
+</div>
+</div>
+</div>
+<!-- Products Table Area -->
+<div class="glass-panel rounded-3xl overflow-hidden shadow-2xl border border-white/5">
+<div class="px-8 py-6 border-b border-white/5 flex flex-row-reverse justify-between items-center bg-white/5">
+<h2 class="text-white font-headline-md">قائمة المنتجات الحالية</h2>
+<div class="flex gap-2">
+<button class="p-2 bg-surface-container-highest rounded-lg text-outline hover:text-white transition-colors">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+<button class="p-2 bg-surface-container-highest rounded-lg text-outline hover:text-white transition-colors">
+<span class="material-symbols-outlined">file_download</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-right border-collapse">
+<thead>
+<tr class="bg-slate-900/40 text-outline text-sm font-semibold border-b border-white/5">
+<th class="px-8 py-5">الصورة</th>
+<th class="px-6 py-5">اسم المنتج</th>
+<th class="px-6 py-5 text-center">النوع</th>
+<th class="px-6 py-5 text-center">الكمية</th>
+<th class="px-6 py-5 text-center">السعر</th>
+<th class="px-8 py-5 text-left">الإجراءات</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5">
+<!-- Row 1: Elden Ring -->
+<tr class="hover:bg-white/[0.03] transition-colors group">
+<td class="px-8 py-4">
+<div class="w-16 h-16 rounded-lg overflow-hidden border border-white/10 group-hover:border-primary/50 transition-colors">
+<img alt="Elden Ring" class="w-full h-full object-cover" data-alt="Official promotional game art for Elden Ring, featuring a dark fantasy knight in ornate silver armor standing against a backdrop of the golden Erdtree. The visual style is cinematic and epic, with high contrast lighting and a moody, atmospheric palette of golds and deep shadows. The composition is centered and powerful, evoking a sense of ancient mystery." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7bYd6p7Itu-zMzmfj1fxfQd8TQcNBW7MEYvkS58Gz_YH_l78Bv7Zsx3B9HC63-xeSwC68IMw1QJvYlCrVZGpL1r2m768K57yCBtYdf6xUSasyie3Yl8xEQDoYb8oJdcfPP7P3C7C9VLubzA-6ANc4LyteL0iowrDy-eyXkOTLmV0nlkCz8HixSuqZ7LmbMrppP272GgyFlRGvr896pexxtVKhjX7mSz9FpbaaEZMicP_-ERvXzh_WoCF-FMWVC0-wgm47WGZ0PsFO">
+</div>
+</td>
+<td class="px-6 py-4">
+<p class="text-white font-bold">Elden Ring</p>
+<p class="text-xs text-outline">SKU: ER-001-PC</p>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full border border-primary/20">ألعاب فيديو</span>
+</td>
+<td class="px-6 py-4 text-center text-on-surface">15</td>
+<td class="px-6 py-4 text-center font-bold text-tertiary">$59.99</td>
+<td class="px-8 py-4 text-left">
+<div class="flex gap-2">
+<button class="p-2 hover:bg-primary/20 rounded-lg text-primary transition-all">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="p-2 hover:bg-error/20 rounded-lg text-error transition-all">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Gaming PC -->
+<tr class="hover:bg-white/[0.03] transition-colors group">
+<td class="px-8 py-4">
+<div class="w-16 h-16 rounded-lg overflow-hidden border border-white/10 group-hover:border-primary/50 transition-colors">
+<img alt="Gaming PC v2" class="w-full h-full object-cover" data-alt="A high-end custom gaming PC build with a tempered glass side panel showcasing vibrant neon pink and cyan internal RGB lighting. The system features advanced liquid cooling components and braided cables, set against a dark studio background. The lighting is crisp and colorful, creating a premium hardware aesthetic suitable for an elite store." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUBHosryCianfr3zCPcfRBicU_x-Ad4bS9RT-YgiukS8_j7YNCOqIHFeqpGFFwTg2H_WsZ-QXw-ILyg_YMyfGChjlRl6dVPl67UMdNSVEO4wjgVNl7Ym-trMytCVBEkxDs9U5Ykdag79vyuYOinTnx487B0Gu8PiER7JwC5FTg3gJrhWO75NGkEThuLxC4hE7weYLf_5nWh8rfvCG0sJ2LXR0e7PLabHK9MLoH7uuy5isqXl50dLSTNmsti_jywlOKQwunxKc4xCfU">
+</div>
+</td>
+<td class="px-6 py-4">
+<p class="text-white font-bold">Gaming PC v2</p>
+<p class="text-xs text-outline">SKU: HW-ULT-02</p>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="bg-secondary-container/10 text-secondary text-xs px-3 py-1 rounded-full border border-secondary-container/20">حاسبات</span>
+</td>
+<td class="px-6 py-4 text-center text-on-surface">3</td>
+<td class="px-6 py-4 text-center font-bold text-tertiary">$2,499</td>
+<td class="px-8 py-4 text-left">
+<div class="flex gap-2">
+<button class="p-2 hover:bg-primary/20 rounded-lg text-primary transition-all">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="p-2 hover:bg-error/20 rounded-lg text-error transition-all">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: Cyberpunk 2077 -->
+<tr class="hover:bg-white/[0.03] transition-colors group">
+<td class="px-8 py-4">
+<div class="w-16 h-16 rounded-lg overflow-hidden border border-white/10 group-hover:border-primary/50 transition-colors">
+<img alt="Cyberpunk 2077" class="w-full h-full object-cover" data-alt="Cyberpunk 2077 promotional art featuring the main character 'V' standing in front of a futuristic, rain-slicked Night City street. The scene is dominated by vibrant neon yellows and deep reds, with a gritty, high-tech urban aesthetic. The lighting is cinematic, reflecting the high-performance gaming world's energy and intensity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCR_djOAsSvnwyFT1NFH1AWJ0yZcaXuvBSPQRXdVOjyZF4Cvz3O_BDiqJDM8hELnU9pSdMIcPBjgY5T55GplQyBlVB3aK6-8--1dTW56-bBFXyi_kH8ZqfFFdZCygO8P1FHFH1dM5RE_PJFUrBn7xgGbXKYf_oO0q68S4yEHCCfwV22sk6iofDwjKXf4RCHObTs6-9Ql7bOalfCMEiL_q5WIKRjIYPMmR9aC7Vr-0Abvsp7NIdngaYAuTmAZZoIHj7oLdQhMqRfiGu_">
+</div>
+</td>
+<td class="px-6 py-4">
+<p class="text-white font-bold">Cyberpunk 2077</p>
+<p class="text-xs text-outline">SKU: CP-2077-V</p>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full border border-primary/20">ألعاب فيديو</span>
+</td>
+<td class="px-6 py-4 text-center text-on-surface">20</td>
+<td class="px-6 py-4 text-center font-bold text-tertiary">$49.99</td>
+<td class="px-8 py-4 text-left">
+<div class="flex gap-2">
+<button class="p-2 hover:bg-primary/20 rounded-lg text-primary transition-all">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="p-2 hover:bg-error/20 rounded-lg text-error transition-all">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4: Razer Keyboard -->
+<tr class="hover:bg-white/[0.03] transition-colors group">
+<td class="px-8 py-4">
+<div class="w-16 h-16 rounded-lg overflow-hidden border border-white/10 group-hover:border-primary/50 transition-colors">
+<img alt="Razer Keyboard" class="w-full h-full object-cover" data-alt="A premium mechanical gaming keyboard with individual key RGB lighting glowing in a pulse of purple and pink. The keyboard has a matte black finish and is captured at a dynamic low angle, emphasizing the tactile switches and sophisticated design. The background is a soft-focus dark office setup, highlighting the gear's glow." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjqFXPhmDfvpXNE-0n8lHNGmDObJ7CD9RXKgmCh38wOfswjk49LDibHIzgHs1CPfV_Xp-tjKjaHZwUA795WAnHBgvdpZxXJYOCX008LZmuwNOsk_Cy2h1bTQmPHxOSVznwiJ3F6tgIHRaRsh8mSyxIlCPO7v2HqIG6Pqaq4c68qgih3Q_ydtCHsiqSNrYYQL8spxMo2Ni5uoKI1MiWJgPQhw2iMiPQGTqeocBZYFfMClm8VnkBOF9dSFaMC8LlfBIf6NbxiyhpsfpC">
+</div>
+</td>
+<td class="px-6 py-4">
+<p class="text-white font-bold">Razer Keyboard</p>
+<p class="text-xs text-outline">SKU: PER-RZ-BLK</p>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="bg-surface-container-highest text-outline text-xs px-3 py-1 rounded-full border border-outline-variant">عتاد</span>
+</td>
+<td class="px-6 py-4 text-center text-on-surface">8</td>
+<td class="px-6 py-4 text-center font-bold text-tertiary">$129.50</td>
+<td class="px-8 py-4 text-left">
+<div class="flex gap-2">
+<button class="p-2 hover:bg-primary/20 rounded-lg text-primary transition-all">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="p-2 hover:bg-error/20 rounded-lg text-error transition-all">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5: Secretlab Chair -->
+<tr class="hover:bg-white/[0.03] transition-colors group">
+<td class="px-8 py-4">
+<div class="w-16 h-16 rounded-lg overflow-hidden border border-white/10 group-hover:border-primary/50 transition-colors">
+<img alt="Secretlab Chair" class="w-full h-full object-cover" data-alt="An ergonomic luxury gaming chair upholstered in premium dark faux leather with subtle fuchsia stitching. The chair is positioned in a modern gaming lounge with ambient neon lighting reflecting off its polished base. The style is sleek and professional, conveying comfort and high-end performance for long gaming sessions." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtcWgc481nahLu__e2WgQIfEpR679WdtaHsMExVgG4M0zNjwLcYyOEU-Iy9WsoU5XANeW62P56mBVSeSTLs67TxNcr9QQL9jFJpO10Bkewsxc02zDtGKFUlOfNiNye5FNKv014Lh659Q53OsbT20PyoOqFhXf6CpUWxvkD_RcmI7fF9JdL3u8miqky-pdIJezKEMXtr4yX5O6oyd4r-v9_FOgi4d-prsBRXnBZiRxr8ZX-oRb7iMlobpurNNJNW7HIqQdawFR0ZL4F">
+</div>
+</td>
+<td class="px-6 py-4">
+<p class="text-white font-bold">Secretlab Chair</p>
+<p class="text-xs text-outline">SKU: ACC-SL-PRO</p>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="bg-surface-container-highest text-outline text-xs px-3 py-1 rounded-full border border-outline-variant">ملحقات</span>
+</td>
+<td class="px-6 py-4 text-center text-on-surface">5</td>
+<td class="px-6 py-4 text-center font-bold text-tertiary">$399.00</td>
+<td class="px-8 py-4 text-left">
+<div class="flex gap-2">
+<button class="p-2 hover:bg-primary/20 rounded-lg text-primary transition-all">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="p-2 hover:bg-error/20 rounded-lg text-error transition-all">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-8 py-6 border-t border-white/5 flex flex-row-reverse justify-between items-center bg-slate-900/20">
+<p class="text-sm text-outline">عرض 1 إلى 5 من إجمالي 120 منتج</p>
+<div class="flex flex-row-reverse items-center gap-2">
+<button class="p-2 bg-surface-container rounded-lg text-outline hover:bg-primary/20 hover:text-primary transition-all">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+<button class="px-4 py-2 bg-primary/20 text-primary font-bold rounded-lg border border-primary/20">1</button>
+<button class="px-4 py-2 hover:bg-white/5 text-outline rounded-lg transition-all">2</button>
+<button class="px-4 py-2 hover:bg-white/5 text-outline rounded-lg transition-all">3</button>
+<button class="p-2 bg-surface-container rounded-lg text-outline hover:bg-primary/20 hover:text-primary transition-all">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+
+
+</body></html>

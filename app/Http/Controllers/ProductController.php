@@ -30,6 +30,23 @@ class ProductController extends Controller
         return view('products.index', compact('products'));
     }
 
+    // عرض قائمة المنتجات للمشرف
+    public function adminIndex(Request $request)
+    {
+        $query = Product::query();
+        if ($request->has('search') && $request->search != '') {
+            $query->where('title', 'like', '%' . $request->search . '%')
+                  ->orWhere('description', 'like', '%' . $request->search . '%');
+        }
+        $products = $query->latest()->paginate(20);
+
+        // إحصائيات حقيقية للوحة التحكم
+        $totalProducts = Product::count();
+        $totalSales = \App\Models\Order::sum('total_price');
+
+        return view('admin.products', compact('products', 'totalProducts', 'totalSales'));
+    }
+
     public function create(Request $request)
     {
         $type = $request->query('type', 'game'); // default to game if not specified
@@ -64,7 +81,7 @@ class ProductController extends Controller
 
         Product::create($data);
 
-        return redirect()->route('products.index')->with('success', 'تم إضافة المنتج بنجاح.');
+        return redirect()->route('admin.products')->with('success', 'تم إضافة المنتج بنجاح.');
     }
 
     public function edit(Product $product)
@@ -92,12 +109,12 @@ class ProductController extends Controller
 
         $product->update($data);
 
-        return redirect()->route('products.index')->with('success', 'Product updated successfully.');
+        return redirect()->route('admin.products')->with('success', 'Product updated successfully.');
     }
 
     public function destroy(Product $product)
     {
         $product->delete();
-        return redirect()->route('products.index')->with('success', 'تم حذف المنتج بنجاح.');
+        return redirect()->route('admin.products')->with('success', 'تم حذف المنتج بنجاح.');
     }
 }

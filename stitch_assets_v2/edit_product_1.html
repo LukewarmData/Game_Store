@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html class="dark" dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;300;400;500;600;700;800;900&amp;family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container": "#271c27",
+                    "surface-dim": "#1a101a",
+                    "tertiary-fixed": "#ffe07d",
+                    "background": "#1a101a",
+                    "on-surface-variant": "#d7c0d4",
+                    "on-secondary-fixed": "#25005a",
+                    "on-primary-fixed-variant": "#7b008f",
+                    "secondary-fixed-dim": "#d2bbff",
+                    "primary": "#faabff",
+                    "on-error": "#690005",
+                    "on-tertiary-container": "#4d3e00",
+                    "secondary-fixed": "#eaddff",
+                    "on-secondary": "#3f008e",
+                    "on-background": "#f0ddec",
+                    "on-tertiary-fixed-variant": "#564500",
+                    "surface-container-lowest": "#140b15",
+                    "on-primary": "#570066",
+                    "secondary": "#d2bbff",
+                    "primary-container": "#e446ff",
+                    "primary-fixed": "#ffd6fe",
+                    "outline": "#9f8a9e",
+                    "on-tertiary": "#3b2f00",
+                    "surface-container-high": "#322631",
+                    "surface-tint": "#faabff",
+                    "surface-container-low": "#221823",
+                    "on-surface": "#f0ddec",
+                    "error": "#ffb4ab",
+                    "error-container": "#93000a",
+                    "tertiary-fixed-dim": "#e7c446",
+                    "tertiary-container": "#c9a82b",
+                    "secondary-container": "#6001d1",
+                    "on-error-container": "#ffdad6",
+                    "on-secondary-container": "#c9aeff",
+                    "tertiary": "#e7c446",
+                    "on-primary-fixed": "#35003f",
+                    "surface-container-highest": "#3d313c",
+                    "on-tertiary-fixed": "#231b00",
+                    "surface-bright": "#413541",
+                    "inverse-on-surface": "#382d38",
+                    "inverse-surface": "#f0ddec",
+                    "surface-variant": "#3d313c",
+                    "surface": "#1a101a",
+                    "outline-variant": "#524152",
+                    "on-primary-container": "#4c0059",
+                    "on-secondary-fixed-variant": "#5a00c6",
+                    "primary-fixed-dim": "#faabff",
+                    "inverse-primary": "#a200bb"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-max": "1440px",
+                    "section-gap": "80px",
+                    "margin-edge": "40px",
+                    "unit": "8px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Be Vietnam Pro"],
+                    "display-xl": ["Be Vietnam Pro"],
+                    "label-caps": ["Space Grotesk"],
+                    "headline-md": ["Be Vietnam Pro"],
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                    "display-xl": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "label-caps": ["14px", {"lineHeight": "1", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(26, 26, 46, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .neon-glow-pink {
+            box-shadow: 0 0 15px rgba(224, 64, 251, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-[#0f0f1a] text-on-background font-body-md min-h-screen overflow-x-hidden">
+<!-- TopNavBar Shell -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-[#1a1a2e]/60 backdrop-blur-[20px] shadow-[0_4_20px_rgba(0,0,0,0.5)] border-b border-white/10 h-20 flex flex-row-reverse justify-between items-center px-8 font-['Be_Vietnam_Pro'] text-right">
+<div class="flex items-center gap-6">
+<h1 class="text-2xl font-black text-[#e040fb] drop-shadow-[0_0_10px_rgba(224,64,251,0.6)]">لوحة التحكم</h1>
+</div>
+<div class="flex flex-row-reverse items-center gap-4">
+<div class="flex flex-row-reverse items-center gap-4 ml-8">
+<span class="material-symbols-outlined text-[#e040fb]">notifications</span>
+<span class="material-symbols-outlined text-[#e040fb]">account_circle</span>
+</div>
+<div class="relative hidden md:block">
+<input class="bg-surface-container-lowest border border-outline-variant rounded-xl px-4 py-2 text-right w-64 focus:border-primary outline-none transition-all" placeholder="بحث..." type="text"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar Shell -->
+<aside class="fixed right-0 top-0 h-full w-72 flex flex-col pt-24 z-40 bg-[#1a1a2e]/60 backdrop-blur-[20px] shadow-2xl shadow-black border-l border-white/10 font-['Be_Vietnam_Pro'] text-right">
+<div class="px-6 mb-8 flex flex-row-reverse items-center gap-4">
+<div class="w-12 h-12 rounded-full overflow-hidden border-2 border-primary">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a Middle Eastern male administrator in a high-tech gaming environment. The lighting is moody with purple and pink neon highlights reflecting off his glasses. He has a confident expression, suited for a premium digital marketplace executive profile. The background is a blurred server room with glowing fiber optic cables." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdbv7QNv43kbKnQBQR-lPRXOoawkiYv1CzApcoXLVLct-ng0uwhZwHkublFdEXy7ZxSkh8iv8nC-2rHyqKEQ64YjndQAZPXuvLQhSNkUTIaXcd7eL4O3IrEm0TOd2-I44mMQiZ5a5aU73uxqStUMa-YHkdnucpQ0Zn0ce2nHl9Sr5cFmidWNKZRDkDcMjOpxxfbVCV8fqnbtv6rfoARJmoxQs2jDh_zhWKVm3s2rq5f26ZXi_X1uIOWFCvlwZ4mPdBFLu0pOzkxZhq"/>
+</div>
+<div>
+<p class="font-headline-md text-white">المشرف</p>
+<p class="text-primary text-sm">متصل الآن</p>
+</div>
+</div>
+<nav class="flex flex-col gap-1 px-2">
+<a class="flex flex-row-reverse items-center justify-start gap-4 text-gray-400 p-4 w-full hover:bg-white/5 hover:text-white transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-lg">لوحة القيادة</span>
+</a>
+<a class="flex flex-row-reverse items-center justify-start gap-4 text-gray-400 p-4 w-full hover:bg-white/5 hover:text-white transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="sports_esports">sports_esports</span>
+<span class="text-lg">الألعاب</span>
+</a>
+<!-- Active State for Inventory (Product Edit) -->
+<a class="flex flex-row-reverse items-center justify-start gap-4 text-[#e040fb] bg-[#e040fb]/10 border-r-4 border-[#e040fb] p-4 w-full" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<span class="text-lg font-bold">المخزون</span>
+</a>
+<a class="flex flex-row-reverse items-center justify-start gap-4 text-gray-400 p-4 w-full hover:bg-white/5 hover:text-white transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="text-lg">المبيعات</span>
+</a>
+<a class="flex flex-row-reverse items-center justify-start gap-4 text-gray-400 p-4 w-full hover:bg-white/5 hover:text-white transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-lg">الإعدادات</span>
+</a>
+</nav>
+<div class="mt-auto p-4 mb-8">
+<button class="w-full py-4 rounded-xl bg-gradient-to-r from-primary to-primary-container text-on-primary font-bold shadow-[0_0_20px_rgba(250,171,255,0.4)] hover:brightness-110 active:scale-95 transition-all">
+                إضافة منتج جديد
+            </button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="mr-72 pt-28 px-10 pb-20">
+<!-- Warning Banner -->
+<div class="mb-8 w-full bg-tertiary-fixed/20 border border-tertiary-fixed/40 p-4 rounded-xl flex items-center gap-3 text-tertiary shadow-[0_0_15px_rgba(231,196,70,0.15)]">
+<span class="material-symbols-outlined text-tertiary">warning</span>
+<span class="font-headline-md text-lg">⚠️ أنت تقوم بتعديل منتج موجود</span>
+</div>
+<!-- Header Title -->
+<div class="mb-12">
+<h2 class="text-display-xl font-display-xl bg-gradient-to-l from-primary to-[#e040fb] bg-clip-text text-transparent inline-block">
+                📝 تعديل المنتج
+            </h2>
+<p class="text-on-surface-variant mt-2 text-body-lg">تحديث تفاصيل المنتج الحالي وتغيير حالته في المتجر</p>
+</div>
+<div class="grid grid-cols-12 gap-8">
+<!-- Left Column: Form Details -->
+<div class="col-span-12 lg:col-span-8 space-y-8">
+<section class="glass-panel p-8 rounded-2xl">
+<h3 class="text-headline-md text-white mb-6 border-b border-white/10 pb-4">المعلومات الأساسية</h3>
+<div class="space-y-6">
+<div class="grid grid-cols-2 gap-6">
+<div class="flex flex-col gap-2">
+<label class="text-on-surface-variant font-label-caps">اسم اللعبة</label>
+<input class="bg-surface-container-low border border-outline-variant rounded-lg p-3 text-white focus:border-primary outline-none focus:ring-1 focus:ring-primary transition-all" type="text" value="أسطورة السايبربانك: الظلال"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-on-surface-variant font-label-caps">الفئة</label>
+<select class="bg-surface-container-low border border-outline-variant rounded-lg p-3 text-white focus:border-primary outline-none transition-all">
+<option>RPG</option>
+<option selected="">Action</option>
+<option>Adventure</option>
+<option>Strategy</option>
+</select>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-on-surface-variant font-label-caps">وصف المنتج</label>
+<textarea class="bg-surface-container-low border border-outline-variant rounded-lg p-3 text-white focus:border-primary outline-none focus:ring-1 focus:ring-primary transition-all resize-none" rows="5">انغمس في عالم مستقبلي حيث تتصادم التكنولوجيا مع السحر. "ظلال السايبربانك" تقدم تجربة لعب فريدة من نوعها مع رسومات مذهلة وقصة متشعبة تعتمد على خياراتك.</textarea>
+</div>
+<div class="grid grid-cols-3 gap-6">
+<div class="flex flex-col gap-2">
+<label class="text-on-surface-variant font-label-caps">السعر (ريال)</label>
+<input class="bg-surface-container-low border border-outline-variant rounded-lg p-3 text-white focus:border-primary outline-none transition-all" type="number" value="299.00"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-on-surface-variant font-label-caps">الخصم (%)</label>
+<input class="bg-surface-container-low border border-outline-variant rounded-lg p-3 text-white focus:border-primary outline-none transition-all" type="number" value="15"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-on-surface-variant font-label-caps">المخزون</label>
+<input class="bg-surface-container-low border border-outline-variant rounded-lg p-3 text-white focus:border-primary outline-none transition-all" type="number" value="124"/>
+</div>
+</div>
+</div>
+</section>
+<section class="glass-panel p-8 rounded-2xl">
+<h3 class="text-headline-md text-white mb-6 border-b border-white/10 pb-4">متطلبات النظام</h3>
+<div class="grid grid-cols-2 gap-6">
+<div class="flex flex-col gap-2">
+<label class="text-on-surface-variant font-label-caps">المعالج</label>
+<input class="bg-surface-container-low border border-outline-variant rounded-lg p-3 text-white focus:border-primary outline-none transition-all" type="text" value="Intel Core i7-12700 / AMD Ryzen 7 5800X"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-on-surface-variant font-label-caps">ذاكرة الوصول العشوائي</label>
+<input class="bg-surface-container-low border border-outline-variant rounded-lg p-3 text-white focus:border-primary outline-none transition-all" type="text" value="16 GB RAM"/>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Media & Actions -->
+<div class="col-span-12 lg:col-span-4 space-y-8">
+<section class="glass-panel p-8 rounded-2xl">
+<h3 class="text-headline-md text-white mb-6 border-b border-white/10 pb-4">صورة الغلاف</h3>
+<div class="relative group">
+<div class="aspect-[3/4] rounded-xl overflow-hidden border-2 border-primary/30 group-hover:border-primary transition-colors cursor-pointer">
+<img class="w-full h-full object-cover" data-alt="A futuristic game cover art featuring a cyborg character with glowing neon blue circuitry against a dark, rainy metropolitan backdrop. The character is wearing reflective tactical gear. Intense cinematic lighting with heavy magenta and cyan contrasts. The style is high-fidelity digital illustration with a shallow depth of field, focused on the intricate details of the cybernetic enhancements." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAs5HKrHNeN-fSbV0fINYhFBhC7TjgUMa0ieuUlXGbkZ3FKHk8QvF6VLsevaT4pO4mnBb2NplNMOlIH0ogTX8wA-wLTK0RMS8v9vZq1Rq5ag9w2bw14Purg0IpdMOma32Murupaynye1emsheuBQdBzcKWaFePkxkuQG35BD-ZOvp6JDt8jCo7cn6TJ0GNP3DuLwIeNUcFyMWk_2RBaPZPtis3vfHFpOxWArL4RqTjErbtsNPLY3vG7qPJR_7SSz7o2xkz6Cz70T_wY"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+<span class="material-symbols-outlined text-white text-5xl">cloud_upload</span>
+</div>
+</div>
+<p class="text-center text-on-surface-variant mt-4 text-sm">انقر لتغيير الصورة (الحد الأقصى 5 ميجابايت)</p>
+</div>
+</section>
+<!-- Actions Container -->
+<section class="glass-panel p-8 rounded-2xl flex flex-col gap-4">
+<button class="w-full py-4 rounded-xl bg-gradient-to-r from-[#e040fb] to-primary-container text-on-primary font-bold shadow-[0_0_20px_rgba(224,64,251,0.4)] hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-2">
+<span>حفظ التعديلات</span>
+<span class="material-symbols-outlined">check</span>
+</button>
+<button class="w-full py-4 rounded-xl border-2 border-white/30 text-white font-bold hover:bg-white/5 active:scale-95 transition-all flex items-center justify-center gap-2">
+<span>إلغاء</span>
+<span class="material-symbols-outlined">close</span>
+</button>
+<div class="pt-4 border-t border-white/10 mt-2">
+<button class="w-full py-4 rounded-xl bg-error-container/20 border border-error text-error font-bold hover:bg-error-container/40 active:scale-95 transition-all flex items-center justify-center gap-2">
+<span>حذف المنتج نهائياً</span>
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</section>
+<section class="glass-panel p-6 rounded-2xl">
+<h4 class="text-white font-headline-md text-base mb-4">إحصائيات سريعة</h4>
+<div class="space-y-3">
+<div class="flex justify-between items-center text-sm">
+<span class="text-on-surface-variant">تاريخ الإضافة:</span>
+<span class="text-white">12 أكتوبر 2023</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span class="text-on-surface-variant">إجمالي المبيعات:</span>
+<span class="text-primary font-bold">1,240 وحدة</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span class="text-on-surface-variant">التقييم:</span>
+<span class="flex items-center gap-1 text-tertiary">
+                                4.8
+                                <span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+</span>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+<!-- FAB Suppression Rule Applied: No FAB on Edit/Details screen -->
+</body></html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>تسجيل الدخول - NGU GameStore</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Tajawal', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              dark: '#1e1b38',
+              darker: '#16132b',
+              accent: '#d946ef', // fuchsia-500
+              accentLight: '#f0abfc', // fuchsia-300
+              accentGlow: 'rgba(217, 70, 239, 0.5)',
+            }
+          },
+          backgroundImage: {
+            'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-styles">
+    body {
+      background-color: #1e1b38;
+      color: white;
+    }
+    
+    .glow-effect {
+      box-shadow: 0 0 15px var(--tw-colors-brand-accentGlow);
+    }
+    
+    .input-icon-wrapper {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .form-input {
+      background-color: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: border-color 0.3s ease;
+    }
+    
+    .form-input:focus {
+      border-color: #d946ef;
+      outline: none;
+    }
+
+    .glass-card {
+      background: rgba(22, 19, 43, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans">
+<!-- BEGIN: Header -->
+<header class="w-full">
+<!-- Top Navigation -->
+<nav class="bg-brand-darker py-4 px-6 flex justify-between items-center border-b border-white/10">
+<div class="flex items-center gap-4">
+<a class="text-brand-accent font-bold text-2xl flex items-center gap-2" href="#">
+          GameStore <i class="fa-solid fa-gamepad"></i>
+</a>
+<a class="text-gray-300 hover:text-white mr-6" href="#">كل المنتجات</a>
+</div>
+</nav>
+<!-- Secondary Navigation -->
+<nav class="bg-brand-dark py-3 px-6 flex justify-center gap-8 border-b border-white/5 text-sm">
+<a class="text-gray-400 hover:text-white flex items-center gap-2" href="#"><i class="fa-solid fa-gamepad"></i> ألعاب فيديو</a>
+<a class="text-gray-400 hover:text-white flex items-center gap-2" href="#"><i class="fa-solid fa-desktop"></i> حاسبات وقطع PC</a>
+<a class="text-gray-400 hover:text-white flex items-center gap-2" href="#"><i class="fa-brands fa-playstation"></i> أجهزة كونسول</a>
+</nav>
+</header>
+<!-- END: Header -->
+<!-- BEGIN: Main Content -->
+<main class="flex-grow flex items-center justify-center py-12 relative overflow-hidden">
+<!-- Background Gradient Effects -->
+<div class="absolute inset-0 z-0">
+<div class="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-accent rounded-full mix-blend-multiply filter blur-[128px] opacity-20"></div>
+<div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-[128px] opacity-20"></div>
+</div>
+<!-- Login Card -->
+<div class="glass-card z-10 w-full max-w-md p-10 rounded-2xl shadow-2xl relative glow-effect border border-brand-accent/20">
+<!-- Card Header -->
+<div class="text-center mb-8">
+<h1 class="text-5xl font-black italic text-transparent bg-clip-text bg-gradient-to-r from-brand-accentLight to-brand-accent mb-2">NGU</h1>
+<p class="text-gray-400 text-sm">تسجيل دخول كمستخدم</p>
+</div>
+<!-- Login Form -->
+<form class="space-y-5">
+<!-- Email Input -->
+<div class="relative flex items-stretch rounded-lg overflow-hidden border border-white/10 group focus-within:border-brand-accent transition-colors">
+<div class="input-icon-wrapper flex items-center justify-center w-12 text-gray-400 border-l border-white/10">
+<i class="fa-regular fa-envelope"></i>
+</div>
+<input class="flex-grow bg-transparent text-white px-4 py-3 outline-none placeholder-gray-500 w-full text-right" placeholder="البريد الإلكتروني" required="" type="email"/>
+</div>
+<!-- Password Input -->
+<div class="relative flex items-stretch rounded-lg overflow-hidden border border-white/10 group focus-within:border-brand-accent transition-colors">
+<div class="input-icon-wrapper flex items-center justify-center w-12 text-gray-400 border-l border-white/10">
+<i class="fa-solid fa-lock"></i>
+</div>
+<input class="flex-grow bg-transparent text-white px-4 py-3 outline-none placeholder-gray-500 w-full text-right" placeholder="كلمة المرور" required="" type="password"/>
+<button class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white focus:outline-none" type="button">
+<i class="fa-regular fa-eye"></i>
+</button>
+</div>
+<!-- Submit Button -->
+<button class="w-full py-3 rounded-lg bg-gradient-to-r from-brand-accentLight to-brand-accent text-brand-darker font-bold text-lg flex items-center justify-center gap-2 hover:opacity-90 transition-opacity mt-6" type="submit">
+<i class="fa-solid fa-arrow-left"></i> تسجيل الدخول
+        </button>
+</form>
+<!-- Divider -->
+<div class="relative flex items-center py-6">
+<div class="flex-grow border-t border-white/10"></div>
+<span class="flex-shrink-0 mx-4 text-gray-500 text-sm">أو تسجيل الدخول بواسطة</span>
+<div class="flex-grow border-t border-white/10"></div>
+</div>
+<!-- Social Login -->
+<div class="grid grid-cols-2 gap-4">
+<button class="flex items-center justify-center gap-2 py-2 px-4 rounded-lg border border-white/10 hover:bg-white/5 transition-colors text-sm" type="button">
+<img alt="Google" class="w-4 h-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwsdr-rCbbrsNQgFL6ar5REUhiRrzdEi61XqWQRBIBgN_6of8aLR1drZ0IGbAVv2U_SheRUF5XDaJDKbKEM6FkT0LY5-woIxZky5rojhzwTjWhnRt2h_1F4bJN1yOFLQcOF75U0iDcdz-phweigU5TmpzvXuwVswF5LvlujTvUw3lK6rcN3noiQvj0oPwf8jbqH9WWJBYhNWDn23QtttUfDBNLWPyjMQfl9_QRHxfGke44pD5lcXQFGThZrkPCVs5btJZaOxpfCkTa"/>
+          جوجل
+        </button>
+<button class="flex items-center justify-center gap-2 py-2 px-4 rounded-lg border border-white/10 hover:bg-white/5 transition-colors text-sm" type="button">
+<i class="fa-brands fa-github text-white"></i>
+          جيت هاب
+        </button>
+</div>
+<!-- Register Link -->
+<div class="text-center mt-8 text-sm">
+<span class="text-gray-400">ليس لديك حساب؟</span>
+<a class="text-brand-accent hover:text-brand-accentLight transition-colors" href="#">إنشاء حساب جديد</a>
+</div>
+</div>
+</main>
+<!-- END: Main Content -->
+<!-- BEGIN: Footer -->
+<footer class="bg-brand-darker border-t border-white/10 pt-12 pb-6 px-6 text-sm">
+<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 text-right">
+<!-- Brand & Description -->
+<div class="md:col-span-1 flex flex-col items-end">
+<a class="text-brand-accent font-bold text-xl flex items-center gap-2 mb-4 flex items-center gap-2" href="#">GameStore <i class="fa-solid fa-gamepad"></i></a>
+<p class="text-gray-400 leading-relaxed text-right w-full">
+          الوجهة الأولى للاعبين في العراق. نوفر أحدث الألعاب، وأقوى تجميعات الحواسيب، بأسعار تنافسية.
+        </p>
+</div>
+<!-- Quick Links -->
+<div class="flex flex-col items-end">
+<h3 class="text-white font-bold mb-4 text-lg">روابط سريعة</h3>
+<ul class="space-y-2 text-gray-400">
+<li class=""><a class="hover:text-brand-accent transition-colors" href="#">الرئيسية</a></li>
+<li class=""><a class="hover:text-brand-accent transition-colors" href="#">المتجر</a></li>
+<li class=""><a class="hover:text-brand-accent transition-colors" href="#">سلة المشتريات</a></li>
+<li class=""><a class="hover:text-brand-accent transition-colors" href="#">حسابي</a></li>
+</ul>
+</div>
+<!-- Contact Info -->
+<div class="flex flex-col items-end">
+<h3 class="text-white font-bold mb-4 text-lg">تواصل معنا</h3>
+<ul class="space-y-2 text-gray-400 text-right">
+<li class="flex items-center justify-end gap-2"><i class="fa-solid fa-location-dot w-4"></i> كربلاء</li>
+<li class="flex items-center justify-end gap-2"><i class="fa-solid fa-phone w-4"></i> 07875565480</li>
+<li class="flex items-center justify-end gap-2"><i class="fa-solid fa-phone w-4"></i> 07709774704</li>
+<li class="flex items-center justify-end gap-2"><i class="fa-solid fa-phone w-4"></i> 07875257459</li>
+<li class="flex items-center justify-end gap-2"><i class="fa-solid fa-envelope w-4"></i> nevergiveup@gmail.com</li>
+</ul>
+<div class="flex gap-4 mt-4 text-gray-400">
+<a class="hover:text-white transition-colors" href="#"><i class="fa-brands fa-discord text-lg"></i></a>
+<a class="hover:text-white transition-colors" href="#"><i class="fa-brands fa-twitter text-lg"></i></a>
+<a class="hover:text-white transition-colors" href="#"><i class="fa-brands fa-instagram text-lg"></i></a>
+</div>
+</div>
+</div>
+<!-- Copyright -->
+<div class="text-center text-gray-500 text-xs border-t border-white/5 pt-6">
+      © 2024 GameStore. جميع الحقوق محفوظة. تم التطوير لدعم مجتمع اللاعبين.
+    </div>
+</footer>
+<!-- END: Footer -->
+</body></html>

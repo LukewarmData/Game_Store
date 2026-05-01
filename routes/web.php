@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
     // روابط السلة (Cart)
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
+    Route::post('/cart/decrement/{cartItem}', [CartController::class, 'decrement'])->name('cart.decrement');
     Route::delete('/cart/remove/{cartItem}', [CartController::class, 'remove'])->name('cart.remove');
     
     // روابط الدفع والطلبات (Checkout)
@@ -53,6 +54,7 @@ Route::middleware('auth')->group(function () {
     
     // روابط لوحة التحكم (خاصة بالأدمن فقط)
     Route::middleware([App\Http\Middleware\AdminMiddleware::class])->group(function () {
+        Route::get('/admin/products', [ProductController::class, 'adminIndex'])->name('admin.products');
         Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
         Route::post('/products', [ProductController::class, 'store'])->name('products.store');
         Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');

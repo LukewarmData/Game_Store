@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+
+<html class="dark" dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&amp;family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        :root {
+            --primary-glow: rgba(224, 64, 251, 0.6);
+            --secondary-glow: rgba(162, 0, 187, 0.4);
+        }
+        .glass-panel {
+            background: rgba(26, 26, 46, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .neon-border-primary {
+            box-shadow: 0 0 15px var(--primary-glow);
+            border: 1px solid #faabff;
+        }
+        .neon-text-primary {
+            text-shadow: 0 0 8px var(--primary-glow);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#3d313c",
+                        "on-tertiary-fixed": "#231b00",
+                        "surface-bright": "#413541",
+                        "surface-container-high": "#322631",
+                        "surface-tint": "#faabff",
+                        "surface-container-low": "#221823",
+                        "on-surface": "#f0ddec",
+                        "error": "#ffb4ab",
+                        "error-container": "#93000a",
+                        "tertiary-fixed-dim": "#e7c446",
+                        "tertiary-container": "#c9a82b",
+                        "secondary-container": "#6001d1",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-container": "#c9aeff",
+                        "tertiary": "#e7c446",
+                        "on-primary-fixed": "#35003f",
+                        "outline-variant": "#524152",
+                        "on-primary-container": "#4c0059",
+                        "on-secondary-fixed-variant": "#5a00c6",
+                        "primary-fixed-dim": "#faabff",
+                        "inverse-primary": "#a200bb",
+                        "inverse-on-surface": "#382d38",
+                        "inverse-surface": "#f0ddec",
+                        "surface-variant": "#3d313c",
+                        "surface": "#1a101a",
+                        "secondary-fixed-dim": "#d2bbff",
+                        "primary": "#faabff",
+                        "on-error": "#690005",
+                        "on-tertiary-container": "#4d3e00",
+                        "secondary-fixed": "#eaddff",
+                        "surface-container": "#271c27",
+                        "surface-dim": "#1a101a",
+                        "tertiary-fixed": "#ffe07d",
+                        "background": "#1a101a",
+                        "on-surface-variant": "#d7c0d4",
+                        "on-secondary-fixed": "#25005a",
+                        "on-primary-fixed-variant": "#7b008f",
+                        "primary-fixed": "#ffd6fe",
+                        "outline": "#9f8a9e",
+                        "on-tertiary": "#3b2f00",
+                        "on-secondary": "#3f008e",
+                        "on-background": "#f0ddec",
+                        "on-tertiary-fixed-variant": "#564500",
+                        "surface-container-lowest": "#140b15",
+                        "on-primary": "#570066",
+                        "secondary": "#d2bbff",
+                        "primary-container": "#e446ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-edge": "40px",
+                        "unit": "8px",
+                        "gutter": "24px",
+                        "container-max": "1440px",
+                        "section-gap": "80px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Be Vietnam Pro"],
+                        "body-lg": ["Inter"],
+                        "label-caps": ["Space Grotesk"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Be Vietnam Pro"],
+                        "display-xl": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-caps": ["14px", {"lineHeight": "1", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                        "display-xl": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "800"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-hidden">
+<!-- Top Navigation Bar -->
+<nav class="bg-slate-950/60 backdrop-blur-lg border-b border-white/10 docked full-width top-0 z-50 shadow-[0_4px_30px_rgba(0,0,0,0.5)] font-be-vietnam-pro antialiased flex flex-row-reverse justify-between items-center w-full px-8 h-20 max-w-screen-2xl mx-auto fixed top-0 left-0 right-0">
+<div class="flex items-center gap-8">
+<div class="text-2xl font-black italic tracking-tighter text-fuchsia-500 drop-shadow-[0_0_8px_rgba(224,64,251,0.6)]">
+                NeonQuest Arabia
+            </div>
+<div class="hidden md:flex gap-6">
+<a class="text-slate-400 hover:text-white transition-colors" href="#">المتجر</a>
+<a class="text-slate-400 hover:text-white transition-colors" href="#">الفئات</a>
+<a class="text-slate-400 hover:text-white transition-colors" href="#">العروض</a>
+<a class="text-slate-400 hover:text-white transition-colors" href="#">المجتمع</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden lg:block">
+<input class="bg-white/5 border border-white/10 rounded-full px-4 py-2 w-64 text-sm focus:ring-1 focus:ring-fuchsia-500 transition-all outline-none" placeholder="بحث عن ألعاب..." type="text"/>
+</div>
+<div class="flex items-center gap-3">
+<button class="material-symbols-outlined text-slate-400 hover:text-fuchsia-500 transition-colors">shopping_cart</button>
+<button class="material-symbols-outlined text-slate-400 hover:text-fuchsia-500 transition-colors">notifications</button>
+<div class="w-10 h-10 rounded-full bg-surface-container-highest border border-white/10 overflow-hidden">
+<img alt="User Profile Avatar" class="w-full h-full object-cover" data-alt="A professional close-up portrait of a tech-savvy gamer with neon-rimmed glasses, reflecting vibrant fuchsia and cyan lights from a high-end monitor. The background is a soft-focus dark gaming room with geometric LED wall panels. The subject has a confident expression, representing a premium digital persona in a futuristic cyber-luxe setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBM2NEDa4E5-dIdlMtSlSWFD2nHqTraTemqxCIqs_acN4W4MFUoEshazHTdn2wqH9iLx7jxHFaFy0iLN_ezuQb7Jmy_g0LRSFDLS8rWalakmFjBB5SsDSUzUZMveX1T4jjr_jNqtruKQgjwmzwPT8WlaGNjSKumK8x5Psi5zaVuJSwzlcFJrk2lETB63rZtvsZJeZpNdJqaL3X7iFeEPfV8z5prnichH0-YXqU4Lx0gSjziuaYDfiOykS_A43J4GkD9RNNzzJBSJUDl"/>
+</div>
+</div>
+</div>
+</nav>
+<!-- Background Content (Blurred Storefront) -->
+<main class="relative w-full h-screen pt-20 overflow-hidden blur-2xl opacity-40 scale-105 pointer-events-none">
+<div class="max-w-screen-2xl mx-auto px-8 py-10 grid grid-cols-12 gap-gutter">
+<!-- Hero Section -->
+<div class="col-span-12 h-[500px] rounded-3xl overflow-hidden glass-panel relative border border-white/10">
+<img alt="Gaming Hero" class="w-full h-full object-cover" data-alt="An immersive cinematic landscape of a futuristic neon-lit city at night, with towering skyscrapers displaying holographic advertisements for epic RPG games. In the center, a powerful gaming rig glows with intense purple and blue RGB lighting, casting long shadows. The atmosphere is electric and high-stakes, blending high-end hardware with a virtual dreamscape." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJiI1cWMMd-Ts1qcRq5If3EUThoe0sv-6A5HwUbg3MGSolhYzDqiJ7TJgXaKBTVEv5PHFudY65vphZVaYayZr9jgiUM5CTNSMSKr_Nmw4NH0CfllVJSOmPyI5kXNvnF1qQJbJw7VwlF0zwggFJCXnY-q2Zkpy1K-ccxORUccIlmLgM0pmzWvJXKGf32j5SSptmaWJJ-mwhYhIcBLQCQwi08N2SPzei9I88O0W-k94YbRyjkXSaQCCqrzh36xtvp3xZHX6bdozMwQOa"/>
+<div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent flex flex-col justify-end p-12">
+<h1 class="font-display-xl text-display-xl text-white mb-4">اكتشف عوالم جديدة</h1>
+<p class="text-body-lg text-slate-300 max-w-2xl">استكشف أحدث الألعاب الحصرية والقطع النادرة في متجرنا الرقمي الفاخر المصمم خصيصاً للمحترفين.</p>
+</div>
+</div>
+<!-- Grid Sections -->
+<div class="col-span-8 grid grid-cols-2 gap-gutter">
+<div class="h-64 rounded-2xl glass-panel p-6 border border-white/10"></div>
+<div class="h-64 rounded-2xl glass-panel p-6 border border-white/10"></div>
+</div>
+<div class="col-span-4 h-full rounded-2xl glass-panel p-6 border border-white/10"></div>
+</div>
+</main>
+<!-- Overlay Layer for Focus -->
+<div class="fixed inset-0 bg-slate-950/30 pointer-events-none"></div>
+<!-- AI Chat Widget (Active in Bottom-Left for RTL) -->
+<div class="fixed bottom-6 left-6 z-[100] w-[400px] max-w-[90vw]">
+<!-- Chat Container -->
+<div class="glass-panel rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_30px_rgba(224,64,251,0.1)] overflow-hidden flex flex-col h-[600px] border border-fuchsia-500/30">
+<!-- Chat Header -->
+<div class="bg-fuchsia-600/90 backdrop-blur-md p-5 flex items-center justify-between border-b border-fuchsia-400/30">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center shadow-inner">
+<span class="text-2xl">🤖</span>
+</div>
+<div>
+<h3 class="font-headline-md text-white neon-text-primary">مساعد NGU الذكي</h3>
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+<span class="text-xs text-fuchsia-100 font-medium">متصل الآن</span>
+</div>
+</div>
+</div>
+<button class="material-symbols-outlined text-white/80 hover:text-white">close</button>
+</div>
+<!-- Chat History -->
+<div class="flex-1 overflow-y-auto p-5 space-y-6 scrollbar-hide">
+<!-- User Message -->
+<div class="flex flex-col items-end gap-2">
+<div class="bg-surface-container-highest text-on-surface p-4 rounded-2xl rounded-tr-none max-w-[85%] border border-white/5 shadow-lg">
+<p class="font-body-md">اريد افضل تجميعة PC للالعاب بحدود 2000 دولار</p>
+</div>
+<span class="text-[10px] text-slate-500 px-1">10:45 AM</span>
+</div>
+<!-- AI Message -->
+<div class="flex flex-col items-start gap-3">
+<div class="bg-fuchsia-950/40 backdrop-blur-sm text-fuchsia-100 p-4 rounded-2xl rounded-tl-none max-w-[90%] border border-fuchsia-500/20 shadow-[0_0_15px_rgba(224,64,251,0.05)]">
+<p class="font-body-md mb-4 leading-relaxed">
+                            أهلاً بك! أرشح لك تجميعة "المحارب الليلي" المتوفرة لدينا، تحتوي على RTX 4080 ومعالج i7 وتصميم عصري يناسب غرفتك. إليك التفاصيل:
+                        </p>
+<!-- Embedded Product Card -->
+<div class="bg-slate-900/80 rounded-xl overflow-hidden border border-fuchsia-500/40 hover:neon-border-primary transition-all duration-300">
+<div class="h-32 relative">
+<img alt="المحارب الليلي PC" class="w-full h-full object-cover" data-alt="A high-end custom gaming PC build titled Night Warrior, showcasing a sleek obsidian-black chassis with intricate tempered glass panels. The interior is a masterpiece of cable management, illuminated by a pulsing neon fuchsia and deep violet liquid cooling system. The hardware glows with a premium cyber-luxe aesthetic, set against a dark, tech-focused background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9LktEXFcyMjYy0VR_BAYOGIxdSDJYnNytXEbe5kr567j0BWkPbKeJD0RohH6m9aCDhKEQEVF55hvVFrKopMxaTvoBfF2s6NIMIVomAgAHGC5ZjKXqLiJWu9Cv5J2PX_GTV-cbi76rjarJUNV3JDY2eLbRgXw6yy9Fsh-YxokIP53Y3WH3IFQ-0yRzvA_d9bfcjYCN2e2E8UPuVoj-GgIq9NkzjdL1JcdECiUgiORzRLsmTGNjbXyKAnGV3ZtZ6BgBg4Ly0vLkezG0"/>
+<div class="absolute top-2 right-2 bg-fuchsia-600 text-[10px] font-bold px-2 py-0.5 rounded-full text-white uppercase tracking-wider">الأكثر طلباً</div>
+</div>
+<div class="p-3 flex justify-between items-center">
+<div>
+<h4 class="font-label-caps text-white text-sm mb-1">المحارب الليلي - V2</h4>
+<p class="text-fuchsia-400 font-bold text-lg leading-none">1,999$</p>
+</div>
+<button class="bg-fuchsia-500 hover:bg-fuchsia-400 text-white p-2 rounded-lg transition-transform active:scale-95">
+<span class="material-symbols-outlined text-sm">shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<span class="text-[10px] text-slate-500 px-1">10:46 AM</span>
+</div>
+</div>
+<!-- Input Area -->
+<div class="p-4 bg-slate-950/80 border-t border-white/10">
+<div class="relative flex items-center">
+<input class="w-full bg-surface-container-low border border-white/10 rounded-2xl py-3 pr-4 pl-14 text-sm focus:border-fuchsia-500 focus:ring-1 focus:ring-fuchsia-500 outline-none transition-all placeholder:text-slate-500 text-on-surface" placeholder="اكتب رسالتك هنا..." type="text"/>
+<button class="absolute left-2 bg-fuchsia-600 hover:bg-fuchsia-500 text-white w-10 h-10 rounded-xl flex items-center justify-center transition-all shadow-[0_0_10px_rgba(224,64,251,0.4)] active:scale-90">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">send</span>
+</button>
+</div>
+<div class="flex gap-2 mt-3 overflow-x-auto no-scrollbar pb-1">
+<button class="whitespace-nowrap px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[10px] text-slate-400 hover:text-fuchsia-300 hover:border-fuchsia-500/50 transition-colors">مواصفات PC أخرى</button>
+<button class="whitespace-nowrap px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[10px] text-slate-400 hover:text-fuchsia-300 hover:border-fuchsia-500/50 transition-colors">تتبع طلبي</button>
+<button class="whitespace-nowrap px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[10px] text-slate-400 hover:text-fuchsia-300 hover:border-fuchsia-500/50 transition-colors">التواصل مع الدعم</button>
+</div>
+</div>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+
+<html class="dark" dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&amp;family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#3d313c",
+                        "on-secondary-fixed-variant": "#5a00c6",
+                        "outline": "#9f8a9e",
+                        "on-error": "#690005",
+                        "secondary": "#d2bbff",
+                        "on-tertiary-container": "#4d3e00",
+                        "surface-bright": "#413541",
+                        "surface": "#1a101a",
+                        "secondary-container": "#6001d1",
+                        "surface-container-lowest": "#140b15",
+                        "on-background": "#f0ddec",
+                        "on-surface-variant": "#d7c0d4",
+                        "surface-container-high": "#322631",
+                        "tertiary-fixed": "#ffe07d",
+                        "on-error-container": "#ffdad6",
+                        "inverse-surface": "#f0ddec",
+                        "background": "#1a101a",
+                        "inverse-primary": "#a200bb",
+                        "on-secondary": "#3f008e",
+                        "on-primary-fixed-variant": "#7b008f",
+                        "surface-dim": "#1a101a",
+                        "primary-container": "#e446ff",
+                        "on-tertiary": "#3b2f00",
+                        "outline-variant": "#524152",
+                        "on-primary": "#570066",
+                        "primary-fixed": "#ffd6fe",
+                        "inverse-on-surface": "#382d38",
+                        "on-tertiary-fixed": "#231b00",
+                        "on-tertiary-fixed-variant": "#564500",
+                        "on-primary-container": "#4c0059",
+                        "surface-container-low": "#221823",
+                        "on-primary-fixed": "#35003f",
+                        "tertiary-fixed-dim": "#e7c446",
+                        "secondary-fixed": "#eaddff",
+                        "secondary-fixed-dim": "#d2bbff",
+                        "surface-tint": "#faabff",
+                        "tertiary-container": "#c9a82b",
+                        "surface-container-highest": "#3d313c",
+                        "on-secondary-container": "#c9aeff",
+                        "error": "#ffb4ab",
+                        "tertiary": "#e7c446",
+                        "primary": "#faabff",
+                        "surface-container": "#271c27",
+                        "primary-fixed-dim": "#faabff",
+                        "error-container": "#93000a",
+                        "on-secondary-fixed": "#25005a",
+                        "on-surface": "#f0ddec"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["spaceGrotesk"],
+                        "body-md": ["inter"],
+                        "headline-md": ["beVietnamPro"],
+                        "headline-lg": ["beVietnamPro"],
+                        "display-xl": ["beVietnamPro"],
+                        "body-lg": ["inter"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #0f0f1a;
+            color: #f0ddec;
+        }
+        .glass-card {
+            background: rgba(26, 26, 46, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .neon-glow {
+            box-shadow: 0 0 20px rgba(224, 64, 251, 0.15);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-body-md overflow-x-hidden">
+<!-- TopNavBar (Suppressed based on Transactional Rule - Logic: Page is Success/Confirmation) -->
+<main class="flex-grow container mx-auto px-6 py-12 flex flex-col items-center">
+<!-- Success Message Header -->
+<div class="text-center mb-12 animate-in fade-in slide-in-from-top duration-700">
+<div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-emerald-500/20 text-emerald-400 mb-6 neon-glow">
+<span class="material-symbols-outlined text-5xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h1 class="font-headline-lg text-on-surface mb-3">تمت إضافة طلبك بنجاح!</h1>
+<p class="font-body-lg text-slate-400">شكراً لتسوقك معنا. هذه فاتورة بشراء منتجاتك.</p>
+</div>
+<!-- Invoice Card -->
+<div class="w-full max-w-4xl bg-white text-slate-900 rounded-xl overflow-hidden shadow-2xl animate-in fade-in zoom-in duration-500">
+<!-- Invoice Header -->
+<div class="px-10 py-8 border-b border-slate-100 flex flex-row justify-between items-start">
+<div class="flex flex-col gap-1">
+<span class="text-2xl font-black text-[#25005a]">🎮 GameStore</span>
+<span class="text-sm text-slate-500">الوقت: 2024-01-15 14:30</span>
+</div>
+<div class="flex flex-col items-start gap-1">
+<span class="text-sm font-bold uppercase tracking-widest text-[#25005a]">فاتورة طلب</span>
+<span class="text-3xl font-black text-[#25005a]">#00042</span>
+</div>
+</div>
+<!-- Customer Info -->
+<div class="px-10 py-8 bg-slate-50/50">
+<h3 class="text-xs font-bold text-slate-400 uppercase tracking-tighter mb-4">معلومات المشتري:</h3>
+<div class="flex flex-col gap-1">
+<span class="font-headline-md text-slate-800">Hussein Raad</span>
+<span class="text-slate-500">hussein@example.com</span>
+</div>
+</div>
+<!-- Products Table -->
+<div class="px-10 py-6">
+<table class="w-full text-right">
+<thead>
+<tr class="border-b border-slate-100 text-slate-400 text-sm">
+<th class="pb-4 font-medium">المنتج</th>
+<th class="pb-4 font-medium text-center">الكمية</th>
+<th class="pb-4 font-medium">سعر الوحدة</th>
+<th class="pb-4 font-medium">الإجمالي</th>
+</tr>
+</thead>
+<tbody class="text-slate-700">
+<tr class="border-b border-slate-50">
+<td class="py-5">
+<div class="flex flex-col">
+<span class="font-bold">Elden Ring</span>
+<span class="text-xs text-slate-400">ألعاب فيديو</span>
+</div>
+</td>
+<td class="py-5 text-center font-medium text-slate-500">1</td>
+<td class="py-5 text-slate-500">$59.99</td>
+<td class="py-5 font-bold text-[#25005a]">$59.99</td>
+</tr>
+<tr class="border-b border-slate-50">
+<td class="py-5">
+<div class="flex flex-col">
+<span class="font-bold">Gaming Chair</span>
+<span class="text-xs text-slate-400">ملحقات</span>
+</div>
+</td>
+<td class="py-5 text-center font-medium text-slate-500">2</td>
+<td class="py-5 text-slate-500">$29.99</td>
+<td class="py-5 font-bold text-[#25005a]">$59.98</td>
+</tr>
+<tr class="border-b border-slate-100">
+<td class="py-5">
+<div class="flex flex-col">
+<span class="font-bold">RTX 4070 PC</span>
+<span class="text-xs text-slate-400">أجهزة</span>
+</div>
+</td>
+<td class="py-5 text-center font-medium text-slate-500">1</td>
+<td class="py-5 text-slate-500">$30.02</td>
+<td class="py-5 font-bold text-[#25005a]">$30.02</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Summary -->
+<div class="px-10 py-10 bg-slate-50/30 flex justify-end">
+<div class="w-64 space-y-3">
+<div class="flex justify-between text-slate-500">
+<span>المجموع الفرعي:</span>
+<span class="font-medium">$149.99</span>
+</div>
+<div class="flex justify-between text-slate-500">
+<span>الضريبة:</span>
+<span class="font-medium">$0.00</span>
+</div>
+<div class="pt-4 border-t border-slate-200 flex justify-between items-center">
+<span class="text-lg font-bold text-[#25005a]">الإجمالي:</span>
+<span class="text-3xl font-black text-[#25005a]">$149.99</span>
+</div>
+</div>
+</div>
+<!-- Footer Message -->
+<div class="px-10 py-6 border-t border-slate-100 text-center">
+<p class="text-xs text-slate-400 italic">هذه الفاتورة تم إنشاؤها إلكترونياً ولا تحتاج إلى توقيع.</p>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-row gap-4 mt-12 w-full max-w-4xl justify-center">
+<button class="flex-1 max-w-[240px] px-8 py-4 rounded-xl border border-white/20 text-white font-headline-md flex items-center justify-center gap-3 hover:bg-white/10 transition-all active:scale-95">
+<span class="material-symbols-outlined">print</span>
+<span>طباعة الفاتورة</span>
+</button>
+<button class="flex-1 max-w-[240px] px-8 py-4 rounded-xl bg-gradient-to-r from-[#e040fb] to-[#9c27b0] text-white font-headline-md flex items-center justify-center gap-3 shadow-[0_0_20px_rgba(224,64,251,0.4)] hover:opacity-90 transition-all active:scale-95">
+<span class="material-symbols-outlined">home</span>
+<span>العودة للمتجر</span>
+</button>
+</div>
+</main>
+<!-- Shared Component: Footer -->
+<footer class="bg-[#0f0f1a] border-t border-white/5 mt-auto">
+<div class="flex flex-row-reverse justify-between items-center px-12 py-8 w-full max-w-screen-2xl mx-auto">
+<span class="font-['Be_Vietnam_Pro'] text-xs uppercase tracking-tighter text-slate-500">© 2024 متجر الألعاب. جميع الحقوق محفوظة.</span>
+<div class="flex flex-row-reverse gap-8">
+<a class="font-['Be_Vietnam_Pro'] text-xs uppercase tracking-tighter text-slate-500 hover:text-[#e040fb] transition-colors cursor-pointer" href="#">طباعة الفاتورة</a>
+<a class="font-['Be_Vietnam_Pro'] text-xs uppercase tracking-tighter text-slate-500 hover:text-[#e040fb] transition-colors cursor-pointer" href="#">العودة للمتجر</a>
+<a class="font-['Be_Vietnam_Pro'] text-xs uppercase tracking-tighter text-slate-500 hover:text-[#e040fb] transition-colors cursor-pointer" href="#">الشروط والأحكام</a>
+</div>
+</div>
+</footer>
+<!-- Background Decoration -->
+<div class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none">
+<div class="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px]"></div>
+<div class="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-secondary/10 rounded-full blur-[120px]"></div>
+</div>
+</body></html>

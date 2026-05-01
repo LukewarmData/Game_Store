@@ -1,0 +1,320 @@
+<!DOCTYPE html><html class="dark" dir="rtl" lang="ar"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;300;400;500;700;800;900&amp;family=Noto+Sans+Arabic:wght@100;300;400;500;700;900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "inverse-on-surface": "#382d38",
+                      "on-primary-fixed": "#35003f",
+                      "surface-container-highest": "#3d313c",
+                      "on-background": "#f0ddec",
+                      "surface-dim": "#1a101a",
+                      "surface-variant": "#3d313c",
+                      "surface": "#1a101a",
+                      "surface-container": "#271c27",
+                      "on-error": "#690005",
+                      "on-tertiary-fixed-variant": "#564500",
+                      "on-primary-container": "#4c0059",
+                      "on-error-container": "#ffdad6",
+                      "tertiary-container": "#c9a82b",
+                      "primary": "#faabff",
+                      "background": "#1a101a",
+                      "secondary-fixed-dim": "#d2bbff",
+                      "primary-fixed": "#ffd6fe",
+                      "on-tertiary-fixed": "#231b00",
+                      "on-secondary-fixed-variant": "#5a00c6",
+                      "surface-bright": "#413541",
+                      "primary-container": "#e446ff",
+                      "on-tertiary-container": "#4d3e00",
+                      "outline-variant": "#524152",
+                      "primary-fixed-dim": "#faabff",
+                      "on-secondary-container": "#c9aeff",
+                      "on-surface-variant": "#d7c0d4",
+                      "tertiary-fixed": "#ffe07d",
+                      "secondary": "#d2bbff",
+                      "on-primary-fixed-variant": "#7b008f",
+                      "inverse-surface": "#f0ddec",
+                      "surface-container-lowest": "#140b15",
+                      "on-primary": "#570066",
+                      "on-secondary-fixed": "#25005a",
+                      "error-container": "#93000a",
+                      "surface-container-high": "#322631",
+                      "secondary-container": "#6001d1",
+                      "outline": "#9f8a9e",
+                      "tertiary-fixed-dim": "#e7c446",
+                      "surface-tint": "#faabff",
+                      "inverse-primary": "#a200bb",
+                      "on-surface": "#f0ddec",
+                      "on-tertiary": "#3b2f00",
+                      "error": "#ffb4ab",
+                      "on-secondary": "#3f008e",
+                      "tertiary": "#e7c446",
+                      "surface-container-low": "#221823",
+                      "secondary-fixed": "#eaddff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "body-lg": ["inter", "Noto Sans Arabic"],
+                      "label-caps": ["spaceGrotesk", "Noto Sans Arabic"],
+                      "body-md": ["inter", "Noto Sans Arabic"],
+                      "headline-lg": ["beVietnamPro", "Noto Sans Arabic"],
+                      "display-xl": ["beVietnamPro", "Noto Sans Arabic"],
+                      "headline-md": ["beVietnamPro", "Noto Sans Arabic"]
+              },
+            },
+          },
+        }
+      </script>
+<style>
+        body {
+            background-color: #0f0f1a;
+            font-family: 'Be Vietnam Pro', 'Noto Sans Arabic', sans-serif;
+            color: #f0ddec;
+        }
+        .glass-card {
+            background: rgba(26, 26, 46, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            border-color: #e446ff;
+            box-shadow: 0 0 20px rgba(228, 70, 255, 0.2);
+            transform: translateY(-4px);
+        }
+        .neon-glow-primary {
+            box-shadow: 0 0 15px rgba(228, 70, 255, 0.5);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+      </style>
+</head>
+<body class="antialiased">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#1a1a2e]/60 backdrop-blur-lg border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
+<div class="flex flex-row-reverse justify-between items-center px-8 py-4 w-full max-w-screen-2xl mx-auto">
+<!-- Brand Logo -->
+<div class="text-2xl font-black italic tracking-wider text-fuchsia-500 drop-shadow-[0_0_8px_rgba(224,64,251,0.8)] font-headline-lg">Game Store</div>
+<!-- Search Bar Center -->
+<div class="hidden md:flex flex-1 max-w-md mx-12">
+<div class="relative w-full">
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-full py-2 px-10 text-on-surface focus:outline-none focus:border-primary-container transition-all text-sm" placeholder="ابحث عن ألعاب، أجهزة..." type="text">
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+</div>
+</div>
+<!-- Nav Links & Actions -->
+<div class="flex items-center gap-6">
+<nav class="hidden lg:flex items-center gap-8 font-['Be_Vietnam_Pro'] font-bold text-sm">
+<a class="text-fuchsia-400 border-b-2 border-fuchsia-500 pb-1" href="#">المتجر</a>
+<a class="text-slate-300 hover:text-fuchsia-300 transition-colors" href="#">العروض</a>
+<a class="text-slate-300 hover:text-fuchsia-300 transition-colors" href="#">المجتمع</a>
+<a class="text-slate-300 hover:text-fuchsia-300 transition-colors" href="#">الدعم</a>
+</nav>
+<div class="flex items-center gap-4 border-r border-white/10 pr-6 mr-2">
+<button class="active:scale-95 transition-transform hover:text-fuchsia-400">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+</button>
+<button class="active:scale-95 transition-transform hover:text-fuchsia-400">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="active:scale-95 transition-transform hover:text-fuchsia-400">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<main class="pt-32 pb-20 px-8 max-w-screen-2xl mx-auto">
+<!-- Page Title Section -->
+<section class="flex flex-col md:flex-row justify-between items-center mb-12 gap-6">
+<div class="text-right">
+<h1 class="font-display-xl text-display-xl text-on-surface">ألعاب الفيديو</h1>
+<p class="text-on-surface-variant font-body-md mt-2">اكتشف أحدث العناوين وأقوى أجهزة الألعاب</p>
+</div>
+<div class="flex gap-4 w-full md:w-auto">
+<div class="relative flex-1 md:w-80">
+<input class="w-full bg-surface-container border border-outline-variant rounded-xl py-3 px-12 text-on-surface focus:ring-1 focus:ring-primary-container focus:border-primary-container transition-all" placeholder="ابحث عن منتج..." type="text">
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+</div>
+<button class="bg-primary-container text-on-primary-container px-8 py-3 rounded-xl font-bold hover:brightness-110 active:scale-95 transition-all neon-glow-primary">
+                    بحث
+                </button>
+</div>
+</section>
+<!-- Product Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-gutter mb-16">
+<!-- Product Card 1 -->
+<div class="glass-card rounded-2xl overflow-hidden flex flex-col group">
+<div class="relative aspect-square overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A cinematic close-up of a high-end futuristic gaming console with glowing magenta LED accents and sleek carbon fiber textures. The scene is set in a dark, atmospheric room with neon pink light reflecting off the surface, creating a premium cyber-luxe aesthetic. The lighting is moody and dramatic, emphasizing the console's sharp edges and sophisticated design in a dark gaming lounge." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIMa-nT8228zUbs1gK8CyU2WhdP9M1fOWU7Xim_qorIwgBWdLJi6DFMxe5WsTM2rgao3eogrP2SlpX3SutjslNzegDeR9S5IcllC6X9eluCIeY9h40uz8k8RUyYq-YoAEpuK9M5PVucXvNUNzEyXPlvK731qAj7EY97chvcvaqkn6hRUWpyqFMDRNwN9ZOaZR9PlS7dThIZkzeKu3MQiIrv6LFklASiuY6A_MFlfupvR77At-YFTJUN85Tpn1-6p7tFpvxZjCIPGna">
+<div class="absolute top-4 left-4 bg-secondary-container text-on-secondary-container text-xs font-bold px-3 py-1 rounded-full">خصم 20%</div>
+</div>
+<div class="p-6 flex flex-col flex-1">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">سايبر بانك 2077</h3>
+<p class="text-on-surface-variant text-sm mb-4 line-clamp-2">استكشف مدينة المستقبل في عالم مفتوح مليء بالمغامرات والأكشن والترقيات التقنية.</p>
+<div class="mt-auto flex items-center justify-between">
+<span class="text-primary-container font-bold text-xl">$59.99</span>
+<div class="flex gap-2">
+<button class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-on-surface-variant hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-error hover:bg-error/10 transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+<button class="w-10 h-10 rounded-full bg-gradient-to-tr from-fuchsia-600 to-purple-600 flex items-center justify-center text-white neon-glow-primary active:scale-90 transition-transform">
+<span class="material-symbols-outlined">shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Card 2 (Out of Stock) -->
+<div class="glass-card rounded-2xl overflow-hidden flex flex-col group opacity-90">
+<div class="relative aspect-square overflow-hidden grayscale">
+<img class="w-full h-full object-cover" data-alt="A professional high-performance gaming headset with an integrated microphone, featuring glowing violet lighting rings on the ear cups. The headset is resting on a reflective black surface in a dimly lit studio environment. The color palette is dominated by deep purples and sleek blacks, creating a high-energy, premium tech vibe with soft bokeh lights in the background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEvEsu9nzq1DFwQwH4vswfXl1IiufrJQv9nBXpQHQl9Xe-n7Ng_lEQvT_X2UFBD0FgiBd3FJjI4q5pjAQO7ZRgwasYXnYMoQIg6XuXpt3nDyeX03qVvUCsDh63Yywqwpory6IL4R1Chy2cOgwNvyR5hLHnW4yID8Vp6oBMaa5hbxcxUJVGKhigCeJZiWgLoCsEYqtObvqrKsb637Cca1_w-liVn2IxDBgj8r-2CMr_UYBVk6rwoWPkS8BxcE1rcw8MmzgqvEwg_e9b">
+<div class="absolute inset-0 bg-background/60 flex items-center justify-center">
+<span class="bg-error-container text-on-error-container px-4 py-2 rounded-lg font-bold text-lg shadow-lg">نفدت الكمية</span>
+</div>
+</div>
+<div class="p-6 flex flex-col flex-1">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">سماعة نكسوس برو</h3>
+<p class="text-on-surface-variant text-sm mb-4 line-clamp-2">سماعة محيطية لاسلكية مع ميكروفون عازل للضوضاء وتصميم مريح لساعات اللعب الطويلة.</p>
+<div class="mt-auto flex items-center justify-between">
+<span class="text-primary-container font-bold text-xl">$129.00</span>
+<div class="flex gap-2">
+<button class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-on-surface-variant hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-error hover:bg-error/10 transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+<button class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-slate-400 cursor-not-allowed" disabled="">
+<span class="material-symbols-outlined">shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="glass-card rounded-2xl overflow-hidden flex flex-col group">
+<div class="relative aspect-square overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A high-end mechanical gaming keyboard with vibrant per-key RGB backlighting in shades of neon pink and electric purple. The keyboard is positioned on a dark desk with a blurred gaming monitor in the background showing a fast-paced action game. The aesthetic is extremely modern and high-tech, focusing on the tactile keys and the intense light bleeding from between the keycaps." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAt_6lWR1HiwDjHspyXELF8We6AS5muNXG6QnSr12ZYOu3w_6taYZKIAYz8tQBahZlbRH-tyX5sqEnHBq01bUC-S3j9TMkVrpRhVLZrCPVstbcwQo_iVqLnnuC71QpTLkluXoH1oR-QXB0Tl0qumlwgYPwFMYqhJ5unsbNAyvdWMc-ZI7eml12ANP5hT9R-ivCuxSIqFJl3t3-XPSYp5yla51YfAJ8Y_AqZpdYwS1qSNzo8cVFEEKk5mrDLGcd3ULA2RLVNKHt-7Lzt">
+</div>
+<div class="p-6 flex flex-col flex-1">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">لوحة مفاتيح ميكانيكية</h3>
+<p class="text-on-surface-variant text-sm mb-4 line-clamp-2">أسرع استجابة في العالم مع إضاءة RGB قابلة للتخصيص ومفاتيح سريعة الاستجابة.</p>
+<div class="mt-auto flex items-center justify-between">
+<span class="text-primary-container font-bold text-xl">$85.50</span>
+<div class="flex gap-2">
+<button class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-on-surface-variant hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-error hover:bg-error/10 transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+<button class="w-10 h-10 rounded-full bg-gradient-to-tr from-fuchsia-600 to-purple-600 flex items-center justify-center text-white neon-glow-primary active:scale-90 transition-transform">
+<span class="material-symbols-outlined">shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="glass-card rounded-2xl overflow-hidden flex flex-col group">
+<div class="relative aspect-square overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="An ergonomic wireless gaming mouse with a futuristic translucent shell showing internal glowing purple circuitry. It rests on a textured dark mousepad with subtle neon light trails. The background is a soft-focus gaming setup with dark blue and pink ambient light. The image captures the high-performance feel and premium build quality of the gaming hardware." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQuHe12PDi6NoMWtUIO66nbHPbcRKXa6deufAyKdh9i22e6WnSJRyf5Xri3OZ31eLQbQ2okeeySSwVnq2eH2p5wB1Y8Po4GOnCus1-uBaOMH4jnGJWbstsNDYRzD9P9mvUONEFEQdpbnQHMDXRSXwxS9oWcxIl3gTnSZBMaqbqwsipFlwEp0Tp77SGMvijVisQGODMzgzIQbEMZJl3Pr56GSnZRWSfmLXGXAuQlO92UisA8WR9DPlRB6NO4CX9_GizYhFXfcLZjOV5">
+</div>
+<div class="p-6 flex flex-col flex-1">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">ماوس ألعاب لاسلكي</h3>
+<p class="text-on-surface-variant text-sm mb-4 line-clamp-2">دقة متناهية مع حساس 25K وتصميم خفيف الوزن لأفضل أداء في ألعاب التصويب.</p>
+<div class="mt-auto flex items-center justify-between">
+<span class="text-primary-container font-bold text-xl">$44.00</span>
+<div class="flex gap-2">
+<button class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-on-surface-variant hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-error hover:bg-error/10 transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+<button class="w-10 h-10 rounded-full bg-gradient-to-tr from-fuchsia-600 to-purple-600 flex items-center justify-center text-white neon-glow-primary active:scale-90 transition-transform">
+<span class="material-symbols-outlined">shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Empty State Section -->
+<section class="mb-16">
+<div class="glass-card rounded-3xl p-16 flex flex-col items-center text-center max-w-2xl mx-auto border-dashed border-2 border-white/10">
+<div class="w-24 h-24 rounded-full bg-surface-container flex items-center justify-center mb-6 text-outline">
+<span class="material-symbols-outlined text-5xl">inventory_2</span>
+</div>
+<h3 class="text-2xl font-bold text-on-surface mb-3">لا توجد منتجات مطابقة لبحثك.</h3>
+<p class="text-on-surface-variant mb-8">حاول استخدام كلمات مفتاحية أخرى أو تصفح الأقسام المتوفرة في المتجر.</p>
+<button class="text-primary-container border border-primary-container px-8 py-3 rounded-xl font-bold hover:bg-primary-container/10 transition-all">إعادة ضبط البحث</button>
+</div>
+</section>
+<!-- Pagination -->
+<nav class="flex justify-center mt-12">
+<ul class="flex items-center gap-2">
+<li class="">
+<a class="w-10 h-10 flex items-center justify-center rounded-lg border border-white/10 text-slate-400 hover:border-fuchsia-500 hover:text-fuchsia-500 transition-all" href="#">
+<span class="material-symbols-outlined">chevron_right</span>
+</a>
+</li>
+<li class=""><a class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary-container text-on-primary-container font-bold shadow-[0_0_10px_rgba(228,70,255,0.4)]" href="#">١</a></li>
+<li class=""><a class="w-10 h-10 flex items-center justify-center rounded-lg border border-white/10 text-slate-400 hover:border-fuchsia-500 hover:text-fuchsia-500 transition-all" href="#">٢</a></li>
+<li class=""><a class="w-10 h-10 flex items-center justify-center rounded-lg border border-white/10 text-slate-400 hover:border-fuchsia-500 hover:text-fuchsia-500 transition-all" href="#">٣</a></li>
+<li class=""><span class="text-slate-600 px-2">...</span></li>
+<li class=""><a class="w-10 h-10 flex items-center justify-center rounded-lg border border-white/10 text-slate-400 hover:border-fuchsia-500 hover:text-fuchsia-500 transition-all" href="#">١٢</a></li>
+<li class="">
+<a class="w-10 h-10 flex items-center justify-center rounded-lg border border-white/10 text-slate-400 hover:border-fuchsia-500 hover:text-fuchsia-500 transition-all" href="#">
+<span class="material-symbols-outlined">chevron_left</span>
+</a>
+</li>
+</ul>
+</nav>
+</main>
+<!-- Footer -->
+<footer class="bg-[#0f0f1a] w-full py-12 border-t border-white/10">
+<div class="flex flex-col md:flex-row-reverse justify-between items-center px-12 gap-6 w-full">
+<div class="text-lg font-bold text-fuchsia-500">نكسوس غيمز</div>
+<div class="flex flex-wrap justify-center gap-8 font-['Be_Vietnam_Pro'] text-xs text-slate-400">
+<a class="hover:text-fuchsia-400 transition-colors" href="#">الشروط والأحكام</a>
+<a class="hover:text-fuchsia-400 transition-colors" href="#">سياسة الخصوصية</a>
+<a class="hover:text-fuchsia-400 transition-colors" href="#">اتصل بنا</a>
+<a class="hover:text-fuchsia-400 transition-colors" href="#">الأسئلة الشائعة</a>
+</div>
+<div class="text-xs text-slate-500 font-['Be_Vietnam_Pro']">
+                © ٢٠٢٤ نكسوس غيمز. جميع الحقوق محفوظة.
+            </div>
+</div>
+<div class="flex justify-center gap-4 mt-8">
+<div class="w-8 h-8 rounded-full border border-white/5 flex items-center justify-center text-slate-500 hover:text-fuchsia-500 cursor-pointer">
+<span class="material-symbols-outlined text-lg">share</span>
+</div>
+<div class="w-8 h-8 rounded-full border border-white/5 flex items-center justify-center text-slate-500 hover:text-fuchsia-500 cursor-pointer">
+<span class="material-symbols-outlined text-lg">public</span>
+</div>
+<div class="w-8 h-8 rounded-full border border-white/5 flex items-center justify-center text-slate-500 hover:text-fuchsia-500 cursor-pointer">
+<span class="material-symbols-outlined text-lg">forum</span>
+</div>
+</div>
+</footer>
+
+
+</body></html>

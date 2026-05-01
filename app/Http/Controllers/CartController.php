@@ -49,7 +49,20 @@ class CartController extends Controller
         if ($cartItem->cart->user_id == Auth::id()) {
             $cartItem->delete();
         }
-        return back()->with('success', 'Product removed from cart.');
+        return back()->with('success', 'تم إزالة المنتج من السلة.');
+    }
+
+    // تقليل كمية منتج في السلة
+    public function decrement(CartItem $cartItem)
+    {
+        if ($cartItem->cart->user_id == Auth::id()) {
+            if ($cartItem->quantity > 1) {
+                $cartItem->decrement('quantity');
+            } else {
+                $cartItem->delete();
+            }
+        }
+        return back()->with('success', 'تم تحديث الكمية.');
     }
 
     // معالجة عملية إتمام الطلب (Checkout) وخصم الكميات من المخزن

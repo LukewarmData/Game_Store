@@ -1,15 +1,37 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
 
 :root {
-    --bg-dark: #0f0c29;
-    --bg-mid: #302b63;
-    --bg-light: #24243e;
+    --bg-dark: #1e1b38;
+    --bg-darker: #16132b;
     --accent-purple: #8A2BE2;
-    --accent-pink: #FF00FF;
+    --accent-pink: #d946ef; /* Stitch Brand Accent */
+    --accent-pink-light: #f0abfc;
+    --accent-glow: rgba(217, 70, 239, 0.5);
     --text-main: #ffffff;
-    --text-muted: #b3b3b3;
-    --glass-bg: rgba(255, 255, 255, 0.05);
-    --glass-border: rgba(255, 255, 255, 0.1);
+    --text-muted: #9ca3af;
+    --glass-bg: rgba(22, 19, 43, 0.8);
+    --glass-border: rgba(255, 255, 255, 0.05);
+}
+
+.glow-effect {
+    box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+}
+
+.brand-gradient-text {
+    background: linear-gradient(to right, var(--accent-pink-light), var(--accent-pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.brand-gradient-bg {
+    background: linear-gradient(to right, var(--accent-pink-light), var(--accent-pink));
 }
 
 body {

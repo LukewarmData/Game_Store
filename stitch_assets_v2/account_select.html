@@ -1,0 +1,197 @@
+<!DOCTYPE html><html class="dark" dir="rtl" lang="ar"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&amp;family=Inter:wght@400;600&amp;family=Space+Grotesk:wght@600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#c9a82b",
+                        "background": "#0f0f1a",
+                        "primary": "#faabff",
+                        "on-tertiary-fixed": "#231b00",
+                        "on-secondary-fixed-variant": "#5a00c6",
+                        "secondary-fixed-dim": "#d2bbff",
+                        "primary-fixed": "#ffd6fe",
+                        "surface-container": "#271c27",
+                        "surface-variant": "#3d313c",
+                        "surface": "#1a101a",
+                        "on-error": "#690005",
+                        "on-tertiary-fixed-variant": "#564500",
+                        "on-primary-container": "#4c0059",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-fixed": "#35003f",
+                        "surface-container-highest": "#3d313c",
+                        "on-background": "#f0ddec",
+                        "surface-dim": "#1a101a",
+                        "inverse-on-surface": "#382d38",
+                        "on-surface": "#f0ddec",
+                        "inverse-primary": "#a200bb",
+                        "error": "#ffb4ab",
+                        "on-tertiary": "#3b2f00",
+                        "on-secondary": "#3f008e",
+                        "tertiary": "#e7c446",
+                        "surface-container-low": "#221823",
+                        "secondary-fixed": "#eaddff",
+                        "on-primary": "#570066",
+                        "surface-container-lowest": "#140b15",
+                        "error-container": "#93000a",
+                        "on-secondary-fixed": "#25005a",
+                        "secondary-container": "#6001d1",
+                        "outline": "#9f8a9e",
+                        "surface-container-high": "#322631",
+                        "surface-tint": "#faabff",
+                        "tertiary-fixed-dim": "#e7c446",
+                        "on-surface-variant": "#d7c0d4",
+                        "primary-fixed-dim": "#faabff",
+                        "on-secondary-container": "#c9aeff",
+                        "tertiary-fixed": "#ffe07d",
+                        "secondary": "#d2bbff",
+                        "inverse-surface": "#f0ddec",
+                        "on-primary-fixed-variant": "#7b008f",
+                        "surface-bright": "#413541",
+                        "primary-container": "#e446ff",
+                        "on-tertiary-container": "#4d3e00",
+                        "outline-variant": "#524152"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "section-gap": "80px",
+                        "gutter": "24px",
+                        "unit": "8px",
+                        "margin-edge": "40px",
+                        "container-max": "1440px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["inter"],
+                        "body-md": ["inter"],
+                        "label-caps": ["spaceGrotesk"],
+                        "headline-md": ["Be Vietnam Pro"],
+                        "headline-lg": ["Be Vietnam Pro"],
+                        "display-xl": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-caps": ["14px", {"lineHeight": "1", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                        "display-xl": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "800"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #0f0f1a;
+            color: #f0ddec;
+            overflow: hidden;
+        }
+        .glass-card {
+            background: rgba(26, 26, 46, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            transform: translateY(-8px);
+            background: rgba(26, 26, 46, 0.8);
+        }
+        .glow-pink:hover {
+            border-color: #faabff;
+            box-shadow: 0 0 20px rgba(250, 171, 255, 0.2);
+        }
+        .glow-purple:hover {
+            border-color: #d2bbff;
+            box-shadow: 0 0 20px rgba(210, 187, 255, 0.2);
+        }
+        .bg-orb {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 100%;
+            filter: blur(120px);
+            z-index: -1;
+            opacity: 0.4;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .text-gradient {
+            background: linear-gradient(to left, #e446ff, #faabff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="font-body-md min-h-screen flex items-center justify-center relative overflow-hidden">
+<!-- Floating Background Orbs -->
+<div class="bg-orb bg-primary-container top-[-10%] right-[-10%]"></div>
+<div class="bg-orb bg-secondary-container bottom-[-10%] left-[-10%]"></div>
+<main class="container-max px-gutter relative z-10 w-full flex flex-col items-center">
+<!-- Header Section -->
+<div class="text-center mb-12 flex flex-col items-center">
+<div class="mb-6 bg-secondary-container/20 p-6 rounded-full border border-secondary-container/30">
+<span class="material-symbols-outlined text-[4rem] text-secondary" data-icon="sports_esports">sports_esports</span>
+</div>
+<h1 class="font-display-xl text-display-xl text-gradient mb-4">
+                مرحباً بك في Game Store</h1>
+<p class="font-body-lg text-on-surface-variant max-w-xl mx-auto">
+                الوجهة الأولى لأفضل الألعاب وأقوى حواسيب الألعاب الاحترافية في المنطقة
+            </p>
+</div>
+<!-- Selection Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl">
+<!-- User Path Card -->
+<div class="glass-card glow-pink rounded-3xl p-10 flex flex-col items-center text-center group">
+<div class="mb-8 w-24 h-24 flex items-center justify-center rounded-2xl bg-primary/10 border border-primary/20 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[3rem] text-primary" data-icon="group">group</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-4">الدخول كمستخدم</h3>
+<p class="font-body-md text-on-surface-variant mb-10 flex-grow">
+                    تصفح المنتجات وأضف ما يعجبك إلى سلتك للحصول على أفضل تجربة تسوق في عالم الجيمنج.
+                </p>
+<button class="w-full py-4 px-8 rounded-xl bg-gradient-to-l from-primary-container to-primary text-on-primary font-headline-md text-headline-md shadow-[0_4px_20px_rgba(228,70,255,0.3)] active:scale-[0.98] transition-all hover:brightness-110">
+                    دخول المستخدم
+                </button>
+</div>
+<!-- Admin Path Card -->
+<div class="glass-card glow-purple rounded-3xl p-10 flex flex-col items-center text-center group">
+<div class="mb-8 w-24 h-24 flex items-center justify-center rounded-2xl bg-secondary/10 border border-secondary/20 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[3rem] text-secondary" data-icon="admin_panel_settings">admin_panel_settings</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-4">الدخول كمسؤول</h3>
+<p class="font-body-md text-on-surface-variant mb-10 flex-grow">
+                    إدارة المتجر وإضافة ألعاب وحواسيب جديدة لقاعدة البيانات ومتابعة الطلبات الجارية.
+                </p>
+<button class="w-full py-4 px-8 rounded-xl border-2 border-secondary text-secondary bg-transparent font-headline-md text-headline-md hover:bg-secondary/10 active:scale-[0.98] transition-all">
+                    دخول المسؤول
+                </button>
+</div>
+</div>
+<!-- Subtle Support Link -->
+<div class="mt-16 text-on-surface-variant font-label-caps text-label-caps flex items-center gap-2">
+<span class="">هل تواجه مشكلة في تسجيل الدخول؟</span>
+<a class="text-primary hover:underline decoration-primary-container" href="#">تواصل مع الدعم الفني</a>
+</div>
+</main>
+<!-- Decorative Elements -->
+<div class="fixed top-0 left-0 w-full h-full pointer-events-none opacity-20">
+<div class="absolute top-[10%] left-[5%] w-px h-64 bg-gradient-to-b from-transparent via-primary to-transparent"></div>
+<div class="absolute bottom-[10%] right-[5%] w-px h-64 bg-gradient-to-b from-transparent via-secondary to-transparent"></div>
+</div>
+
+
+</body></html>
